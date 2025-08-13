@@ -202,7 +202,7 @@
           </div>
           <div style="display:flex;gap:10px;align-items:center">
             <a class="btn" id="contactLink">Contactar por email</a>
-            <a class="ghost" href="tel:+542974299737">Llamar / WhatsApp</a>
+            <a class="ghost" id="contactWhatsApp">WhatsApp</a>
           </div>
         </div>
 
@@ -268,6 +268,20 @@
         }, 500);
       } catch (error) {
         alert("Podés contactarme en: ivavnpfohh85@gmail.com");
+      }
+    });
+    document.getElementById("contactWhatsApp").addEventListener("click", function(e) {
+      e.preventDefault();
+      
+      const phoneNumber = "2974299737"; // tu número sin + ni espacios
+      const userAgent = navigator.userAgent.toLowerCase();
+    
+      if (/mobile|android|iphone|ipad/.test(userAgent)) {
+        // Si es celular → abrir WhatsApp directamente
+        window.location.href = `https://wa.me/${phoneNumber}`;
+      } else {
+        // Si es PC → abrir WhatsApp Web
+        window.open(`https://web.whatsapp.com/send?phone=${phoneNumber}`, "_blank");
       }
     });
   </script>
