@@ -82,6 +82,18 @@
         padding: 12px;
       }
     }
+    @media (max-width: 768px) {
+      .grid {
+        grid-template-columns: 1fr; /* Una sola columna */
+        text-align: center; /* opcional para centrar texto */
+      }
+    
+      .grid .img img {
+        max-width: 100%;
+        height: auto;
+      }
+    }
+    
     
 
     /* small interactions */
@@ -92,6 +104,7 @@
     .modal{position:fixed;inset:0;display:grid;place-items:center;background:rgba(0,0,0,0.7);visibility:hidden;opacity:0;transition:opacity .2s,visibility .2s}
     .modal.open{visibility:visible;opacity:1}
     .modal img{max-width:92%;max-height:86%;border-radius:8px}
+
   </style>
 </head>
 <body>
@@ -188,7 +201,7 @@
             <div style="color:var(--muted)">Solicitá un presupuesto y acordamos retiro/entrega o visita técnica.</div>
           </div>
           <div style="display:flex;gap:10px;align-items:center">
-            <a class="btn" href="mailto:ivanpfohh85@gmail.com?subject=Presupuesto%20Pfoh%20Hardware">Contactar por email</a>
+            <a class="btn" id="contactLink">Contactar por email</a>
             <a class="ghost" href="tel:+542974299737">Llamar / WhatsApp</a>
           </div>
         </div>
@@ -242,6 +255,20 @@
     // Small progressive reveal
     document.addEventListener('DOMContentLoaded',()=>{
       document.querySelectorAll('.fade-in').forEach((el,i)=>{ el.style.animationDelay = (i*80)+'ms'; });
+    });
+
+    document.getElementById("contactLink").addEventListener("click", function(e) {
+      e.preventDefault();
+      try {
+        window.location.href = "mailto:ivanpfohh85@gmail.com";
+        setTimeout(function() {
+          if (document.visibilityState === "visible") {
+            alert("Podés contactarme en: ivanpfohh85@gmail.com");
+          }
+        }, 500);
+      } catch (error) {
+        alert("Podés contactarme en: ivavnpfohh85@gmail.com");
+      }
     });
   </script>
   
