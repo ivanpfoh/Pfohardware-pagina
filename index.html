@@ -87,8 +87,6 @@
         height: auto;
       }
     }
-    
-    
 
     /* small interactions */
     .fade-in{opacity:0;transform:translateY(8px);animation:enter .6s ease forwards}
@@ -97,7 +95,16 @@
     /* simple modal (lightbox) */
     .modal{position:fixed;inset:0;display:grid;place-items:center;background:rgba(0,0,0,0.7);visibility:hidden;opacity:0;transition:opacity .2s,visibility .2s}
     .modal.open{visibility:visible;opacity:1}
-    .modal img{max-width:92%;max-height:86%;border-radius:8px}
+    .modal img {
+      max-width: 100vw;   /* límite: ancho de la ventana */
+      max-height: 100vh;  /* límite: alto de la ventana */
+      width: auto;        /* mantiene proporción */
+      height: auto;       /* mantiene proporción */
+      object-fit: contain;
+      border-radius: 8px;
+      display: block;
+      margin: auto;
+    }
 
   </style>
 </head>
@@ -182,8 +189,16 @@
         <h3 style="margin-top:18px">Galería rápida</h3>
         <div class="gallery">
           <img src="Notebook.png" alt="Trabajo 1" data-full="Notebook.png">
+          <img src="pc mia desarmada.jpg" alt="Trabajo 4" data-full="pc mia desarmada.jpg">
           <img src="limpiezaps4.png" alt="Trabajo 2" data-full="limpiezaps4.png">
           <img src="cambio de modulo de pantalla.png" alt="Trabajo 3" data-full="cambio de modulo de pantalla.png">
+          
+        </div>
+        <div class="gallery">
+          <img src="pc sucia.jpg" alt="Trabajo 5" data-full="pc sucia.jpg">
+          <img src="pc limpia.jpg" alt="Trabajo 6" data-full="pc limpia.jpg">
+          <img src="pc valen.JPEG" alt="Trabajo 7" data-full="pc valen.JPEG">
+          <img src="pc valen 2.JPEG" alt="Trabajo 8" data-full="pc valen 2.JPEG">
         </div>
       </section>
 
