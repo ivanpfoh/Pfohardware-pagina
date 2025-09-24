@@ -4,109 +4,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Pfoh Hardware — Soporte técnico y mantenimiento de PC</title>
+  <meta content="PfoHardware.com" property="og:title" />
+  <meta property="og:type" content="website" />
+  <meta
+  content="https://github.com/ivanpfoh/Pfohardware-pagina/blob/main/Notebook.png"
+  property="og:image"
+  />
   <meta name="description" content="Pfoh Hardware: diagnóstico, limpieza, mantenimiento y upgrades de computadoras. Servicio profesional en Rada Tilly. Contacto y presupuesto rápido.">
+  <title>Pfoh Hardware — Soporte técnico y mantenimiento de PC</title>
   <link rel="icon" href="logo.png">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root{
-      --bg:#0b0b0b; --card:#0f1720; --accent:#00e6c6; --accent-2:#00bfa6; --muted:#9aa4af; --glass:rgba(255,255,255,0.04);
-      --max-w:1100px;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{margin:0;font-family:Inter,system-ui,Arial;background:linear-gradient(180deg,#000 0%, #070707 100%);color:#e6eef3;line-height:1.5}
-    a{color:var(--accent);text-decoration:none}
-    .site{max-width:var(--max-w);margin:28px auto;padding:24px}
-
-    /* header */
-    header{display:flex;align-items:center;justify-content:space-between;gap:16px}
-    .brand{display:flex;align-items:center;gap:14px}
-    .brand img{width:64px;height:64px;object-fit:contain;border-radius:8px}
-    .brand h1{font-size:1.35rem;margin:0}
-    .nav{display:flex;gap:10px;align-items:center}
-    .btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#012; padding:10px 14px;border-radius:10px;font-weight:700;border:none;cursor:pointer}
-    .ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px}
-
-    /* hero */
-    .hero{display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:center;margin-top:22px}
-    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:28px;border-radius:12px;box-shadow:0 6px 30px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
-    .hero h2{font-size:1.8rem;margin:0 0 8px}
-    .hero p.lead{color:var(--muted);margin:0 0 16px}
-    .features{display:flex;flex-direction:column;gap:10px}
-    .feature{display:flex;gap:12px;align-items:center}
-    .chev{width:36px;height:36px;border-radius:8px;background:linear-gradient(180deg,var(--accent),var(--accent-2));display:inline-grid;place-items:center;font-weight:800;color:#002;}
-
-    /* side hero */
-    .side-hero{background:#040506;padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
-    .side-hero img{width:100%;border-radius:8px;display:block}
-
-    /* services grid */
-    .services{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
-    .service-card{background:var(--card);padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
-    .service-card h3{margin:0 0 8px}
-    .service-card p{color:var(--muted);margin:0;font-size:0.95rem}
-
-    /* about */
-    .about{display:flex;gap:18px;margin-top:20px;align-items:center}
-    .about .text{flex:1}
-    .about .img{width:220px}
-    .about img{width:100%;border-radius:10px}
-
-    /* gallery */
-    .gallery{display:flex;gap:10px;margin-top:18px}
-    .gallery img{height:110px;object-fit:cover;border-radius:8px;cursor:pointer;border:2px solid transparent}
-    .gallery img:hover{transform:translateY(-6px);transition:all .18s; border-color:var(--accent)}
-
-    /* CTA */
-    .cta{margin-top:20px;background:linear-gradient(180deg, rgba(0,0,0,0.45), rgba(0,0,0,0.2));padding:18px;border-radius:12px;display:flex;align-items:center;justify-content:space-between}
-
-    /* footer */
-    footer{margin-top:28px;color:var(--muted);font-size:0.9rem;display:flex;justify-content:space-between;align-items:center}
-
-    /* small screens */
-    @media (max-width:880px){
-      .hero{grid-template-columns:1fr;}
-      .services{grid-template-columns:repeat(2,1fr)}
-      .site{padding:16px}
-      .brand img{width:54px;height:54px}
-    }
-    @media (max-width:520px){
-      .services{grid-template-columns:1fr}
-      .brand h1{font-size:1rem}
-    }
-    
-    @media (max-width: 768px) {
-      .grid {
-        grid-template-columns: 1fr; /* Una sola columna */
-        text-align: center; /* opcional para centrar texto */
-      }
-    
-      .grid .img img {
-        max-width: 100%;
-        height: auto;
-      }
-    }
-
-    /* small interactions */
-    .fade-in{opacity:0;transform:translateY(8px);animation:enter .6s ease forwards}
-    @keyframes enter{to{opacity:1;transform:none}}
-
-    /* simple modal (lightbox) */
-    .modal{position:fixed;inset:0;display:grid;place-items:center;background:rgba(0,0,0,0.7);visibility:hidden;opacity:0;transition:opacity .2s,visibility .2s}
-    .modal.open{visibility:visible;opacity:1}
-    .modal img {
-      max-width: 100vw;   /* límite: ancho de la ventana */
-      max-height: 100vh;  /* límite: alto de la ventana */
-      width: auto;        /* mantiene proporción */
-      height: auto;       /* mantiene proporción */
-      object-fit: contain;
-      border-radius: 8px;
-      display: block;
-      margin: auto;
-    }
-
-  </style>
+  <link href="style.css" rel="stylesheet">
 </head>
 <body>
   <div class="site">
@@ -119,10 +27,10 @@
         </div>
       </div>
       <nav class="nav">
-        <a class="ghost" href="#servicios">Servicios</a>
-        <a class="ghost" href="#sobre-mi">Quién soy</a>
-        <a class="ghost" href="#contacto">Contacto</a>
-        <a class="btn" id="contactTop" href="#contacto">Presupuesto</a>
+        <a class="ghost" href="index.html">Inicio</a>
+        <a class="ghost" href="servicios.html">Servicios</a>
+        <a class="ghost" href="quiensoy.html">Quién soy</a>
+        <a class="ghost" href="contacto.html">Contacto</a>
       </nav>
     </header>
 
@@ -151,38 +59,6 @@
           <img src="armado de pc.png" alt="Mantenimiento de PC - Pfoh Hardware">
           <div style="margin-top:10px;color:var(--muted);font-size:0.95rem">Servicio rápido — Presupuesto sin compromiso — Posibilidad de retiro y entrega.</div>
         </aside>
-      </section>
-
-      <section id="servicios" class="services">
-        <div class="service-card fade-in"><h3>Diagnóstico completo</h3><p>Informe detallado del estado del equipo, pruebas de hardware y recomendaciones con presupuesto.</p></div>
-        <div class="service-card fade-in"><h3>Limpieza y refrigeración</h3><p>Limpieza interna, reemplazo de pasta térmica, optimización de perfiles de ventilador.</p></div>
-        <div class="service-card fade-in"><h3>Actualización de hardware</h3><p>Instalación de SSD, ampliación de memoria, migración de sistema operativo y clonación de discos.</p></div>
-        <div class="service-card fade-in"><h3>Formateo y SO</h3><p>Instalación y configuración de Windows / Linux, drivers, actualizaciones y post-instalación segura.</p></div>
-        <div class="service-card fade-in"><h3>Reparaciones de placa</h3><p>Diagnóstico de fallas en placa madre, reparación de conectores y reemplazo de componentes dañados.</p></div>
-        <div class="service-card fade-in"><h3>Soporte remoto</h3><p>Asistencia remota para problemas de software, configuración y asesoramiento de seguridad.</p></div>
-      </section>
-
-      <section id="sobre-mi" class="about">
-        <div class="text fade-in">
-          <h3>Quién está detrás</h3>
-          <p style="color:var(--muted)">Pfoh Hardware es el emprendimiento profesional de soporte técnico liderado por Iván Pfoh. Estudiante avanzado de la Tecnicatura en Análisis de Sistemas. Experiencia en diagnóstico, mantenimiento físico, reinstalación de sistemas, actualización y reparación de componentes. Trabajo con clientes particulares y pequeñas empresas ofreciendo soluciones claras, documentadas y con garantía de trabajo.</p>
-
-          <ul style="color:var(--muted)">
-            <li>Rapidez en respuestas y presupuesto transparente.</li>
-            <li>Reportes y pruebas entregables.</li>
-            <li>Servicio técnico orientado a resultados y continuidad operativa para empresas.</li>
-          </ul>
-
-          <div style="margin-top:12px">
-            <strong>Certificaciones</strong>
-            <div style="color:var(--muted)">Fundamentos de ciberseguridad — Google (2025) · Fundamentos de soporte técnico — Google (2025) · Diagnostico y manenimiento de hardware  — Informatic Training Center (2018) </div>
-            <div class="gallery">
-              <img src="certificado de ciberseguridad.png" alt="Certificado de ciberseguridad" data-full="certificado de ciberseguridad.png">
-              <img src="Certificado Soporte it.png" alt="Certificado de soporte it" data-full="Certificado Soporte it.png">
-              <img src="CertificadoInformaticTrainingCenter.jpg" alt="Certificado de Diagnostico y mantenimiento de Hardware de PC" data-full="CertificadoInformaticTrainingCenter.jpg">
-            </div>
-          </div>
-        </div>
       </section>
 
       <section id="galeria">
@@ -228,69 +104,7 @@
 
   <!-- Modal for image lightbox -->
   <div id="modal" class="modal" aria-hidden="true"><img id="modalImg" src="" alt="Preview"></div>
-
-  <script>
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click',e=>{
-        const href=a.getAttribute('href');
-        if(href.length>1){
-          e.preventDefault();
-          document.querySelector(href).scrollIntoView({behavior:'smooth',block:'start'});
-        }
-      });
-    });
-
-    // Gallery lightbox
-    const modal=document.getElementById('modal');
-    const modalImg=document.getElementById('modalImg');
-    document.querySelectorAll('.gallery img').forEach(img=>{
-      img.addEventListener('click',()=>{
-        modalImg.src = img.dataset.full || img.src;
-        modal.classList.add('open');
-        modal.setAttribute('aria-hidden','false');
-      });
-    });
-    modal.addEventListener('click',()=>{ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); });
-
-    // Simple analytics: track clicks on contact button (client-side only)
-    document.getElementById('contactTop').addEventListener('click',()=>{
-      console.log('Contact top clicked');
-    });
-
-    // Small progressive reveal
-    document.addEventListener('DOMContentLoaded',()=>{
-      document.querySelectorAll('.fade-in').forEach((el,i)=>{ el.style.animationDelay = (i*80)+'ms'; });
-    });
-
-    document.getElementById("contactLink").addEventListener("click", function(e) {
-      e.preventDefault();
-      try {
-        window.location.href = "mailto:ivanpfohh85@gmail.com";
-        setTimeout(function() {
-          if (document.visibilityState === "visible") {
-            alert("Podés contactarme en: ivanpfohh85@gmail.com");
-          }
-        }, 500);
-      } catch (error) {
-        alert("Podés contactarme en: ivavnpfohh85@gmail.com");
-      }
-    });
-    document.getElementById("contactWhatsApp").addEventListener("click", function(e) {
-      e.preventDefault();
-      
-      const phoneNumber = "2974299737"; // tu número sin + ni espacios
-      const userAgent = navigator.userAgent.toLowerCase();
-    
-      if (/mobile|android|iphone|ipad/.test(userAgent)) {
-        // Si es celular → abrir WhatsApp directamente
-        window.location.href = `https://wa.me/${phoneNumber}`;
-      } else {
-        // Si es PC → abrir WhatsApp Web
-        window.open(`https://web.whatsapp.com/send?phone=${phoneNumber}`, "_blank");
-      }
-    });
-  </script>
+  <script src="app.js"></script>
   
 </body>
 </html>
