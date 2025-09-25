@@ -14,7 +14,7 @@ header{display:flex;align-items:center;justify-content:space-between;gap:16px}
 .brand h1{font-size:1.35rem;margin:0}
 .nav{display:flex;gap:10px;align-items:center}
 .btn{background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#012; padding:10px 14px;border-radius:10px;font-weight:700;border:none;cursor:pointer}
-.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px}
+.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;cursor:pointer}
 /* hero */
 .hero{display:grid;grid-template-columns:1fr 380px;gap:24px;align-items:center;margin-top:22px}
 .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:28px;border-radius:12px;box-shadow:0 6px 30px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.03)}
@@ -82,4 +82,64 @@ footer{margin-top:28px;color:var(--muted);font-size:0.9rem;display:flex;justify-
     border-radius: 8px;
     display: block;
     margin: auto;
+}
+.alerta-fondo {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.6);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+  /* Caja principal */
+.alerta-caja {
+    font-family: Inter, system-ui, Arial, sans-serif;
+    background: var(--card);      /* mismo fondo que tus tarjetas */
+    color: #e6eef3;               /* mismo color de texto */
+    padding: 20px;
+    border-radius: 12px;
+    max-width: 400px;
+    text-align: center;
+    box-shadow: 0 6px 30px rgba(0,0,0,0.6);
+    border: 1px solid rgba(255,255,255,0.05);
+    animation: alerta-aparecer 0.3s ease-out;
+}
+
+
+.alerta-caja h2 {
+    margin-bottom: 10px;
+    font-size: 1.35rem; /* igual que tu brand h1 */
+    color: var(--accent);
+}
+
+.alerta-caja p {
+    margin-bottom: 20px;
+    font-size: 1rem;
+    color: var(--muted);
+}
+.alerta-boton {
+    background: linear-gradient(90deg,var(--accent),var(--accent-2));
+    color: #012;
+}
+
+.alerta-boton:hover {
+    background: #357ab7;
+}
+.alerta-caja,.alerta-boton {
+    font-family: Inter, system-ui, Arial, sans-serif !important;
+    font-weight: 700 !important;
+    font-size: 1rem !important;
+    letter-spacing: 0 !important;
+}
+
+@keyframes alerta-aparecer {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.btn:hover, .ghost:hover{
+    transform: scale(1.1);
 }

@@ -27,19 +27,6 @@ document.getElementById('contactTop').addEventListener('click',()=>{
 document.addEventListener('DOMContentLoaded',()=>{
     document.querySelectorAll('.fade-in').forEach((el,i)=>{ el.style.animationDelay = (i*80)+'ms'; });
 });
-document.getElementById("contactLink").addEventListener("click", function(e) {
-    e.preventDefault();
-    try {
-        window.location.href = "mailto:ivanpfohh85@gmail.com";
-        setTimeout(function() {
-        if (document.visibilityState === "visible") {
-            alert("Podés contactarme en: ivanpfohh85@gmail.com");
-            }
-        }, 500);
-    } catch (error) {
-        alert("Podés contactarme en: ivavnpfohh85@gmail.com");
-    }
-});
 document.getElementById("contactWhatsApp").addEventListener("click", function(e) {
     e.preventDefault();
     
@@ -53,3 +40,11 @@ document.getElementById("contactWhatsApp").addEventListener("click", function(e)
         window.open(`https://web.whatsapp.com/send?phone=${phoneNumber}`, "_blank");
     }
 });
+function abrirAlerta() {
+    document.getElementById('alertaFondo').style.display = 'flex';
+}
+
+function cerrarAlerta() {
+    document.getElementById('alertaFondo').style.display = 'none';
+}
+

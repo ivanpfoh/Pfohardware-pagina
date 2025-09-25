@@ -11,7 +11,7 @@
   property="og:image"
   />
   <meta name="description" content="Pfoh Hardware: diagnóstico, limpieza, mantenimiento y upgrades de computadoras. Servicio profesional en Rada Tilly. Contacto y presupuesto rápido.">
-  <title>Pfoh Hardware — Soporte técnico y mantenimiento de PC</title>
+  <title>PfoHardware — Soporte técnico y mantenimiento de PC</title>
   <link rel="icon" href="logo.jpg">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link href="style.css" rel="stylesheet">
@@ -22,7 +22,7 @@
       <div class="brand">
         <img src="logo.jpg" alt="Logo Pfoh Hardware">
         <div>
-          <h1>Pfoh Hardware</h1>
+          <h1>PfoHardware</h1>
           <div style="color:var(--muted);font-size:0.92rem">Diagnóstico • Mantenimiento • Upgrades</div>
         </div>
       </div>
@@ -49,8 +49,7 @@
           </div>
 
           <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap">
-            <a class="btn" id="contactTop" href="#contacto">Solicitar presupuesto</a>
-            <a class="ghost" href="#galeria">Ver trabajos</a>
+            <a class="btn" id="contactTop" href="contacto.html">Solicitar presupuesto</a>
           </div>
 
           <div style="margin-top:16px;color:var(--muted);font-size:0.9rem">Atención profesional, tiempos y presupuesto claros. La consulta no molesta.</div>
@@ -62,8 +61,8 @@
         </aside>
       </section>
 
-      <section id="galeria">
-        <h3 style="margin-top:18px">Galería rápida</h3>
+      <section>
+        <h3 style="margin-top:18px">Galería rápida - Trabajos</h3>
         <div class="gallery">
           <img src="Notebook.png" alt="Trabajo 1" data-full="Notebook.png">
           <img src="pc mia desarmada.jpeg" alt="Trabajo 4" data-full="pc mia desarmada.jpeg">
@@ -86,11 +85,20 @@
             <div style="color:var(--muted)">Solicitá un presupuesto y acordamos retiro/entrega o visita técnica.</div>
           </div>
           <div style="display:flex;gap:10px;align-items:center">
-            <a class="btn" id="contactLink">Contactar por email</a>
+            <div class="alerta-fondo" id="alertaFondo">
+              <div class="alerta-caja">
+                <h2>Hola!</h2>
+                <p>Podés contactarme en:<br><strong>ivanpfohh85@gmail.com</strong></p>
+                <!-- ahora usa la clase btn -->
+                <button class="btn alerta-boton" onclick="cerrarAlerta()">Aceptar</button>
+              </div>
+            </div>
+            <a class="btn" onclick="abrirAlerta()">Contactar por email</a>
             <a class="ghost" id="contactWhatsApp">WhatsApp</a>
           </div>
         </div>
       </section>
+      
 
     </main>
 
@@ -100,6 +108,10 @@
         <a href="https://instagram.com/pfohardware" target="_blank">Instagram</a>
         <a href="https://github.com/ivanpfoh" target="_blank">GitHub</a>
       </div>
+      
+
+      <!-- Overlay + Caja -->
+      
     </footer>
   </div>
 
