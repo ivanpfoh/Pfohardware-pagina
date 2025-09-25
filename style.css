@@ -408,3 +408,22 @@ body {
     transform: translateZ(0);
     -webkit-transform: translateZ(0);
 }
+body.loaded {
+    opacity: 1;
+    filter: none;
+}
+
+.site-loaded {
+    animation: sharpen 0.3s ease-out;
+}
+
+@keyframes sharpen {
+    from { 
+        filter: blur(0.5px);
+        opacity: 0.99;
+    }
+    to { 
+        filter: blur(0px);
+        opacity: 1;
+    }
+}

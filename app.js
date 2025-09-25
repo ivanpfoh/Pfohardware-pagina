@@ -125,3 +125,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+document.addEventListener('DOMContentLoaded', function() {
+    document.body.classList.add('loaded');
+    document.querySelector('.site').classList.add('site-loaded');
+    
+    // Forzar un reflow
+    void document.body.offsetWidth;
+});
