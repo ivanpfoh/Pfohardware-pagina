@@ -186,7 +186,6 @@
     transform: translateX(5px);
 }
 
-/* OVERLAY CORREGIDO */
 /* OVERLAY SIMPLIFICADO Y FUNCIONAL */
 .nav-overlay {
     position: fixed;
@@ -362,22 +361,4 @@ footer{margin-top:28px;color:var(--muted);font-size:0.9rem;display:flex;justify-
 .btn:hover, .ghost:hover{
     transform: scale(1.1);
 }
-
-/* OVERLAY SIMPLIFICADO */
-.nav-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.85); /* Más oscuro, menos blur */
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: all 0.3s ease;
-    /* ELIMINAR BACKDROP-FILTER QUE CAUSA BLUR */
-    backdrop-filter: none; /* ← ESTO ES IMPORTANTE */
-    -webkit-backdrop-filter: none;
-}
-
 
