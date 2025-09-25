@@ -264,6 +264,18 @@ footer{margin-top:28px;color:var(--muted);font-size:0.9rem;display:flex;justify-
     .services{grid-template-columns:1fr}
     .brand h1{font-size:1rem}
 }
+@media (max-width: 768px) {
+    body {
+        -webkit-text-size-adjust: none;
+        text-size-adjust: none;
+    }
+    
+    .site {
+        /* Suavizar el escalado */
+        transform: translateZ(0);
+        -webkit-transform: translateZ(0);
+    }
+}
 
 @media (max-width: 768px) {
     .grid {
@@ -353,3 +365,29 @@ footer{margin-top:28px;color:var(--muted);font-size:0.9rem;display:flex;justify-
     transform: scale(1.1);
 }
 
+/* MEJORA DE RENDERIZADO PARA MÓVILES */
+html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+/* Evitar zoom en inputs en iOS */
+input, select, textarea {
+    font-size: 16px !important;
+}
+
+/* Mejorar renderizado de imágenes */
+img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+}
+
+/* Específico para móviles */
