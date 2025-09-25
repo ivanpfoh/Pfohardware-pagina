@@ -1,19 +1,4 @@
 // Función helper para verificar elementos
-document.addEventListener('DOMContentLoaded', function() {
-    // Forzar repaint después de la carga
-    setTimeout(function() {
-        document.body.style.opacity = '0.99';
-        setTimeout(function() {
-            document.body.style.opacity = '1';
-        }, 50);
-    }, 100);
-    
-    // También forzar repaint en elementos específicos
-    const repaintElements = document.querySelectorAll('.site, .hero, header');
-    repaintElements.forEach(el => {
-        el.style.transform = 'translateZ(0)';
-    });
-});
 function getElementSafe(id) {
     const element = document.getElementById(id);
     if (!element) {
@@ -90,7 +75,7 @@ function cerrarAlerta() {
     const alertaFondo = getElementSafe('alertaFondo');
     if (alertaFondo) alertaFondo.style.display = 'none';
 }
-// Menú hamburguesa
+// VERSIÓN SIMPLIFICADA - GARANTIZADA
 document.addEventListener('DOMContentLoaded', function() {
     const hamburgerBtn = document.getElementById('hamburgerBtn');
     const closeBtn = document.getElementById('closeBtn');
@@ -98,37 +83,37 @@ document.addEventListener('DOMContentLoaded', function() {
     const navOverlay = document.getElementById('navOverlay');
     
     if (hamburgerBtn && navMobile) {
-        // Abrir menú
+        // ABRIR MENÚ
         hamburgerBtn.addEventListener('click', function() {
             navMobile.classList.add('open');
             navOverlay.classList.add('active');
-            hamburgerBtn.classList.add('active');
             document.body.style.overflow = 'hidden';
         });
         
-        // Cerrar menú
+        // CERRAR MENÚ
         function closeMenu() {
             navMobile.classList.remove('open');
             navOverlay.classList.remove('active');
-            hamburgerBtn.classList.remove('active');
             document.body.style.overflow = '';
         }
         
         closeBtn.addEventListener('click', closeMenu);
         navOverlay.addEventListener('click', closeMenu);
         
-        // Cerrar con tecla ESC
+        // LOS LINKS FUNCIONAN NORMALMENTE - SIN JavaScript que los bloquee
+        // El menú se cierra automáticamente al cambiar de página
+        
+        // CERRAR CON ESC
         document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && navMobile.classList.contains('open')) {
+            if (e.key === 'Escape') {
                 closeMenu();
             }
         });
     }
 });
-document.addEventListener('DOMContentLoaded', function() {
-    document.body.classList.add('loaded');
-    document.querySelector('.site').classList.add('site-loaded');
-    
-    // Forzar un reflow
-    void document.body.offsetWidth;
+document.querySelectorAll('.nav-mobile-link').forEach(link => {
+    link.addEventListener('click', function(e) {
+        console.log('Click en link:', this.href);
+        console.log('Página actual:', window.location.href);
+    });
 });

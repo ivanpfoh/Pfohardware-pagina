@@ -264,18 +264,7 @@ footer{margin-top:28px;color:var(--muted);font-size:0.9rem;display:flex;justify-
     .services{grid-template-columns:1fr}
     .brand h1{font-size:1rem}
 }
-@media (max-width: 768px) {
-    body {
-        -webkit-text-size-adjust: none;
-        text-size-adjust: none;
-    }
-    
-    .site {
-        /* Suavizar el escalado */
-        transform: translateZ(0);
-        -webkit-transform: translateZ(0);
-    }
-}
+
 
 @media (max-width: 768px) {
     .grid {
@@ -390,40 +379,110 @@ img {
     image-rendering: crisp-edges;
 }
 
-/* Específico para móviles */
-.site {
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
+/* MENÚ MÓVIL - ELIMINAR BLUR ESPECÍFICO */
+.nav-mobile {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 85%;
+    max-width: 320px;
+    height: 100vh;
+    background: var(--card);
+    z-index: 1001;
+    /* TRANSICIÓN MÁS SUAVE SIN BLUR */
+    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.95);
+    border-left: 1px solid rgba(255, 255, 255, 0.15);
+    /* ELIMINAR BLUR */
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-}
-
-body {
-    perspective: 1000px;
-    -webkit-perspective: 1000px;
-}
-
-/* Aplicar a elementos principales */
-.hero, .hero-card, .brand, header {
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-}
-body.loaded {
+    will-change: transform;
+    /* MEJORAR RENDER */
     opacity: 1;
     filter: none;
 }
 
-.site-loaded {
-    animation: sharpen 0.3s ease-out;
+.nav-mobile.open {
+    right: 0;
+    /* ASEGURAR QUE NO HAYA BLUR AL ABRIR */
+    transform: translate3d(0, 0, 0) !important;
+    -webkit-transform: translate3d(0, 0, 0) !important;
 }
 
-@keyframes sharpen {
-    from { 
-        filter: blur(0.5px);
-        opacity: 0.99;
+.nav-mobile-content {
+    padding: 80px 25px 30px;
+    height: 100%;
+    position: relative;
+    /* ELIMINAR BLUR EN CONTENIDO */
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    opacity: 1;
+}
+
+
+/* OVERLAY SIMPLIFICADO */
+.nav-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85); /* Más oscuro, menos blur */
+    z-index: 1000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    /* ELIMINAR BACKDROP-FILTER QUE CAUSA BLUR */
+    backdrop-filter: none; /* ← ESTO ES IMPORTANTE */
+    -webkit-backdrop-filter: none;
+}
+
+.nav-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+/* BOTÓN CERRAR MEJORADO */
+.close-btn {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    font-size: 20px;
+    color: var(--accent);
+    cursor: pointer;
+    z-index: 1003;
+    /* PREVENIR BLUR */
+    transform: translateZ(0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* PREVENIR BLUR EN TODO EL SITIO */
+.site {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
+
+body {
+    -webkit-font-smoothing: subpixel-antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+/* MEJORAR RENDIMIENTO EN MÓVILES */
+@media (max-width: 768px) {
+    body {
+        overflow-x: hidden;
     }
-    to { 
-        filter: blur(0px);
-        opacity: 1;
+    
+    .site {
+        width: 100%;
+        position: relative;
     }
 }
