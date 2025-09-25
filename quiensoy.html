@@ -10,6 +10,7 @@
         property="og:image"
         />
         <meta name="description" content="Pfoh Hardware: diagnóstico, limpieza, mantenimiento y upgrades de computadoras. Servicio profesional en Rada Tilly. Contacto y presupuesto rápido.">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
         <title>Pfoh Hardware — Soporte técnico y mantenimiento de PC</title>
         <link rel="icon" href="logo.jpg">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -19,21 +20,45 @@
     <div class="site">
         <header>
             <div class="brand">
-                <a href="index.html"><img src="logo.jpg" alt="Logo Pfoh Hardware"></a>
+              <a href="index.html"><img src="logo.jpg" alt="Logo Pfoh Hardware"></a>
               <div>
                 <h1>PfoHardware</h1>
                 <div style="color:var(--muted);font-size:0.92rem">Diagnóstico • Mantenimiento • Upgrades</div>
               </div>
             </div>
             
+            <!-- AGREGAR MENÚ HAMBURGUESA -->
+            <div class="menu-hamburguesa">
+              <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menú">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+              </button>
+            </div>
+          
             <nav class="nav">
-              
-                <a class="ghost" href="index.html">Inicio</a>
-                <a class="ghost" href="servicios.html">Servicios</a>
-                <a class="ghost" href="quiensoy.html">Quién soy</a>
-                <a class="ghost" href="contacto.html">Contacto</a>
+              <a class="ghost" href="index.html">Inicio</a>
+              <a class="ghost" href="servicios.html">Servicios</a>
+              <a class="ghost" href="quiensoy.html">Quién soy</a>
+              <a class="ghost" href="contacto.html">Contacto</a>
             </nav>
           </header>
+          
+          <!-- AGREGAR MENÚ MÓVIL -->
+          <nav class="nav-mobile" id="navMobile">
+            <div class="nav-mobile-content">
+              <button class="close-btn" id="closeBtn" aria-label="Cerrar menú">
+                <i class="fas fa-times"></i>
+              </button>
+              <ul class="nav-mobile-links">
+                <li><a href="index.html" class="nav-mobile-link">Inicio</a></li>
+                <li><a href="servicios.html" class="nav-mobile-link">Servicios</a></li>
+                <li><a href="quiensoy.html" class="nav-mobile-link">Quién Soy</a></li>
+                <li><a href="contacto.html" class="nav-mobile-link">Contacto</a></li>
+              </ul>
+            </div>
+            <div class="nav-overlay" id="navOverlay"></div>
+          </nav>
         <section id="sobre-mi" class="about">
             <div class="text fade-in">
             <h3>Quién está detrás</h3>

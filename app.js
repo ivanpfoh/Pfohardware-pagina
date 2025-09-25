@@ -75,45 +75,68 @@ function cerrarAlerta() {
     const alertaFondo = getElementSafe('alertaFondo');
     if (alertaFondo) alertaFondo.style.display = 'none';
 }
-// VERSIÓN SIMPLIFICADA - GARANTIZADA
+
+// VERSIÓN MEJORADA DEL MENÚ MÓVIL
 document.addEventListener('DOMContentLoaded', function() {
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const closeBtn = document.getElementById('closeBtn');
-    const navMobile = document.getElementById('navMobile');
-    const navOverlay = document.getElementById('navOverlay');
+    console.log('DOM cargado - inicializando menú móvil');
     
-    if (hamburgerBtn && navMobile) {
-        // ABRIR MENÚ
-        hamburgerBtn.addEventListener('click', function() {
-            navMobile.classList.add('open');
-            navOverlay.classList.add('active');
-            document.body.style.overflow = 'hidden';
-        });
-        
-        // CERRAR MENÚ
-        function closeMenu() {
-            navMobile.classList.remove('open');
-            navOverlay.classList.remove('active');
-            document.body.style.overflow = '';
-        }
-        
-        closeBtn.addEventListener('click', closeMenu);
-        navOverlay.addEventListener('click', closeMenu);
-        
-        // LOS LINKS FUNCIONAN NORMALMENTE - SIN JavaScript que los bloquee
-        // El menú se cierra automáticamente al cambiar de página
-        
-        // CERRAR CON ESC
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeMenu();
-            }
-        });
+    const hamburgerBtn = getElementSafe('hamburgerBtn');
+    const closeBtn = getElementSafe('closeBtn');
+    const navMobile = getElementSafe('navMobile');
+    const navOverlay = getElementSafe('navOverlay');
+    
+    // Verificar que todos los elementos existen
+    if (!hamburgerBtn || !closeBtn || !navMobile || !navOverlay) {
+        console.log('No se encontraron todos los elementos del menú móvil');
+        console.log('hamburgerBtn:', hamburgerBtn);
+        console.log('closeBtn:', closeBtn);
+        console.log('navMobile:', navMobile);
+        console.log('navOverlay:', navOverlay);
+        return;
     }
-});
-document.querySelectorAll('.nav-mobile-link').forEach(link => {
-    link.addEventListener('click', function(e) {
-        console.log('Click en link:', this.href);
-        console.log('Página actual:', window.location.href);
+    
+    console.log('Todos los elementos del menú móvil encontrados');
+    
+    // Función para abrir el menú
+    function openMenu() {
+        console.log('Abriendo menú móvil');
+        navMobile.classList.add('open');
+        navOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevenir scroll del body
+    }
+    
+    // Función para cerrar el menú
+    function closeMenu() {
+        console.log('Cerrando menú móvil');
+        navMobile.classList.remove('open');
+        navOverlay.classList.remove('active');
+        document.body.style.overflow = ''; // Restaurar scroll del body
+    }
+    
+    // Event listeners
+    hamburgerBtn.addEventListener('click', openMenu);
+    closeBtn.addEventListener('click', closeMenu);
+    navOverlay.addEventListener('click', closeMenu);
+    
+    // Cerrar menú al hacer clic en enlaces (opcional)
+    navMobile.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', closeMenu);
     });
+    
+    // Prevenir que los clics dentro del menú lo cierren
+    navMobile.addEventListener('click', function(e) {
+        e.stopPropagation();
+    });
+    
+    // Cerrar menú con la tecla Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && navMobile.classList.contains('open')) {
+            closeMenu();
+        }
+    });
+    
+    console.log('Menú móvil inicializado correctamente');
 });
+
+// Debug: Verificar que el script se está cargando
+console.log('app.js cargado correctamente');

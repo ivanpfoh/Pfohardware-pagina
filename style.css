@@ -486,3 +486,42 @@ body {
         position: relative;
     }
 }
+/* ASEGURAR que el menú no se cierre con clicks internos */
+.nav-mobile {
+    pointer-events: auto;
+}
+
+.nav-mobile-content {
+    pointer-events: auto;
+}
+
+.nav-mobile-links a {
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+/* El overlay solo debe cerrar al clickear en él, no en el menú */
+.nav-overlay {
+    pointer-events: auto;
+}
+
+.nav-mobile.open ~ .nav-overlay {
+    pointer-events: auto;
+}
+/* ASEGURAR que el overlay no interfiera con el menú */
+.nav-overlay {
+    pointer-events: auto;
+}
+
+.nav-mobile.open {
+    pointer-events: auto;
+}
+
+.nav-mobile-content {
+    pointer-events: auto;
+}
+
+/* Prevenir que el overlay capture clicks del menú */
+.nav-mobile.open ~ .nav-overlay {
+    pointer-events: auto;
+}
