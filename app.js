@@ -75,68 +75,26 @@ function cerrarAlerta() {
     const alertaFondo = getElementSafe('alertaFondo');
     if (alertaFondo) alertaFondo.style.display = 'none';
 }
-
-// VERSIÓN MEJORADA DEL MENÚ MÓVIL
+// VERSIÓN EXTRA-SIMPLE QUE SÍ FUNCIONA - NO CAMBIAR
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM cargado - inicializando menú móvil');
+    console.log('🚀 Menú móvil funcionando - mantener simple');
     
-    const hamburgerBtn = getElementSafe('hamburgerBtn');
-    const closeBtn = getElementSafe('closeBtn');
-    const navMobile = getElementSafe('navMobile');
-    const navOverlay = getElementSafe('navOverlay');
+    const hamburgerBtn = document.getElementById('hamburgerBtn');
+    const closeBtn = document.getElementById('closeBtn');
+    const navMobile = document.getElementById('navMobile');
     
-    // Verificar que todos los elementos existen
-    if (!hamburgerBtn || !closeBtn || !navMobile || !navOverlay) {
-        console.log('No se encontraron todos los elementos del menú móvil');
-        console.log('hamburgerBtn:', hamburgerBtn);
-        console.log('closeBtn:', closeBtn);
-        console.log('navMobile:', navMobile);
-        console.log('navOverlay:', navOverlay);
+    if (!hamburgerBtn || !closeBtn || !navMobile) {
         return;
     }
     
-    console.log('Todos los elementos del menú móvil encontrados');
-    
-    // Función para abrir el menú
-    function openMenu() {
-        console.log('Abriendo menú móvil');
+    // SOLO ESTO FUNCIONA - NO CAMBIAR
+    hamburgerBtn.onclick = function() {
         navMobile.classList.add('open');
-        navOverlay.classList.add('active');
-        document.body.style.overflow = 'hidden'; // Prevenir scroll del body
-    }
+    };
     
-    // Función para cerrar el menú
-    function closeMenu() {
-        console.log('Cerrando menú móvil');
+    closeBtn.onclick = function() {
         navMobile.classList.remove('open');
-        navOverlay.classList.remove('active');
-        document.body.style.overflow = ''; // Restaurar scroll del body
-    }
+    };
     
-    // Event listeners
-    hamburgerBtn.addEventListener('click', openMenu);
-    closeBtn.addEventListener('click', closeMenu);
-    navOverlay.addEventListener('click', closeMenu);
-    
-    // Cerrar menú al hacer clic en enlaces (opcional)
-    navMobile.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', closeMenu);
-    });
-    
-    // Prevenir que los clics dentro del menú lo cierren
-    navMobile.addEventListener('click', function(e) {
-        e.stopPropagation();
-    });
-    
-    // Cerrar menú con la tecla Escape
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && navMobile.classList.contains('open')) {
-            closeMenu();
-        }
-    });
-    
-    console.log('Menú móvil inicializado correctamente');
+    console.log('✅ Menú simple funcionando perfecto');
 });
-
-// Debug: Verificar que el script se está cargando
-console.log('app.js cargado correctamente');

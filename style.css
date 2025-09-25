@@ -186,23 +186,32 @@
     transform: translateX(5px);
 }
 
+/* OVERLAY CORREGIDO */
+/* OVERLAY SIMPLIFICADO Y FUNCIONAL */
 .nav-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(5px);
+    background: rgba(0, 0, 0, 0.85);
     z-index: 1000;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.4s ease;
+    transition: all 0.3s ease;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    /* IMPORTANTE: permitir clicks solo cuando está activo */
+    pointer-events: none;
+    display: none;
+    
 }
 
 .nav-overlay.active {
+    display: block;
     opacity: 1;
     visibility: visible;
+    pointer-events: auto; /* Solo clickeable cuando está activo */
 }
 
 @keyframes slideInRight {
@@ -354,74 +363,6 @@ footer{margin-top:28px;color:var(--muted);font-size:0.9rem;display:flex;justify-
     transform: scale(1.1);
 }
 
-/* MEJORA DE RENDERIZADO PARA MÓVILES */
-html {
-    -webkit-text-size-adjust: 100%;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-}
-
-body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizeLegibility;
-}
-
-/* Evitar zoom en inputs en iOS */
-input, select, textarea {
-    font-size: 16px !important;
-}
-
-/* Mejorar renderizado de imágenes */
-img {
-    image-rendering: -webkit-optimize-contrast;
-    image-rendering: crisp-edges;
-}
-
-/* MENÚ MÓVIL - ELIMINAR BLUR ESPECÍFICO */
-.nav-mobile {
-    position: fixed;
-    top: 0;
-    right: -100%;
-    width: 85%;
-    max-width: 320px;
-    height: 100vh;
-    background: var(--card);
-    z-index: 1001;
-    /* TRANSICIÓN MÁS SUAVE SIN BLUR */
-    transition: right 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: -5px 0 30px rgba(0, 0, 0, 0.95);
-    border-left: 1px solid rgba(255, 255, 255, 0.15);
-    /* ELIMINAR BLUR */
-    transform: translate3d(0, 0, 0);
-    -webkit-transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-    will-change: transform;
-    /* MEJORAR RENDER */
-    opacity: 1;
-    filter: none;
-}
-
-.nav-mobile.open {
-    right: 0;
-    /* ASEGURAR QUE NO HAYA BLUR AL ABRIR */
-    transform: translate3d(0, 0, 0) !important;
-    -webkit-transform: translate3d(0, 0, 0) !important;
-}
-
-.nav-mobile-content {
-    padding: 80px 25px 30px;
-    height: 100%;
-    position: relative;
-    /* ELIMINAR BLUR EN CONTENIDO */
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-    opacity: 1;
-}
-
-
 /* OVERLAY SIMPLIFICADO */
 .nav-overlay {
     position: fixed;
@@ -439,89 +380,4 @@ img {
     -webkit-backdrop-filter: none;
 }
 
-.nav-overlay.active {
-    opacity: 1;
-    visibility: visible;
-}
-/* BOTÓN CERRAR MEJORADO */
-.close-btn {
-    position: absolute;
-    top: 15px;
-    right: 15px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 50%;
-    width: 45px;
-    height: 45px;
-    font-size: 20px;
-    color: var(--accent);
-    cursor: pointer;
-    z-index: 1003;
-    /* PREVENIR BLUR */
-    transform: translateZ(0);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
-/* PREVENIR BLUR EN TODO EL SITIO */
-.site {
-    transform: translateZ(0);
-    -webkit-transform: translateZ(0);
-}
-
-body {
-    -webkit-font-smoothing: subpixel-antialiased;
-    text-rendering: optimizeLegibility;
-}
-
-/* MEJORAR RENDIMIENTO EN MÓVILES */
-@media (max-width: 768px) {
-    body {
-        overflow-x: hidden;
-    }
-    
-    .site {
-        width: 100%;
-        position: relative;
-    }
-}
-/* ASEGURAR que el menú no se cierre con clicks internos */
-.nav-mobile {
-    pointer-events: auto;
-}
-
-.nav-mobile-content {
-    pointer-events: auto;
-}
-
-.nav-mobile-links a {
-    pointer-events: auto;
-    cursor: pointer;
-}
-
-/* El overlay solo debe cerrar al clickear en él, no en el menú */
-.nav-overlay {
-    pointer-events: auto;
-}
-
-.nav-mobile.open ~ .nav-overlay {
-    pointer-events: auto;
-}
-/* ASEGURAR que el overlay no interfiera con el menú */
-.nav-overlay {
-    pointer-events: auto;
-}
-
-.nav-mobile.open {
-    pointer-events: auto;
-}
-
-.nav-mobile-content {
-    pointer-events: auto;
-}
-
-/* Prevenir que el overlay capture clicks del menú */
-.nav-mobile.open ~ .nav-overlay {
-    pointer-events: auto;
-}
