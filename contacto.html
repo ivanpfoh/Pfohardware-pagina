@@ -10,7 +10,7 @@
         property="og:image"
         />
         <meta name="description" content="Pfoh Hardware: diagnóstico, limpieza, mantenimiento y upgrades de computadoras. Servicio profesional en Rada Tilly. Contacto y presupuesto rápido.">
-        <title>Pfoh Hardware — Soporte técnico y mantenimiento de PC</title>
+        <title>PfoHardware — Soporte técnico y mantenimiento de PC</title>
         <link rel="icon" href="logo.jpg">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
         <link href="style.css" rel="stylesheet">
@@ -19,31 +19,41 @@
     <div class="site">
         <header>
             <div class="brand">
-            <img src="logo.jpg" alt="Logo Pfoh Hardware">
-            <div>
-                <h1>Pfoh Hardware</h1>
+              <img src="logo.jpg" alt="Logo Pfoh Hardware">
+              <div>
+                <h1>PfoHardware</h1>
                 <div style="color:var(--muted);font-size:0.92rem">Diagnóstico • Mantenimiento • Upgrades</div>
+              </div>
             </div>
-            </div>
+            
             <nav class="nav">
-            <a class="ghost" href="index.html">Inicio</a>
-            <a class="ghost" href="servicios.html">Servicios</a>
-            <a class="ghost" href="quiensoy.html">Quién soy</a>
-            <a class="ghost" href="contacto.html">Contacto</a>
+              
+                <a class="ghost" href="index.html">Inicio</a>
+                <a class="ghost" href="servicios.html">Servicios</a>
+                <a class="ghost" href="quiensoy.html">Quién soy</a>
+                <a class="ghost" href="contacto.html">Contacto</a>
             </nav>
-        </header>
-        <section id="contacto" style="margin-top:18px">
+          </header>
+          <section id="contacto" style="margin-top:18px">
             <div class="cta">
-            <div>
+              <div>
                 <div style="font-weight:700;font-size:1.05rem">Necesitas que revise tu equipo?</div>
                 <div style="color:var(--muted)">Solicitá un presupuesto y acordamos retiro/entrega o visita técnica.</div>
-            </div>
-            <div style="display:flex;gap:10px;align-items:center">
-                <a class="btn" id="contactLink">Contactar por email</a>
+              </div>
+              <div style="display:flex;gap:10px;align-items:center">
+                <div class="alerta-fondo" id="alertaFondo">
+                  <div class="alerta-caja">
+                    <h2>Hola!</h2>
+                    <p>Podés contactarme en:<br><strong>ivanpfohh85@gmail.com</strong></p>
+                    <!-- ahora usa la clase btn -->
+                    <button class="btn alerta-boton" onclick="cerrarAlerta()">Aceptar</button>
+                  </div>
+                </div>
+                <a class="btn" onclick="abrirAlerta()">Contactar por email</a>
                 <a class="ghost" id="contactWhatsApp">WhatsApp</a>
+              </div>
             </div>
-            </div>
-        </section>
+          </section>
         <footer>
             <div>&copy; Pfoh Hardware — Profesional IT · Rada Tilly</div>
             <div style="display:flex;gap:12px;align-items:center">
