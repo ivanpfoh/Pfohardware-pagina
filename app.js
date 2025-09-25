@@ -1,4 +1,19 @@
 // Función helper para verificar elementos
+document.addEventListener('DOMContentLoaded', function() {
+    // Forzar repaint después de la carga
+    setTimeout(function() {
+        document.body.style.opacity = '0.99';
+        setTimeout(function() {
+            document.body.style.opacity = '1';
+        }, 50);
+    }, 100);
+    
+    // También forzar repaint en elementos específicos
+    const repaintElements = document.querySelectorAll('.site, .hero, header');
+    repaintElements.forEach(el => {
+        el.style.transform = 'translateZ(0)';
+    });
+});
 function getElementSafe(id) {
     const element = document.getElementById(id);
     if (!element) {

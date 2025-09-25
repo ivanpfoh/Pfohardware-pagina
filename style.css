@@ -391,3 +391,20 @@ img {
 }
 
 /* Específico para móviles */
+.site {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+body {
+    perspective: 1000px;
+    -webkit-perspective: 1000px;
+}
+
+/* Aplicar a elementos principales */
+.hero, .hero-card, .brand, header {
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+}
