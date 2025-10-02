@@ -87,22 +87,37 @@
       </section>
 
       <section>
-        <h3 style="margin-top:18px">Galería rápida - Trabajos</h3>
-        <div class="gallery">
-          <img src="Notebook.png" alt="Trabajo 1" data-full="Notebook.png">
-          <img src="pc mia desarmada.jpeg" alt="Trabajo 4" data-full="pc mia desarmada.jpeg">
-          <img src="limpiezaps4.png" alt="Trabajo 2" data-full="limpiezaps4.png">
-          <img src="cambio de modulo de pantalla.png" alt="Trabajo 3" data-full="cambio de modulo de pantalla.png">
-          
+        <h3 class="titulo-album">Galería rápida - Trabajos</h3>
+        <div class="album" >
+          <div class="stack" onclick="openModal(0)">
+            <img src="Notebook.png" alt="Notebook.png">
+            <img src="notebook1.jpeg" alt="notebook1">
+            <img src="limpiezaps4.png" alt="limpiezaps4.png">
+          </div>
         </div>
-        <div class="gallery">
-          <img src="pc sucia.jpeg" alt="Trabajo 5" data-full="pc sucia.jpeg">
-          <img src="pc limpia (2).jpg" alt="Trabajo 6" data-full="pc limpia (2).jpg">
-          <img src="pc valen.jpg" alt="Trabajo 7" data-full="pc valen.jpg">
-          <img src="pc valen 2 (2).jpeg" alt="Trabajo 8" data-full="pc valen 2 (2).jpeg">
+        <div class="gallery" style="display:none;">
+          <img src="Notebook.png" alt="Trabajo 1" onclick="openModal(0)">
+          <img src="notebook1.jpeg" alt="notebook1.jpeg" onclick="openModal(1)">
+          <img src="limpiezaps4.png" alt="limpiezaps4.png" onclick="openModal(2)">
+          <img src="cambio de modulo de pantalla.png" alt="cambio de modulo de pantalla.png" onclick="openModal(3)">
+          <img src="pc sucia.jpeg" alt="pc sucia.jpeg" onclick="openModal(4)">
+          <img src="pc limpia (2).jpg" alt="pc limpia (2).jpg" onclick="openModal(5)">
+          <img src="pc valen.jpg" alt="pc valen.jpg" onclick="openModal(6)">
+          <img src="pc valen 2 (2).jpeg" alt="pc valen 2 (2).jpeg" onclick="openModal(7)">
+          <img src="notebook4.jpeg" alt="notebook4.jpeg" onclick="openModal(8)">
+          <img src="computadora1.jpeg" alt="computadora1.jpeg" onclick="openModal(9)">
         </div>
+      
+        <!-- Modal -->
+        <div id="lightbox" class="lightbox">
+          <span class="close" onclick="closeModal()">&times;</span>
+          <img class="lightbox-content" id="lightbox-img">
+          <a class="prev" onclick="changeSlide(-1)">&#10094;</a>
+          <a class="next" onclick="changeSlide(1)">&#10095;</a>
+        </div>
+        
       </section>
-
+      <div id="modal" class="modal" aria-hidden="true"><img id="modalImg" src="" alt="Preview"></div>
       <section id="contacto" style="margin-top:18px">
         <div class="cta">
           <div>
@@ -136,7 +151,7 @@
     </footer>
   </div>
 
-  <div id="modal" class="modal" aria-hidden="true"><img id="modalImg" src="" alt="Preview"></div>
+  
   
   <script src="app.js"></script>
 </body>

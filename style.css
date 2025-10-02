@@ -361,4 +361,111 @@ footer{margin-top:28px;color:var(--muted);font-size:0.9rem;display:flex;justify-
 .btn:hover, .ghost:hover{
     transform: scale(1.1);
 }
-
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to   { opacity: 1; transform: scale(1); }
+}
+/* Lightbox básico */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(0,0,0,0.9);
+    
+  }
+  
+  .lightbox-content {
+    max-width: 80%;
+    max-height: 80%;
+    margin: auto;
+    display: block;
+    margin-top: 5%;
+  }
+  
+  .close {
+    position: absolute;
+    top: 20px; right: 40px;
+    font-size: 40px;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 40px;
+    color: #fff;
+    padding: 10px;
+  }
+  .prev { left: 10px; }
+  .next { right: 10px; }
+  .album {
+    text-align: center;
+    cursor: pointer;
+    margin-top: 20px;
+  }
+  
+  .album img {
+    width: 250px;
+    border-radius: 15px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    transition: transform 0.3s;
+  }
+  .album img:hover {
+    transform: scale(1.05);
+  }
+  
+  .album p {
+    color: #ccc;
+    margin-top: 10px;
+    font-size: 18px;
+  }
+  .stack {
+    position: relative;
+    width: 200px;
+    margin: 40px auto;
+    padding-bottom: 240px; /* reserva espacio para la pila */
+    display: flex;
+    justify-content: left;
+    align-items: start;
+  }
+  
+  
+  
+  .stack img {
+    position: absolute;   /* cada foto sí va encima */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: left;
+    align-items: start;
+  }
+  
+  .stack img:nth-child(1) {
+    transform: rotate(-5deg);
+    z-index: 1;
+  }
+  .stack img:nth-child(2) {
+    transform: rotate(2deg);
+    z-index: 2;
+  }
+  .stack img:nth-child(3) {
+    transform: rotate(7deg);
+    z-index: 3;
+  }
+  .stack:hover img {
+    transform: scale(1.05);
+  }
+  .titulo-album {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 22px;
+  }

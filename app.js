@@ -98,3 +98,28 @@ document.addEventListener('DOMContentLoaded', function() {
     
     console.log('✅ Menú simple funcionando perfecto');
 });
+let currentIndex = 0;
+const images = document.querySelectorAll(".gallery img");
+const lightbox = document.getElementById("lightbox");
+const lightboxImg = document.getElementById("lightbox-img");
+
+function openModal(index) {
+  currentIndex = index;
+  lightbox.style.display = "block";
+  showImage(currentIndex);
+}
+
+function closeModal() {
+  lightbox.style.display = "none";
+}
+
+function changeSlide(step) {
+  currentIndex += step;
+  if (currentIndex < 0) currentIndex = images.length - 1;
+  if (currentIndex >= images.length) currentIndex = 0;
+  showImage(currentIndex);
+}
+
+function showImage(index) {
+  lightboxImg.src = images[index].src;
+}
