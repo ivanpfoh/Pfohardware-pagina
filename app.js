@@ -54,7 +54,7 @@ if (contactWhatsApp) {
     contactWhatsApp.addEventListener("click", function(e) {
         e.preventDefault();
         
-        const phoneNumber = "2974299737";
+        const phoneNumber = "";
         const isMobile = /mobile|android|iphone|ipad/.test(navigator.userAgent.toLowerCase());
         
         if (isMobile) {
