@@ -1,84 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <meta content="PfoHardware.com" property="og:title" />
-        <meta property="og:type" content="website" />
-        <meta
-        content="https://github.com/ivanpfoh/Pfohardware-pagina/blob/main/Notebook.png"
-        property="og:image"
-        />
-        <meta name="description" content="Pfoh Hardware: diagnóstico, limpieza, mantenimiento y upgrades de computadoras. Servicio profesional en Rada Tilly. Contacto y presupuesto rápido.">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-        <title>Pfoh Hardware — Soporte técnico y mantenimiento de PC</title>
-        <link rel="icon" href="logo.jpg">
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-        <link href="style.css" rel="stylesheet">
-    </head>
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#050706">
+  <meta name="description" content="PfoHardware: soporte técnico, mantenimiento y upgrades de PCs y notebooks en Recoleta, Capital Federal.">
+  <title>Servicios · PfoHardware — Recoleta, Capital Federal</title>
+  <link rel="icon" href="logo.jpg">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://github.com/ivanpfoh/Pfohardware-pagina/blob/main/Notebook.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
 <body>
-    <div class="site">
-        <header>
-            <div class="brand">
-              <a href="index.html"><img src="logo.jpg" alt="Logo Pfoh Hardware"></a>
-              <div>
-                <h1>PfoHardware</h1>
-                <div style="color:var(--muted);font-size:0.92rem">Diagnóstico • Mantenimiento • Upgrades</div>
-              </div>
-            </div>
-            
-            <!-- AGREGAR MENÚ HAMBURGUESA -->
-            <div class="menu-hamburguesa">
-              <button class="hamburger-btn" id="hamburgerBtn" aria-label="Abrir menú">
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-                <span class="hamburger-line"></span>
-              </button>
-            </div>
-          
-            <nav class="nav">
-              <a class="ghost" href="index.html">Inicio</a>
-              <a class="ghost" href="servicios.html">Servicios</a>
-              <a class="ghost" href="quiensoy.html">Quién soy</a>
-              <a class="ghost" href="contacto.html">Contacto</a>
-            </nav>
-          </header>
-          
-          <!-- AGREGAR MENÚ MÓVIL -->
-          <nav class="nav-mobile" id="navMobile">
-            <div class="nav-mobile-content">
-              <button class="close-btn" id="closeBtn" aria-label="Cerrar menú">
-                <i class="fas fa-times"></i>
-              </button>
-              <ul class="nav-mobile-links">
-                <li><a href="index.html" class="nav-mobile-link">Inicio</a></li>
-                <li><a href="servicios.html" class="nav-mobile-link">Servicios</a></li>
-                <li><a href="quiensoy.html" class="nav-mobile-link">Quién Soy</a></li>
-                <li><a href="contacto.html" class="nav-mobile-link">Contacto</a></li>
-              </ul>
-            </div>
-            <div class="nav-overlay" id="navOverlay"></div>
-          </nav>
-        <section id="servicios" class="services">
-            <div class="service-card fade-in"><h3>Diagnóstico completo</h3><p>Informe detallado del estado del equipo, pruebas de hardware y recomendaciones con presupuesto.</p></div>
-            <div class="service-card fade-in"><h3>Limpieza y refrigeración</h3><p>Limpieza interna, reemplazo de pasta térmica, optimización de perfiles de ventilador.</p></div>
-            <div class="service-card fade-in"><h3>Actualización de hardware</h3><p>Instalación de SSD, ampliación de memoria, migración de sistema operativo y clonación de discos.</p></div>
-            <div class="service-card fade-in"><h3>Formateo y SO</h3><p>Instalación y configuración de Windows / Linux, drivers, actualizaciones y post-instalación segura.</p></div>
-            <div class="service-card fade-in"><h3>Reparaciones de placa</h3><p>Diagnóstico de fallas en placa madre, reparación de conectores y reemplazo de componentes dañados.</p></div>
-            <div class="service-card fade-in"><h3>Soporte remoto</h3><p>Asistencia remota para problemas de software, configuración y asesoramiento de seguridad.</p></div>
-        </section>
-        <footer>
-            <div>&copy; Pfoh Hardware — Profesional IT · Rada Tilly</div>
-            <div style="display:flex;gap:12px;align-items:center">
-            <a href="https://instagram.com/pfohardware" target="_blank">Instagram</a>
-            <a href="https://github.com/ivanpfoh" target="_blank">GitHub</a>
-            </div>
-        </footer>
-        </div>
-    </div>
-    <!-- Modal for image lightbox -->
-    <div id="modal" class="modal" aria-hidden="true"><img id="modalImg" src="" alt="Preview"></div>
-    <script src="app.js"></script>
-    
+  <div class="noise"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="PfoHardware, inicio">
+      <img class="brand-logo" src="logo.jpg" alt="PH">
+      <span><strong>PfoHardware</strong><small>Diagnóstico · Mantenimiento · Upgrades</small></span>
+    </a>
+    <button class="menu" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
+    <nav id="nav" aria-label="Navegación principal">
+      <a href="index.html">Inicio</a>
+      <a href="servicios.html" aria-current="page">Servicios</a><a href="index.html#trabajos">Trabajos</a><a href="quiensoy.html">Quién soy</a>
+      <a class="nav-cta" href="contacto.html">Pedir presupuesto</a>
+    </nav>
+  </header>
+
+  <main>    <section class="section services" id="servicios">
+      <div class="section-head reveal"><div><p class="eyebrow"><span></span> Qué puedo hacer por tu equipo</p><h2>Soluciones concretas.<br><em>Resultados medibles.</em></h2></div><p>Desde una PC lenta hasta una actualización completa: primero encuentro la causa, después te explico las opciones.</p></div>
+      <div class="service-grid">
+        <article class="service featured reveal"><span class="num">01</span><div class="service-icon">⌁</div><h3>Diagnóstico completo</h3><p>Pruebas de hardware, temperaturas, discos y sistema. Recibís una explicación clara y un presupuesto antes de avanzar.</p><ul><li>Informe del estado</li><li>Pruebas y recomendaciones</li></ul></article>
+        <article class="service reveal"><span class="num">02</span><div class="service-icon">✦</div><h3>Limpieza y refrigeración</h3><p>Limpieza interna, cambio de pasta térmica y revisión del flujo de aire para cuidar rendimiento y vida útil.</p></article>
+        <article class="service reveal"><span class="num">03</span><div class="service-icon">↗</div><h3>Upgrades con criterio</h3><p>SSD, memoria y componentes elegidos según tu uso y presupuesto. Migración y clonación incluidas cuando corresponde.</p></article>
+        <article class="service reveal"><span class="num">04</span><div class="service-icon">◫</div><h3>Formateo y sistemas</h3><p>Instalación y configuración de Windows o Linux, drivers, actualizaciones y puesta a punto segura.</p></article>
+        <article class="service reveal"><span class="num">05</span><div class="service-icon">⌕</div><h3>Reparación de componentes</h3><p>Diagnóstico de placa, conectores y piezas dañadas. Te digo con honestidad cuándo conviene reparar y cuándo reemplazar.</p></article>
+<article class="service"><span class="num">06</span><div class="service-icon" aria-hidden="true">↔</div><h3>Soporte remoto</h3><p>Asistencia a distancia para problemas de software, configuración y asesoramiento de seguridad.</p></article>
+      </div>
+    </section>    <section class="contact" id="contacto">
+      <div class="contact-inner reveal"><p class="eyebrow"><span></span> Hablemos de tu equipo</p><h2>¿Algo no funciona<br>como debería?</h2><p>Contame qué está pasando. Coordinamos una revisión, retiro y entrega o asistencia según tu caso.</p><div class="hero-actions"><a class="button primary" href="mailto:ivanpfohh85@gmail.com">Escribirme por email <span>↗</span></a><a class="button ghost" data-whatsapp hidden>WhatsApp</a></div><p><a class="email-address" href="mailto:ivanpfohh85@gmail.com">ivanpfohh85@gmail.com</a></p><p><a class="email-address" href="https://instagram.com/pfohardware" target="_blank" rel="noopener noreferrer">Instagram: @pfohardware</a></p></div>
+      <div class="contact-meta reveal"><span>Atención en</span><strong>Recoleta</strong><small>Capital Federal</small></div>
+    </section></main>
+
+  <footer><a class="brand" href="index.html"><img class="brand-logo" src="logo.jpg" alt="PH"><span><strong>PfoHardware</strong><small>Profesional IT</small></span></a><p>© 2026 Iván Pfoh</p><div><a href="https://instagram.com/pfohardware" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://github.com/ivanpfoh" target="_blank" rel="noopener noreferrer">GitHub</a></div></footer>
+<dialog id="lightbox" aria-label="Vista ampliada de la imagen"><button type="button" class="lightbox-close" aria-label="Cerrar imagen">×</button><figure><img id="lightbox-img" alt=""><figcaption id="lightbox-caption"></figcaption></figure><div class="lightbox-controls"><button type="button" data-prev aria-label="Imagen anterior">← Anterior</button><button type="button" data-next aria-label="Imagen siguiente">Siguiente →</button></div></dialog>
+  <script src="app.js"></script>
 </body>
 </html>
+
