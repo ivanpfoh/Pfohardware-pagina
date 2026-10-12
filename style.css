@@ -34,3 +34,117 @@ dialog button{background:#152a22;border:1px solid #386352;border-radius:4px;colo
 @media(max-width:850px){.service-grid,.photo-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:540px){.service-grid,.photo-grid{grid-template-columns:minmax(0,1fr)}.trust{margin-top:30px}.brand strong{font-size:1rem}}
 
+.software-sale,
+.download-page {
+  --software-accent: #00ffc4;
+}
+
+.software-card,
+.download-card {
+  padding: clamp(24px, 4vw, 48px);
+  border: 1px solid #285447;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #0e1c16, #080d0b);
+}
+
+.software-card {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+
+.software-card > div {
+  min-width: 0;
+}
+
+.software-card h2,
+.download-card h1 {
+  margin: 0 0 24px;
+  font-size: clamp(2rem, 3.5vw, 3.4rem);
+  line-height: 1.12;
+  letter-spacing: -.04em;
+}
+
+.software-description {
+  color: var(--muted, #9bada6);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+.software-price {
+  margin: 0 0 24px;
+  color: var(--software-accent);
+  font: 700 clamp(2.5rem, 4vw, 3.6rem)/1.1 "Space Grotesk", sans-serif;
+}
+
+.software-price span {
+  font-size: 1rem;
+  letter-spacing: .08em;
+}
+
+.software-sale .software-cta,
+.download-page .software-cta {
+  min-height: 58px;
+  padding: 18px 24px;
+  background: var(--software-accent);
+  border-color: var(--software-accent);
+  color: #00110d;
+  font-size: 1rem;
+  text-align: center;
+}
+
+.software-purchase .software-cta {
+  width: 100%;
+}
+
+.software-sale .legal-text {
+  margin: 14px 0 0;
+  color: #a6b7af;
+  font-size: .875rem;
+  line-height: 1.65;
+}
+
+.download-page {
+  min-height: 65vh;
+  padding-top: 72px;
+  padding-bottom: 88px;
+}
+
+.download-card {
+  max-width: 800px;
+  margin: auto;
+}
+
+.download-card .eyebrow {
+  margin-bottom: 24px;
+}
+
+.download-card .software-cta {
+  margin-top: 16px;
+}
+
+.download-help {
+  margin: 28px 0 0;
+  color: var(--muted, #9bada6);
+}
+
+.download-help a {
+  color: var(--software-accent);
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 850px) {
+  .software-card {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .software-sale .software-cta,
+  .download-page .software-cta {
+    transition: none;
+    transform: none;
+  }
+}
