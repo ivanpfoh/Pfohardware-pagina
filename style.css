@@ -134,6 +134,190 @@ dialog button{background:#152a22;border:1px solid #386352;border-radius:4px;colo
   overflow-wrap: anywhere;
 }
 
+/* Guía rápida de instalación y aviso de Windows SmartScreen */
+.software-guide {
+  grid-column: 1 / -1;
+  margin-top: 16px;
+  padding-top: 36px;
+  border-top: 1px solid #1a332a;
+}
+
+.software-guide-head {
+  margin-bottom: 24px;
+}
+
+.guide-tag {
+  display: inline-block;
+  font: 600 .72rem monospace;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--software-accent);
+  background: rgba(0, 255, 196, 0.08);
+  border: 1px solid rgba(0, 255, 196, 0.25);
+  padding: 4px 10px;
+  border-radius: 3px;
+  margin-bottom: 12px;
+}
+
+.guide-title {
+  font: 600 clamp(1.4rem, 2.5vw, 1.85rem) "Space Grotesk", sans-serif;
+  letter-spacing: -.03em;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.guide-subtitle {
+  color: var(--muted, #9bada6);
+  font-size: .95rem;
+  margin: 0;
+  max-width: 680px;
+  line-height: 1.6;
+}
+
+.software-steps {
+  display: grid;
+  grid-template-columns: 1fr 1.35fr 1fr;
+  gap: 20px;
+  align-items: stretch;
+  margin-top: 24px;
+}
+
+.software-step {
+  background: #09120e;
+  border: 1px solid #193127;
+  border-radius: 6px;
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.software-step h3,
+.software-step h4 {
+  font: 600 1.15rem "Space Grotesk", sans-serif;
+  color: var(--text);
+  margin: 0 0 10px;
+}
+
+.software-step p {
+  color: var(--muted, #9bada6);
+  font-size: .88rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.software-step code {
+  font-family: monospace;
+  color: var(--software-accent);
+  background: #11261d;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: .85em;
+}
+
+.step-badge {
+  display: inline-block;
+  font: 700 .75rem monospace;
+  color: var(--software-accent);
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+/* Tarjeta destacada de SmartScreen (Paso 2) */
+.software-step-alert {
+  background: linear-gradient(145deg, #09161a, #071317);
+  border-color: #1a4959;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.step-badge-alert {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.step-badge-alert > span:first-child {
+  font: 700 .75rem monospace;
+  color: #38bdf8;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.smartscreen-badge {
+  font: 600 .68rem monospace;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.smartscreen-desc {
+  margin-bottom: 12px !important;
+}
+
+.smartscreen-box {
+  background: #051622;
+  border: 1px solid #134663;
+  border-radius: 6px;
+  padding: 14px;
+  margin: 12px 0;
+}
+
+.smartscreen-box-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #93c5fd;
+  font-size: .82rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.smartscreen-box-title svg {
+  color: #38bdf8;
+  flex-shrink: 0;
+}
+
+.smartscreen-actions {
+  margin: 0;
+  padding-left: 20px;
+  color: #f0f9ff;
+  font-size: .85rem;
+  line-height: 1.65;
+}
+
+.smartscreen-actions li strong {
+  color: #38bdf8;
+}
+
+.step-security-note {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: .78rem !important;
+  color: #8da49c !important;
+  margin-top: auto !important;
+  padding-top: 10px;
+}
+
+.step-security-note svg {
+  color: var(--software-accent);
+  flex-shrink: 0;
+}
+
+@media (max-width: 950px) {
+  .software-steps {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
 @media (max-width: 850px) {
   .software-card {
     grid-template-columns: 1fr;
