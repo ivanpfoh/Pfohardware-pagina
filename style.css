@@ -58,6 +58,123 @@ dialog button{background:#152a22;border:1px solid #386352;border-radius:4px;colo
   min-width: 0;
 }
 
+/* Pestaña / Badge de compatibilidad con Windows */
+.software-os-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  color: #38bdf8;
+  font: 700 .75rem monospace;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  padding: 6px 14px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  box-shadow: 0 0 16px rgba(56, 189, 248, 0.12);
+}
+
+.software-os-tab svg {
+  flex-shrink: 0;
+  color: #38bdf8;
+}
+
+.software-os-warning {
+  margin-top: 18px;
+  padding: 11px 14px;
+  background: rgba(255, 170, 0, 0.07);
+  border: 1px solid rgba(255, 170, 0, 0.24);
+  border-radius: 4px;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.software-os-warning-icon {
+  font-size: 1rem;
+  line-height: 1.3;
+  flex-shrink: 0;
+}
+
+.software-os-warning p {
+  margin: 0;
+  color: #eed6aa;
+  font-size: .84rem;
+  line-height: 1.5;
+}
+
+.software-os-warning p strong {
+  color: #ffd074;
+}
+
+/* Requisitos del sistema */
+.software-specs {
+  margin-top: 20px;
+  padding: 18px;
+  background: #08110e;
+  border: 1px solid #1a352b;
+  border-radius: 6px;
+}
+
+.specs-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  color: var(--text);
+  font: 600 .95rem "Space Grotesk", sans-serif;
+  letter-spacing: -.01em;
+}
+
+.specs-title svg {
+  color: var(--software-accent);
+  flex-shrink: 0;
+}
+
+.specs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.spec-item {
+  background: #0b1713;
+  border: 1px solid #162f25;
+  border-radius: 4px;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.spec-name {
+  font: 700 .68rem monospace;
+  color: var(--software-accent);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.spec-val {
+  font-size: .83rem;
+  color: #d6e2dd;
+  line-height: 1.4;
+}
+
+.spec-val em {
+  display: block;
+  font-style: normal;
+  color: #8fa89e;
+  font-size: .76rem;
+  margin-top: 2px;
+}
+
+@media (max-width: 600px) {
+  .specs-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .software-card h2,
 .download-card h1 {
   margin: 0 0 24px;
