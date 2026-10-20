@@ -215,6 +215,34 @@ dialog button{background:#152a22;border:1px solid #386352;border-radius:4px;colo
   width: 100%;
 }
 
+.software-sale .software-cta.disabled,
+.software-sale .software-cta:disabled,
+.download-page .software-cta.disabled,
+.download-page .software-cta:disabled {
+  background: #14231e !important;
+  border-color: #234036 !important;
+  color: #6d887e !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.software-pause-note {
+  margin: 14px 0 0;
+  padding: 10px 14px;
+  background: rgba(255, 170, 0, 0.08);
+  border: 1px solid rgba(255, 170, 0, 0.25);
+  border-radius: 4px;
+  color: #f3d49b;
+  font-size: .84rem;
+  line-height: 1.5;
+}
+
+.software-pause-note strong {
+  color: #ffd074;
+}
+
 .software-sale .legal-text {
   margin: 14px 0 0;
   color: #a6b7af;
