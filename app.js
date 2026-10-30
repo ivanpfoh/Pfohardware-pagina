@@ -1,9 +1,11 @@
 "use strict";
 
+document.documentElement.classList.remove("no-js");
+
 // ==========================================
 // Navegación / Menú móvil
 // ==========================================
-const menu = document.querySelector(".menu");
+const menu = document.querySelector(".menu-toggle");
 const nav = document.querySelector("#nav");
 
 function closeMenu() {
@@ -20,90 +22,52 @@ function openMenu() {
   menu?.setAttribute("aria-label", "Cerrar menú");
 }
 
-function toggleMenu() {
-  if (!nav) return;
-  const isOpen = nav.classList.contains("open");
-  if (isOpen) {
-    closeMenu();
-  } else {
-    openMenu();
-  }
-}
-
 if (menu && nav) {
-  menu.setAttribute("aria-label", "Abrir menú");
   menu.addEventListener("click", (e) => {
     e.stopPropagation();
-    toggleMenu();
+    nav.classList.contains("open") ? closeMenu() : openMenu();
   });
 
-  // Cerrar menú al hacer clic en cualquier enlace y realizar navegación suave
+  // Cerrar el menú al elegir un enlace; si apunta a esta misma página, desplazarse suave
   nav.querySelectorAll("a").forEach(a => {
     a.addEventListener("click", (e) => {
       closeMenu();
-
       const href = a.getAttribute("href") || "";
-      let targetId = "";
-
-      if (href.startsWith("#") && href.length > 1) {
-        targetId = href.slice(1);
-      } else if (href.includes("#")) {
-        const [pathPart, hashPart] = href.split("#");
-        const currentPath = window.location.pathname;
-        if (
-          currentPath.endsWith(pathPart) ||
-          (pathPart === "index.html" && (currentPath.endsWith("/") || currentPath === "" || currentPath.endsWith("index.html")))
-        ) {
-          targetId = hashPart;
-        }
-      }
-
-      if (targetId) {
-        const targetEl = document.getElementById(targetId);
-        if (targetEl) {
+      const [pathPart, hashPart] = href.split("#");
+      const currentPath = window.location.pathname;
+      const mismaPagina = !pathPart || currentPath.endsWith(pathPart) ||
+        (pathPart === "index.html" && (currentPath.endsWith("/") || currentPath === ""));
+      if (hashPart && mismaPagina) {
+        const destino = document.getElementById(hashPart);
+        if (destino) {
           e.preventDefault();
-          targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
-          try {
-            history.pushState(null, "", "#" + targetId);
-          } catch (_) {}
+          destino.scrollIntoView({ behavior: "smooth", block: "start" });
+          try { history.pushState(null, "", "#" + hashPart); } catch (_) {}
         }
       }
     });
   });
 
-  // Cerrar menú al hacer clic fuera
   document.addEventListener("click", (e) => {
-    if (nav.classList.contains("open") && !nav.contains(e.target) && !menu.contains(e.target)) {
-      closeMenu();
-    }
+    if (nav.classList.contains("open") && !nav.contains(e.target) && !menu.contains(e.target)) closeMenu();
   });
-
-  // Cerrar con tecla Escape
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      closeMenu();
-    }
+    if (e.key === "Escape") closeMenu();
   });
 }
 
 // ==========================================
-// Smooth scroll para otros enlaces internos
+// Email con una guía para la consulta
 // ==========================================
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener("click", e => {
-    const href = a.getAttribute("href");
-    if (href && href.length > 1) {
-      const target = document.querySelector(href);
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    }
-  });
+const EMAIL = "ivanpfohh85@gmail.com";
+document.querySelectorAll("[data-mail]").forEach(a => {
+  const asunto = "Consulta desde la web";
+  const cuerpo = "Hola Iván,\n\nEquipo (PC, notebook o consola) y modelo:\nQué le pasa y desde cuándo:\n\nGracias.";
+  a.href = `mailto:${EMAIL}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
 });
 
 // ==========================================
-// Botón de WhatsApp (dinámico)
+// Botón de WhatsApp (se muestra solo si hay un número cargado)
 // ==========================================
 const WHATSAPP_NUMBER = "";
 if (/^\d{8,15}$/.test(WHATSAPP_NUMBER)) {
@@ -116,7 +80,7 @@ if (/^\d{8,15}$/.test(WHATSAPP_NUMBER)) {
 }
 
 // ==========================================
-// Galería Lightbox
+// Galería con visor
 // ==========================================
 const photos = [...document.querySelectorAll("[data-gallery]")];
 const lightbox = document.querySelector("#lightbox");
@@ -127,14 +91,10 @@ function showPhoto(index) {
   current = (index + photos.length) % photos.length;
   const photo = photos[current];
   const img = lightbox.querySelector("img");
-  if (img) {
-    img.src = photo.href;
-    img.alt = photo.querySelector("img")?.alt || photo.textContent.trim() || "";
-  }
-  const caption = lightbox.querySelector("figcaption");
-  if (caption) {
-    caption.textContent = img ? img.alt : "";
-  }
+  const texto = photo.querySelector("img")?.alt || "";
+  img.src = photo.href;
+  img.alt = texto;
+  lightbox.querySelector("figcaption").textContent = texto;
 }
 
 if (photos.length && lightbox) {
@@ -146,39 +106,34 @@ if (photos.length && lightbox) {
       lightbox.showModal();
     });
   });
-
   lightbox.querySelector(".lightbox-close")?.addEventListener("click", () => lightbox.close());
   lightbox.querySelector("[data-prev]")?.addEventListener("click", () => showPhoto(current - 1));
   lightbox.querySelector("[data-next]")?.addEventListener("click", () => showPhoto(current + 1));
-
   lightbox.addEventListener("keydown", e => {
-    if (e.key === "ArrowLeft") {
-      e.preventDefault();
-      showPhoto(current - 1);
-    }
-    if (e.key === "ArrowRight") {
-      e.preventDefault();
-      showPhoto(current + 1);
-    }
+    if (e.key === "ArrowLeft") { e.preventDefault(); showPhoto(current - 1); }
+    if (e.key === "ArrowRight") { e.preventDefault(); showPhoto(current + 1); }
   });
-
   lightbox.addEventListener("click", e => {
-    if (e.target === lightbox) {
-      const b = lightbox.getBoundingClientRect();
-      if (e.clientX < b.left || e.clientX > b.right || e.clientY < b.top || e.clientY > b.bottom) {
-        lightbox.close();
-      }
-    }
+    if (e.target !== lightbox) return;
+    const b = lightbox.getBoundingClientRect();
+    if (e.clientX < b.left || e.clientX > b.right || e.clientY < b.top || e.clientY > b.bottom) lightbox.close();
   });
 }
 
 // ==========================================
-// Fallback para nombres de imágenes
+// Aparición suave al hacer scroll
 // ==========================================
-document.querySelectorAll('img[src="notebook1.jpeg"]').forEach(img => {
-  img.addEventListener("error", () => {
-    img.src = "notebook1.jpg";
-    const parentA = img.closest("a");
-    if (parentA) parentA.href = "notebook1.jpg";
-  }, { once: true });
-});
+const aparecen = document.querySelectorAll(".reveal");
+if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const observador = new IntersectionObserver(entradas => {
+    entradas.forEach(entrada => {
+      if (entrada.isIntersecting) {
+        entrada.target.classList.add("visible");
+        observador.unobserve(entrada.target);
+      }
+    });
+  }, { rootMargin: "0px 0px -8% 0px" });
+  aparecen.forEach(el => observador.observe(el));
+} else {
+  aparecen.forEach(el => el.classList.add("visible"));
+}
