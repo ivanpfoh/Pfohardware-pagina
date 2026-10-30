@@ -31,6 +31,7 @@ function closeMenu() {
 
 function openMenu() {
   if (!nav) return;
+  encabezado?.classList.remove("oculto");
   nav.classList.add("open");
   document.body.classList.add("menu-abierto");
   menu?.setAttribute("aria-expanded", "true");

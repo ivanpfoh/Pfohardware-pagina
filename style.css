@@ -480,7 +480,7 @@ main { position: relative; }
   .menu-toggle { display: inline-flex; }
   .nav {
     position: fixed; inset: 0; z-index: 1; flex-direction: column; align-items: stretch; justify-content: center; gap: 4px;
-    padding: calc(var(--header) + 24px) var(--gutter) 40px; background: rgba(5, 8, 10, .97);
+    padding: calc(var(--header) + 24px) var(--gutter) 40px; background: var(--bg);
     clip-path: circle(0 at calc(100% - var(--gutter) - 23px) calc(var(--header) / 2)); visibility: hidden;
     transition: clip-path 600ms var(--ease-in-out), visibility 0s linear 600ms;
   }
@@ -556,3 +556,9 @@ main { position: relative; }
 .tira { padding-inline: max(var(--gutter), calc((100vw - var(--max)) / 2)); scroll-padding-inline: max(var(--gutter), calc((100vw - var(--max)) / 2)); }
 /* Las fotos de la tira pasan por encima de la pista de cobre */
 .trabajos .tira { position: relative; z-index: 2; }
+/* Celular: el encabezado no lleva desenfoque ni transformación mientras el menú está abierto,
+   porque eso encerraría el menú (que es fixed) dentro de los 64 px del encabezado */
+@media (max-width: 900px) {
+  .site-header.con-scroll { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(5, 8, 10, .94); }
+  body.menu-abierto .site-header { transform: none; background: transparent; border-bottom-color: transparent; }
+}
