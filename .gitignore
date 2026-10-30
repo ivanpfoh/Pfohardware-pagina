@@ -3,3 +3,6 @@
 _motion/*/renders/
 _motion/*/.hyperframes/
 _motion/*/node_modules/
+
+# Capturas y videos de revisión de la web (no se publican)
+_revision/
