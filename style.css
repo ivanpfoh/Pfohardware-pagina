@@ -284,6 +284,23 @@ dialog button{background:#152a22;border:1px solid #386352;border-radius:4px;colo
   overflow-wrap: anywhere;
 }
 
+.download-hash {
+  font-size: .85rem;
+  line-height: 1.7;
+}
+
+.download-hash .hash-value {
+  display: inline-block;
+  margin: 6px 0;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: rgba(0, 255, 196, .08);
+  color: var(--software-accent);
+  font-size: .78rem;
+  letter-spacing: .02em;
+  overflow-wrap: anywhere;
+}
+
 /* Bloque de confianza, soporte y seguridad */
 .software-trust {
   grid-column: 1 / -1;
