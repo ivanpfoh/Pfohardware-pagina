@@ -1,0 +1,254 @@
+<template>
+  <style>
+    /* Diagnóstico sobre una PC real de PfoHardware: barrido, cada componente revisado y el estado final "Listo".
+       Termina quieto en su último cuadro, que es el póster en la web. Paleta y tipografía del sitio.
+       Los textos van grandes porque en la web se ve a menos de la mitad de su tamaño (un tercio en el celular). */
+    @font-face {
+      font-family: "Space Grotesk";
+      src: url("assets/fonts/SpaceGrotesk-600.woff2") format("woff2");
+      font-weight: 600;
+    }
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #05080a;
+      font-family: "JetBrains Mono", monospace;
+      color: #e6edf3;
+      --brand-1: #00f5a0;
+      --brand-2: #1fddf5;
+      --brand: #12e8d6;
+      --panel: rgba(8, 12, 14, 0.88);
+      --line: #243238;
+    }
+    #diag-camara {
+      position: absolute;
+      inset: 0;
+    }
+    .diag-foto {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1000px;
+      height: 800px;
+    }
+    #diag-scan {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 140px;
+    }
+    #diag-scan .halo {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(18, 232, 214, 0), rgba(18, 232, 214, 0.16));
+    }
+    #diag-scan .linea {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--brand-1), var(--brand-2));
+      box-shadow: 0 0 18px rgba(18, 232, 214, 0.8);
+    }
+    .marca {
+      position: absolute;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 3px solid var(--brand);
+      background: rgba(5, 8, 10, 0.35);
+      box-shadow: 0 0 16px rgba(18, 232, 214, 0.55);
+    }
+    .marca::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 10px;
+      height: 10px;
+      margin: -5px 0 0 -5px;
+      border-radius: 50%;
+      background: var(--brand-1);
+    }
+    .guia {
+      position: absolute;
+      height: 3px;
+      background: rgba(18, 232, 214, 0.85);
+      box-shadow: 0 0 8px rgba(18, 232, 214, 0.5);
+    }
+    .etiqueta {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      height: 56px;
+      padding: 0 18px;
+      border-radius: 12px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      font-weight: 700;
+      font-size: 30px;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+    .etiqueta i {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--brand-1);
+      box-shadow: 0 0 10px rgba(0, 245, 160, 0.8);
+    }
+    .etiqueta b {
+      color: var(--brand-1);
+      font-weight: 700;
+    }
+    #diag-estado {
+      position: absolute;
+      left: 50px;
+      bottom: 40px;
+      width: 380px;
+      padding: 18px 22px 20px;
+      border-radius: 16px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+    }
+    #diag-estado small {
+      display: block;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: #8b949e;
+    }
+    #diag-estado .valor {
+      position: relative;
+      height: 52px;
+      margin-top: 6px;
+    }
+    #diag-estado .valor span {
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font: 600 42px/52px "Space Grotesk", sans-serif;
+      color: #e6edf3;
+    }
+    #diag-punto {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--brand-1);
+      box-shadow: 0 0 16px rgba(0, 245, 160, 0.9);
+    }
+    #diag-barra-fondo {
+      margin-top: 14px;
+      height: 7px;
+      border-radius: 7px;
+      background: #17262a;
+      overflow: hidden;
+    }
+    #diag-barra {
+      height: 100%;
+      width: 100%;
+      border-radius: 7px;
+      background: linear-gradient(90deg, var(--brand-1), var(--brand-2));
+    }
+  </style>
+  <div id="root" data-composition-id="diagnostico" data-width="1000" data-height="800">
+    <div id="diag-camara">
+      <img id="diag-foto-tenue" class="diag-foto" src="assets/pc-dim.jpg" alt="" />
+      <img id="diag-foto-clara" class="diag-foto" src="assets/pc.jpg" alt="" />
+      <div id="diag-scan" data-layout-allow-overflow><div class="halo"></div><div class="linea"></div></div>
+
+      <div id="ram-guia" class="guia"></div>
+      <div id="ram-marca" class="marca"></div>
+      <span id="ram-etiqueta" class="etiqueta"><i></i>RAM · <b>OK</b></span>
+
+      <div id="cpu-guia" class="guia"></div>
+      <div id="cpu-marca" class="marca"></div>
+      <span id="cpu-etiqueta" class="etiqueta"><i></i>CPU · <b>36 °C</b></span>
+
+      <div id="vent-guia" class="guia"></div>
+      <div id="vent-marca" class="marca"></div>
+      <span id="vent-etiqueta" class="etiqueta"><i></i>VENTILACIÓN · <b>OK</b></span>
+
+      <div id="placa-guia" class="guia"></div>
+      <div id="placa-marca" class="marca"></div>
+      <span id="placa-etiqueta" class="etiqueta"><i></i>PLACA · <b>OK</b></span>
+    </div>
+
+    <div id="diag-estado">
+      <small>ESTADO DEL SISTEMA</small>
+      <div class="valor" data-layout-allow-overlap>
+        <span id="diag-analiza">Analizando…</span>
+        <span id="diag-listo"><i id="diag-punto"></i>Listo</span>
+      </div>
+      <div id="diag-barra-fondo"><div id="diag-barra"></div></div>
+    </div>
+  </div>
+  <script>
+    // Cada componente real de la foto (coordenadas del cuadro de 1000x800): dónde va la marca,
+    // dónde queda la etiqueta y cuándo aparece (en el orden en que el barrido llega a cada uno).
+    const RADIO = 18;
+    const componentes = [
+      { id: "ram", marca: [692, 210], etiqueta: { left: 740, top: 182 }, lado: "derecha", t: 0.7 },
+      { id: "cpu", marca: [470, 300], etiqueta: { left: 330, top: 40 }, lado: "arriba", t: 0.82 },
+      { id: "vent", marca: [100, 250], etiqueta: { left: 50, top: 490 }, lado: "abajo", t: 0.94 },
+      { id: "placa", marca: [662, 578], etiqueta: { left: 610, top: 640 }, lado: "abajo", t: 1.25 },
+    ];
+
+    const tl = gsap.timeline({ paused: true });
+
+    // Cámara: llega un poco cerca y se asienta mientras termina el diagnóstico; el final queda quieto
+    tl.fromTo("#diag-camara", { scale: 1.06, transformOrigin: "50% 45%" }, { scale: 1, transformOrigin: "50% 45%", duration: 2.6, ease: "power3.out" }, 0);
+
+    // Barrido: la línea baja y deja la foto con su luz real detrás
+    tl.fromTo("#diag-scan", { y: -140, opacity: 1 }, { y: 660, duration: 1.4, ease: "power2.inOut" }, 0.15);
+    tl.fromTo("#diag-foto-clara", { clipPath: "inset(0% 0% 100% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.4, ease: "power2.inOut" }, 0.15);
+    tl.to("#diag-scan", { opacity: 0, duration: 0.2, ease: "power1.out" }, 1.4);
+
+    componentes.forEach(({ id, marca: [mx, my], etiqueta, lado, t }) => {
+      const etq = document.getElementById(`${id}-etiqueta`);
+      etq.style.left = `${etiqueta.left}px`;
+      etq.style.top = `${etiqueta.top}px`;
+      const alto = etq.offsetHeight;
+      // Punto de la etiqueta más cercano al componente
+      const destino = {
+        derecha: [etiqueta.left, etiqueta.top + alto / 2],
+        arriba: [mx, etiqueta.top + alto],
+        abajo: [mx, etiqueta.top],
+      }[lado];
+      const dx = destino[0] - mx, dy = destino[1] - my;
+      const angulo = Math.atan2(dy, dx);
+      const guia = document.getElementById(`${id}-guia`);
+      guia.style.left = `${mx + Math.cos(angulo) * RADIO}px`;
+      guia.style.top = `${my + Math.sin(angulo) * RADIO - 1.5}px`;
+      guia.style.width = `${Math.hypot(dx, dy) - RADIO}px`;
+      const marca = document.getElementById(`${id}-marca`);
+      marca.style.left = `${mx - RADIO}px`;
+      marca.style.top = `${my - RADIO}px`;
+      const grados = (angulo * 180) / Math.PI;
+
+      tl.fromTo(marca, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(1.7)" }, t);
+      tl.fromTo(
+        guia,
+        { scaleX: 0, rotation: grados, transformOrigin: "0% 50%" },
+        { scaleX: 1, rotation: grados, transformOrigin: "0% 50%", duration: 0.28, ease: "power3.out" },
+        t + 0.08,
+      );
+      tl.fromTo(etq, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, t + 0.2);
+    });
+
+    // Estado: avanza mientras revisa y pasa a "Listo"
+    tl.fromTo("#diag-barra", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, transformOrigin: "0% 50%", duration: 1.95, ease: "none" }, 0.15);
+    tl.fromTo("#diag-analiza", { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(8px)", duration: 0.13, ease: "power2.in" }, 2.15);
+    tl.fromTo("#diag-listo", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, ease: "power4.out" }, 2.22);
+    tl.fromTo("#diag-punto", { scale: 0.6 }, { scale: 1, duration: 0.35, ease: "back.out(1.7)" }, 2.22);
+
+    window.__timelines["diagnostico"] = tl;
+  </script>
+</template>

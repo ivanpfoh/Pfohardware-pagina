@@ -24,10 +24,17 @@
   --shadow: 0 24px 64px rgba(0, 0, 0, .5);
   --font: "Manrope", "Segoe UI", system-ui, sans-serif;
   --font-display: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  /* Curvas de movimiento (las de CSS se quedan cortas): salida fuerte para lo que entra o responde,
+     ida y vuelta para lo que se mueve en pantalla */
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: calc(var(--header) + 16px); -webkit-text-size-adjust: 100%; }
+html {
+  scroll-behavior: smooth; scroll-padding-top: calc(var(--header) + 16px); -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;   /* sin el destello gris al tocar: cada control tiene su :active */
+}
 body {
   margin: 0;
   background: var(--bg);
@@ -38,6 +45,9 @@ body {
 }
 img { max-width: 100%; height: auto; display: block; }
 a { color: inherit; }
+/* Celular: el toque responde al instante y mantener apretado un control no selecciona su texto */
+a, button, summary { touch-action: manipulation; }
+button, .btn, .menu-toggle, .faq summary { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
 p { margin: 0 0 1em; }
 [hidden] { display: none !important; }
 :focus-visible { outline: 2px solid var(--brand); outline-offset: 3px; border-radius: 4px; }
@@ -49,7 +59,12 @@ p { margin: 0 0 1em; }
 }
 .skip-link:focus { top: 12px; }
 
-.container { width: 100%; max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+.container {
+  width: 100%; max-width: var(--max); margin: 0 auto;
+  padding: 0 24px;
+  /* con el celular acostado, el contenido no queda bajo el notch */
+  padding: 0 max(24px, env(safe-area-inset-right, 0px)) 0 max(24px, env(safe-area-inset-left, 0px));
+}
 
 /* ---------- Tipografía ---------- */
 h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; letter-spacing: -.02em; margin: 0 0 .5em; color: var(--text); }
@@ -73,17 +88,15 @@ h4 { font-size: 1.05rem; line-height: 1.35; }
   display: inline-flex; align-items: center; justify-content: center; gap: 10px;
   min-height: 48px; padding: 12px 22px; border-radius: var(--radius-sm); border: 1px solid transparent;
   font: 700 .95rem/1.2 var(--font); text-decoration: none; cursor: pointer; text-align: center;
-  transition: transform .18s ease, filter .18s ease, background-color .18s ease, border-color .18s ease;
+  transition: transform 160ms var(--ease-out), filter 160ms ease, background-color 160ms ease, border-color 160ms ease;
 }
+.btn:active { transform: scale(.97); }   /* responde al apretar, con mouse o con el dedo */
 .btn svg { flex-shrink: 0; }
 .btn-primary { background: var(--gradient); color: var(--on-brand); box-shadow: 0 10px 30px rgba(18, 232, 214, .16); }
-.btn-primary:hover { filter: brightness(1.08); transform: translateY(-1px); }
 .btn-secondary { background: transparent; border-color: var(--line); color: var(--text); }
-.btn-secondary:hover { background: rgba(230, 237, 243, .05); border-color: #34474E; transform: translateY(-1px); }
 .btn-block { width: 100%; }
 .btn-lg { min-height: 56px; font-size: 1.02rem; }
 .link { color: var(--brand); text-decoration: underline; text-decoration-color: rgba(18, 232, 214, .4); text-underline-offset: 3px; }
-.link:hover { text-decoration-color: var(--brand); }
 
 /* ---------- Encabezado ---------- */
 .site-header {
@@ -97,16 +110,15 @@ h4 { font-size: 1.05rem; line-height: 1.35; }
 .brand strong { display: block; font: 600 1.08rem/1.15 var(--font-display); letter-spacing: -.01em; }
 .brand small { display: block; color: var(--muted); font-size: .78rem; line-height: 1.3; }
 .nav { display: flex; align-items: center; gap: 6px; }
-.nav a { padding: 8px 12px; border-radius: 8px; color: var(--muted); text-decoration: none; font-weight: 600; font-size: .93rem; transition: color .15s, background-color .15s; }
-.nav a:hover { color: var(--text); background: rgba(230, 237, 243, .05); }
+.nav a { padding: 8px 12px; border-radius: 8px; color: var(--muted); text-decoration: none; font-weight: 600; font-size: .93rem; transition: color .15s ease, background-color .15s ease; }
 .nav a[aria-current="page"] { color: var(--text); }
 .nav .btn { margin-left: 10px; min-height: 40px; padding: 9px 16px; font-size: .9rem; color: var(--on-brand); }
-.nav .btn:hover { background: var(--gradient); color: var(--on-brand); }
 .menu-toggle {
   display: none; width: 44px; height: 44px; border-radius: 10px; border: 1px solid var(--line); background: transparent;
-  cursor: pointer; place-content: center; gap: 5px;
+  cursor: pointer; place-content: center; gap: 5px; transition: transform 160ms var(--ease-out);
 }
-.menu-toggle span { display: block; width: 20px; height: 2px; border-radius: 2px; background: var(--text); transition: transform .2s ease; }
+.menu-toggle:active { transform: scale(.95); }
+.menu-toggle span { display: block; width: 20px; height: 2px; border-radius: 2px; background: var(--text); transition: transform 200ms var(--ease-out); }
 .menu-toggle[aria-expanded="true"] span:first-child { transform: translateY(3.5px) rotate(45deg); }
 .menu-toggle[aria-expanded="true"] span:last-child { transform: translateY(-3.5px) rotate(-45deg); }
 
@@ -152,33 +164,11 @@ h4 { font-size: 1.05rem; line-height: 1.35; }
 .hero-card-bar { display: flex; align-items: center; gap: 7px; padding: 4px 4px 14px; }
 .hero-card-bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--line); }
 .hero-card-bar small { margin-left: auto; font: 600 .7rem/1 ui-monospace, Consolas, monospace; letter-spacing: .12em; color: var(--faint); }
-.board {
-  position: relative; aspect-ratio: 5 / 4; border-radius: 14px; overflow: hidden; border: 1px solid var(--border);
-  background: radial-gradient(circle at 50% 46%, rgba(18, 232, 214, .12), rgba(5, 8, 10, 0) 58%), var(--bg);
-}
-.board::before {
-  content: ""; position: absolute; inset: 0;
-  background-image: linear-gradient(rgba(36, 50, 56, .45) 1px, transparent 1px), linear-gradient(90deg, rgba(36, 50, 56, .45) 1px, transparent 1px);
-  background-size: 32px 32px;
-  -webkit-mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 78%); mask-image: radial-gradient(circle at 50% 50%, #000 30%, transparent 78%);
-}
-.chip {
-  position: absolute; left: 50%; top: 48%; transform: translate(-50%, -50%);
-  width: 132px; height: 132px; border-radius: 22px; display: grid; place-items: center;
-  background: linear-gradient(var(--panel), var(--panel)) padding-box, var(--gradient) border-box; border: 1px solid transparent;
-  box-shadow: 0 0 60px rgba(18, 232, 214, .18);
-}
-.chip img { width: 74px; height: 74px; }
-.trace { position: absolute; background: var(--gradient); opacity: .55; border-radius: 2px; }
-.trace.t1 { height: 2px; width: 26%; left: 0; top: 30%; }
-.trace.t2 { width: 2px; height: 26%; right: 20%; bottom: 0; }
-.trace.t3 { height: 2px; width: 22%; right: 0; bottom: 24%; }
-.board-status { position: absolute; left: 18px; bottom: 16px; display: grid; gap: 2px; }
-.board-status small { font: 600 .66rem/1.2 ui-monospace, Consolas, monospace; letter-spacing: .12em; color: var(--faint); }
-.board-status strong { display: inline-flex; align-items: center; gap: 8px; font: 600 1rem/1.2 var(--font-display); color: var(--text); }
-.board-status strong i { width: 8px; height: 8px; border-radius: 50%; background: var(--brand-1); box-shadow: 0 0 12px rgba(0, 245, 160, .8); }
-.board-tags { position: absolute; right: 16px; top: 16px; display: grid; gap: 6px; justify-items: end; }
-.board-tags span { font: 600 .7rem/1 ui-monospace, Consolas, monospace; letter-spacing: .08em; color: var(--muted); background: rgba(11, 17, 20, .85); border: 1px solid var(--border); padding: 6px 9px; border-radius: 7px; }
+.board { position: relative; aspect-ratio: 5 / 4; border-radius: 14px; overflow: hidden; border: 1px solid var(--border); background: var(--bg); }
+/* Motion graphic de HyperFrames (_motion/hero-diagnostico): se reproduce una vez y queda en su último cuadro */
+.board-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+/* Sin JavaScript el video no arranca: se ve el resultado final */
+.no-js .board::after { content: ""; position: absolute; inset: 0; background: url("img/motion/hero-diagnostico-final.webp") center / cover; }
 .hero-card-caption { display: flex; justify-content: space-between; gap: 12px; padding: 14px 4px 2px; font-size: .88rem; color: var(--muted); }
 .hero-card-caption strong { color: var(--text); font-weight: 600; }
 
@@ -190,9 +180,8 @@ h4 { font-size: 1.05rem; line-height: 1.35; }
 .card {
   position: relative; padding: 26px; border-radius: var(--radius);
   background: var(--panel); border: 1px solid var(--border);
-  transition: border-color .2s ease, transform .2s ease;
+  transition: border-color .2s ease;
 }
-.card:hover { border-color: var(--line); }
 .card h3 { margin: 18px 0 8px; }
 .card p:not(.eyebrow) { color: var(--muted); margin: 0; }
 .card-icon {
@@ -202,8 +191,8 @@ h4 { font-size: 1.05rem; line-height: 1.35; }
 .card-list { list-style: none; padding: 0; margin: 16px 0 0; display: grid; gap: 6px; }
 .card-list li { display: flex; gap: 9px; align-items: flex-start; color: var(--text); font-size: .93rem; font-weight: 600; }
 .card-list svg { color: var(--brand); margin-top: 4px; flex-shrink: 0; }
-.card-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; font-weight: 700; color: var(--brand); text-decoration: none; }
-.card-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+.card-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; font-weight: 700; color: var(--brand); text-decoration: none; text-underline-offset: 3px; }
+.card-link:active { opacity: .7; }
 .more { margin-top: 28px; }
 
 /* ---------- Optimizador ---------- */
@@ -223,7 +212,9 @@ h4 { font-size: 1.05rem; line-height: 1.35; }
   content: ""; position: absolute; inset: 8% 4% -2%; z-index: -1; border-radius: 40px;
   background: radial-gradient(ellipse at center, rgba(18, 232, 214, .16), rgba(18, 232, 214, 0) 70%); filter: blur(10px);
 }
-.shot img { width: 100%; max-width: 470px; margin: 0 auto; border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+.shot img, .shot video { display: block; width: 100%; max-width: 470px; height: auto; margin: 0 auto; border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--shadow); }
+/* Motion graphic de HyperFrames (_motion/demo-optimizador): las pantallas reales del programa, en loop */
+.shot video { aspect-ratio: 900 / 966; background: var(--bg); }
 .shot figcaption { text-align: center; margin-top: 14px; font-size: .86rem; color: var(--faint); }
 
 .buy { display: grid; grid-template-columns: 1fr 1.25fr; gap: 18px; margin-top: 56px; align-items: stretch; }
@@ -259,8 +250,14 @@ h4 { font-size: 1.05rem; line-height: 1.35; }
   font: 600 1.02rem/1.35 var(--font-display); color: var(--text);
 }
 .faq summary::-webkit-details-marker { display: none; }
-.faq summary::after { content: "+"; font: 400 1.5rem/1 var(--font); color: var(--brand); transition: transform .2s ease; }
+.faq summary::after { content: "+"; font: 400 1.5rem/1 var(--font); color: var(--brand); transition: transform 200ms var(--ease-out); }
 .faq details[open] summary::after { transform: rotate(45deg); }
+/* La respuesta se despliega en vez de aparecer de golpe (donde el navegador lo permite) */
+@supports (interpolate-size: allow-keywords) {
+  .faq { interpolate-size: allow-keywords; }
+  .faq details::details-content { height: 0; overflow: clip; transition: height 240ms var(--ease-out), content-visibility 240ms allow-discrete; }
+  .faq details[open]::details-content { height: auto; }
+}
 .faq .faq-body { padding: 0 22px 20px; color: var(--muted); }
 .faq .faq-body p:last-child { margin-bottom: 0; }
 .faq ol { margin: 0; padding-left: 20px; display: grid; gap: 8px; }
@@ -274,8 +271,7 @@ code {
 /* ---------- Trabajos ---------- */
 .gallery { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
 .photo { position: relative; display: block; overflow: hidden; border-radius: 14px; border: 1px solid var(--border); background: var(--panel); text-decoration: none; color: var(--text); }
-.photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform .35s ease; }
-.photo:hover img { transform: scale(1.035); }
+.photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; transition: transform 400ms var(--ease-out); }
 .photo-caption {
   position: absolute; left: 0; right: 0; bottom: 0; padding: 36px 16px 14px; font-weight: 600; font-size: .93rem;
   background: linear-gradient(180deg, rgba(5, 8, 10, 0), rgba(5, 8, 10, .9));
@@ -319,8 +315,7 @@ code {
 .cta-meta { display: grid; gap: 6px; padding-left: 28px; border-left: 1px solid var(--line); min-width: 200px; }
 .cta-meta span, .cta-meta small { color: var(--muted); font-size: .86rem; }
 .cta-meta strong { font: 600 1.5rem/1.2 var(--font-display); }
-.cta-meta a { color: var(--text); text-decoration: none; font-weight: 600; overflow-wrap: anywhere; }
-.cta-meta a:hover { color: var(--brand); }
+.cta-meta a { color: var(--text); text-decoration: none; font-weight: 600; overflow-wrap: anywhere; transition: color .15s ease; }
 
 .contact-options .card { display: flex; flex-direction: column; }
 .contact-options .card p { flex: 1; }
@@ -341,8 +336,7 @@ code {
 .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 32px; }
 .footer-grid h2 { font: 700 .78rem/1 var(--font); letter-spacing: .14em; text-transform: uppercase; color: var(--faint); margin: 6px 0 16px; }
 .footer-grid ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
-.footer-grid a { color: var(--muted); text-decoration: none; }
-.footer-grid a:hover { color: var(--text); }
+.footer-grid a { color: var(--muted); text-decoration: none; transition: color .15s ease; }
 .footer-grid .brand + p { margin: 14px 0 0; max-width: 320px; }
 .footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 36px; padding-top: 22px; border-top: 1px solid var(--border); color: var(--faint); font-size: .86rem; }
 .footer-bottom a { color: var(--muted); }
@@ -351,20 +345,49 @@ code {
 dialog.lightbox {
   width: min(1000px, 94vw); max-height: 94vh; padding: 52px 20px 20px; border-radius: 18px;
   background: var(--panel); color: var(--text); border: 1px solid var(--line); box-shadow: var(--shadow);
+  /* Entra apenas chico y se asienta (centrado, como todo modal); al cerrar se va más rápido */
+  opacity: 0; transform: scale(.97);
+  transition: opacity 140ms ease, transform 140ms var(--ease-out), overlay 140ms allow-discrete, display 140ms allow-discrete;
 }
-dialog.lightbox::backdrop { background: rgba(0, 0, 0, .82); backdrop-filter: blur(4px); }
+dialog.lightbox[open] { opacity: 1; transform: none; transition-duration: 220ms; }
+@starting-style { dialog.lightbox[open] { opacity: 0; transform: scale(.97); } }
+dialog.lightbox::backdrop {
+  background: rgba(0, 0, 0, 0); backdrop-filter: blur(4px);
+  transition: background-color 140ms ease, overlay 140ms allow-discrete, display 140ms allow-discrete;
+}
+dialog.lightbox[open]::backdrop { background: rgba(0, 0, 0, .82); transition-duration: 220ms; }
+@starting-style { dialog.lightbox[open]::backdrop { background: rgba(0, 0, 0, 0); } }
 .lightbox figure { margin: 0; text-align: center; }
 .lightbox img { max-width: 100%; max-height: 68vh; margin: 0 auto; object-fit: contain; border-radius: 10px; }
 .lightbox figcaption { margin-top: 14px; color: var(--muted); }
-.lightbox button { min-height: 42px; padding: 10px 16px; border-radius: 10px; border: 1px solid var(--line); background: transparent; color: var(--text); font: 600 .92rem var(--font); cursor: pointer; }
-.lightbox button:hover { background: rgba(230, 237, 243, .05); }
+.lightbox button { min-height: 42px; padding: 10px 16px; border-radius: 10px; border: 1px solid var(--line); background: transparent; color: var(--text); font: 600 .92rem var(--font); cursor: pointer; transition: transform 160ms var(--ease-out), background-color .15s ease; }
+.lightbox button:active { transform: scale(.97); }
 .lightbox-close { position: absolute; top: 10px; right: 10px; width: 42px; padding: 0 !important; font-size: 1.4rem !important; }
 .lightbox-controls { display: flex; justify-content: space-between; gap: 10px; margin-top: 16px; }
 
 /* ---------- Animación de entrada (respeta "reducir movimiento") ---------- */
-.reveal { opacity: 0; transform: translateY(14px); transition: opacity .6s ease, transform .6s ease; }
+/* Lo que entra junto (las tarjetas de una fila) aparece escalonado: --d lo pone app.js */
+.reveal {
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 500ms var(--ease-out) var(--d, 0ms), transform 500ms var(--ease-out) var(--d, 0ms), border-color .2s ease;
+}
 .reveal.visible { opacity: 1; transform: none; }
 .no-js .reveal { opacity: 1; transform: none; }
+
+/* ---------- Hover: solo con mouse (en el celular el hover queda "pegado" después de tocar) ---------- */
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { filter: brightness(1.08); }
+  .btn-secondary:hover { background: rgba(230, 237, 243, .05); border-color: #34474E; }
+  .link:hover { text-decoration-color: var(--brand); }
+  .nav a:hover { color: var(--text); background: rgba(230, 237, 243, .05); }
+  .nav .btn:hover { background: var(--gradient); color: var(--on-brand); }
+  .card:hover { border-color: var(--line); }
+  .card-link:hover { text-decoration: underline; }
+  .photo:hover img { transform: scale(1.035); }
+  .cta-meta a:hover { color: var(--brand); }
+  .footer-grid a:hover { color: var(--text); }
+  .lightbox button:hover { background: rgba(230, 237, 243, .05); }
+}
 
 /* ---------- Adaptación a pantallas ---------- */
 @media (max-width: 1020px) {
@@ -375,12 +398,19 @@ dialog.lightbox::backdrop { background: rgba(0, 0, 0, .82); backdrop-filter: blu
 @media (max-width: 860px) {
   :root { --header: 64px; }
   .menu-toggle { display: grid; }
+  /* El menú sale del botón (arriba a la derecha) y se cierra más rápido de lo que abre */
   .nav {
-    display: none; position: absolute; top: calc(var(--header) + 8px); left: 16px; right: 16px;
+    position: absolute; top: calc(var(--header) + 8px); left: 16px; right: 16px;
+    left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px));
     flex-direction: column; align-items: stretch; gap: 4px; padding: 12px;
     background: var(--panel); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow);
+    visibility: hidden; opacity: 0; transform: translateY(-6px) scale(.98); transform-origin: top right; pointer-events: none;
+    transition: opacity 120ms ease, transform 120ms var(--ease-out), visibility 0s linear 120ms;
   }
-  .nav.open { display: flex; }
+  .nav.open {
+    visibility: visible; opacity: 1; transform: none; pointer-events: auto;
+    transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out), visibility 0s;
+  }
   .nav a { padding: 12px 14px; font-size: 1rem; }
   .nav .btn { margin: 6px 0 0; min-height: 48px; }
   .brand small { display: none; }
@@ -397,7 +427,7 @@ dialog.lightbox::backdrop { background: rgba(0, 0, 0, .82); backdrop-filter: blu
   .section { padding: 72px 0; }
 }
 @media (max-width: 560px) {
-  .container { padding: 0 18px; }
+  .container { padding: 0 18px; padding: 0 max(18px, env(safe-area-inset-right, 0px)) 0 max(18px, env(safe-area-inset-left, 0px)); }
   .grid-2, .grid-3, .grid-4, .steps, .gallery, .modes, .features { grid-template-columns: 1fr; }
   .actions .btn { width: 100%; }
   .checks { display: grid; gap: 10px; }
@@ -406,8 +436,11 @@ dialog.lightbox::backdrop { background: rgba(0, 0, 0, .82); backdrop-filter: blu
   .section { padding: 60px 0; }
   h1 { font-size: 2.45rem; }
 }
+/* "Reducir movimiento": menos y más suave, no cero. Quedan los fundidos; se va todo lo que se desplaza */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .reveal { opacity: 1; transform: none; transition: none; }
-  .btn, .photo img, .card { transition: none; }
+  .reveal { transform: none; transition: opacity 300ms ease, border-color .2s ease; }
+  .nav, .nav.open, dialog.lightbox, dialog.lightbox[open] { transform: none; }
+  .photo img, .menu-toggle span { transition: none; }
+  .photo:hover img { transform: none; }
 }

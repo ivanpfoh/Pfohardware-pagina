@@ -2,11 +2,12 @@
 <html lang="es" class="no-js">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>PfoHardware · Servicio técnico de PC y notebooks en Recoleta, CABA</title>
   <meta name="description" content="Servicio técnico de PCs y notebooks en Recoleta, Capital Federal: diagnóstico, limpieza, upgrades y soporte. Y el Optimizador de Sistema PfoHardware para Windows.">
   <link rel="canonical" href="https://ivanpfoh.github.io/Pfohardware-pagina/">
   <meta name="theme-color" content="#05080A">
+  <meta name="color-scheme" content="dark">
   <link rel="icon" href="img/favicon-32.png" sizes="32x32" type="image/png">
   <link rel="icon" href="img/favicon-192.png" sizes="192x192" type="image/png">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
@@ -24,6 +25,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+  <script>document.documentElement.classList.remove("no-js");</script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -82,11 +84,34 @@
         </div>
         <div class="hero-card" aria-hidden="true">
           <div class="hero-card-bar"><i></i><i></i><i></i><small>PH · DIAGNÓSTICO</small></div>
+          <!-- Motion graphic (HyperFrames, _motion/hero-diagnostico): se reproduce una vez y queda en "Listo" -->
           <div class="board">
-            <div class="trace t1"></div><div class="trace t2"></div><div class="trace t3"></div>
-            <div class="chip"><img src="img/logo-ph-96.png" alt="" width="74" height="74"></div>
-            <div class="board-tags"><span>CPU · OK</span><span>RAM · OK</span><span>SSD · OK</span><span>TEMP · 36 °C</span></div>
-            <div class="board-status"><small>ESTADO DEL SISTEMA</small><strong><i></i>Listo</strong></div>
+            <video class="board-video" id="video-diagnostico" muted playsinline preload="auto" disablepictureinpicture
+                   poster="img/motion/hero-diagnostico-inicio.webp" width="1000" height="800">
+              <source src="img/motion/hero-diagnostico.mp4" type="video/mp4">
+            </video>
+            <script>
+              // Se decide antes de cargar nada: con "reducir movimiento" o ahorro de datos (o si el navegador no
+              // deja reproducir, como el ahorro de batería del iPhone) queda directamente el resultado final
+              (function () {
+                const v = document.getElementById("video-diagnostico");
+                const final = () => { v.poster = "img/motion/hero-diagnostico-final.webp"; };
+                if ((window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) ||
+                    (navigator.connection && navigator.connection.saveData)) {
+                  v.preload = "none";
+                  final();
+                  return;
+                }
+                v.addEventListener("error", final, true);
+                const reproducir = () => { const intento = v.play(); if (intento && intento.catch) intento.catch(final); };
+                // Arranca cuando se ve (en el celular la tarjeta queda más abajo que el título)
+                if (!("IntersectionObserver" in window)) { reproducir(); return; }
+                const vista = new IntersectionObserver(([e]) => {
+                  if (e.isIntersecting) { vista.disconnect(); reproducir(); }
+                }, { threshold: 0.5 });
+                vista.observe(v);
+              })();
+            </script>
           </div>
           <div class="hero-card-caption"><strong>Diagnóstico preciso</strong><span>Hardware + software</span></div>
         </div>
@@ -163,9 +188,14 @@
               <li>Pide <strong>permiso de administrador</strong></li>
             </ul>
           </div>
+          <!-- Motion graphic (HyperFrames, _motion/demo-optimizador) con las pantallas reales del programa -->
           <figure class="shot reveal">
-            <img src="img/optimizador-app.webp" alt="Pantalla principal del Optimizador PfoHardware: anillo de progreso, modo de optimización y botón Optimizar ahora" width="916" height="975" loading="lazy">
-            <figcaption>La pantalla principal del optimizador.</figcaption>
+            <video class="shot-video" data-demo muted loop playsinline preload="none" disablepictureinpicture
+                   poster="img/motion/demo-optimizador-poster.webp" width="900" height="966"
+                   aria-label="Demostración del Optimizador PfoHardware: un clic en Optimizar ahora, el anillo de progreso llega al 100 % y aparece Optimización completada, con la opción Deshacer cambios.">
+              <source src="img/motion/demo-optimizador.mp4" type="video/mp4">
+            </video>
+            <figcaption>El optimizador en acción: un clic y listo.</figcaption>
           </figure>
         </div>
 

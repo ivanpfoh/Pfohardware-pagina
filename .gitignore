@@ -1,0 +1,5 @@
+# Proyectos de HyperFrames (_motion/): se versiona la fuente; los renders y las capturas de revisión no.
+# Los videos para la web son las versiones comprimidas de img/motion/.
+_motion/*/renders/
+_motion/*/.hyperframes/
+_motion/*/node_modules/

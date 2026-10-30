@@ -1,0 +1,148 @@
+<template>
+  <style>
+    /* Demo del Optimizador con sus pantallas reales (capturas del programa a escala 1,5): el mouse toca
+       "Optimizar ahora", el anillo llega al 100 %, se posa en "Deshacer cambios" y vuelve al inicio.
+       El primer y el último cuadro son iguales: en la web se repite sin salto. */
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #05080a;
+    }
+    .demo-capa,
+    .demo-pantalla {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 900px;
+      height: 966px;
+    }
+    #demo-reposo-cam {
+      z-index: 1;
+    }
+    #demo-anillo-cam {
+      z-index: 2;
+    }
+    #demo-fin {
+      z-index: 3;
+    }
+    #demo-hueco,
+    #demo-boton {
+      position: absolute;
+      left: 48px;
+      top: 735px;
+      width: 804px;
+      height: 69px;
+    }
+    #demo-hueco {
+      background: #05080a;
+    }
+    /* Ocultos desde el cuadro 0: así el primer y el último cuadro son iguales */
+    #demo-reposo-hover,
+    #demo-hueco,
+    #demo-boton,
+    #demo-fin-hover {
+      opacity: 0;
+    }
+    #demo-cursor {
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 4;
+      width: 30px;
+      height: 45px;
+    }
+    #demo-cursor svg {
+      display: block;
+      filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.55));
+    }
+  </style>
+  <div id="root" data-composition-id="demo" data-width="900" data-height="966">
+    <!-- Inicio: con el mouse encima el botón se ilumina y al tocarlo se hunde apenas -->
+    <div id="demo-reposo-cam" class="demo-capa" data-layout-allow-overflow>
+      <img id="demo-reposo" class="demo-pantalla" src="assets/reposo.png" alt="" />
+      <img id="demo-reposo-hover" class="demo-pantalla" src="assets/reposo-hover.png" alt="" />
+      <div id="demo-hueco"></div>
+      <img id="demo-boton" src="assets/boton-hover.png" alt="" />
+    </div>
+
+    <!-- El anillo real del programa, cuadro por cuadro, hasta "Optimización completada" -->
+    <div id="demo-anillo-cam" class="demo-capa" data-layout-allow-overflow>
+      <video
+        id="demo-anillo"
+        class="clip demo-pantalla"
+        data-start="1.6"
+        data-duration="3.6"
+        data-track-index="1"
+        src="assets/anillo.mp4"
+        muted
+        playsinline
+      ></video>
+    </div>
+
+    <div id="demo-fin" class="clip demo-capa" data-start="5.2" data-duration="3.4" data-track-index="2">
+      <div id="demo-fin-cont" class="demo-capa">
+        <img id="demo-fin-img" class="demo-pantalla" src="assets/fin.png" alt="" />
+        <img id="demo-fin-hover" class="demo-pantalla" src="assets/fin-hover.png" alt="" />
+      </div>
+    </div>
+
+    <div id="demo-cursor" data-layout-allow-overflow>
+      <svg width="30" height="45" viewBox="0 0 20 30" aria-hidden="true">
+        <path
+          d="M1 1 L1 24 L6.6 18.6 L10.4 27.6 L14 26.1 L10.3 17.3 L17.8 17.3 Z"
+          fill="#ffffff"
+          stroke="#000000"
+          stroke-width="1.4"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </div>
+  </div>
+  <script>
+    // La punta del cursor está en (1,5 ; 1,5): se resta para que caiga justo en el punto
+    const PUNTA = 1.5;
+    const pos = (x, y) => ({ x: x - PUNTA, y: y - PUNTA });
+    const AFUERA = pos(960, 1040);
+    const BOTON = pos(470, 772); // "Optimizar ahora" (x 48-851, y 735-803)
+    const DESHACER = pos(262, 606); // "Deshacer cambios" (x 48-441, y 576-633)
+
+    // El cursor arranca afuera del cuadro (fuera de la línea de tiempo, para que valga en el cuadro 0)
+    gsap.set("#demo-cursor", AFUERA);
+    const tl = gsap.timeline({ paused: true });
+
+    // 1. El mouse va al botón mientras la cámara se acerca a él
+    tl.fromTo("#demo-cursor", AFUERA, { ...BOTON, duration: 0.9, ease: "power2.inOut" }, 0.35);
+    tl.fromTo(
+      "#demo-reposo-cam",
+      { scale: 1, transformOrigin: "449.5px 769px" },
+      { scale: 1.08, transformOrigin: "449.5px 769px", duration: 0.9, ease: "power2.inOut" },
+      0.55,
+    );
+    tl.fromTo("#demo-reposo-hover", { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "power1.out" }, 1.1);
+
+    // 2. Clic: el cursor y el botón se hunden apenas
+    tl.set("#demo-hueco, #demo-boton", { opacity: 1 }, 1.44);
+    tl.fromTo("#demo-boton", { scale: 1 }, { scale: 0.97, duration: 0.08, ease: "power2.out" }, 1.45);
+    tl.fromTo("#demo-cursor svg", { scale: 1, transformOrigin: "2px 2px" }, { scale: 0.86, transformOrigin: "2px 2px", duration: 0.08, ease: "power2.out" }, 1.45);
+    tl.to("#demo-cursor svg", { scale: 1, duration: 0.16, ease: "power2.out" }, 1.53);
+
+    // 3. Corte al anillo: entra apenas grande y se asienta
+    tl.fromTo("#demo-anillo-cam", { scale: 1.04, transformOrigin: "50% 60%" }, { scale: 1, transformOrigin: "50% 60%", duration: 0.6, ease: "expo.out" }, 1.6);
+    // La pantalla de inicio vuelve a su lugar mientras queda tapada
+    tl.set("#demo-reposo-cam", { scale: 1 }, 2.0);
+    tl.set("#demo-reposo-hover, #demo-hueco, #demo-boton", { opacity: 0 }, 2.0);
+    tl.set("#demo-boton", { scale: 1 }, 2.0);
+
+    // 4. Terminado: el mouse se posa en "Deshacer cambios"
+    tl.fromTo("#demo-cursor", BOTON, { ...DESHACER, duration: 0.8, ease: "power2.inOut", immediateRender: false }, 5.75);
+    tl.fromTo("#demo-fin-hover", { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "power1.out", immediateRender: false }, 6.42);
+
+    // 5. Vuelta al inicio: el mouse sale y la pantalla final se desvanece sobre la inicial
+    tl.fromTo("#demo-cursor", DESHACER, { ...AFUERA, duration: 0.35, ease: "power3.in", immediateRender: false }, 7.85);
+    tl.fromTo("#demo-fin-hover", { opacity: 1 }, { opacity: 0, duration: 0.12, ease: "power1.out", immediateRender: false }, 7.9);
+    tl.fromTo("#demo-fin-cont", { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(8px)", duration: 0.2, ease: "power2.in" }, 8.2);
+
+    window.__timelines["demo"] = tl;
+  </script>
+</template>

@@ -121,19 +121,47 @@ if (photos.length && lightbox) {
 }
 
 // ==========================================
-// Aparición suave al hacer scroll
+// Aparición suave al hacer scroll (con "reducir movimiento" es solo un fundido: ver style.css)
 // ==========================================
 const aparecen = document.querySelectorAll(".reveal");
-if ("IntersectionObserver" in window && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+if ("IntersectionObserver" in window) {
   const observador = new IntersectionObserver(entradas => {
+    // Lo que entra a la vez (una fila de tarjetas) aparece escalonado, 60 ms entre cada uno
+    let orden = 0;
     entradas.forEach(entrada => {
-      if (entrada.isIntersecting) {
-        entrada.target.classList.add("visible");
-        observador.unobserve(entrada.target);
-      }
+      if (!entrada.isIntersecting) return;
+      entrada.target.style.setProperty("--d", `${Math.min(orden++, 4) * 60}ms`);
+      entrada.target.classList.add("visible");
+      observador.unobserve(entrada.target);
     });
   }, { rootMargin: "0px 0px -8% 0px" });
   aparecen.forEach(el => observador.observe(el));
 } else {
   aparecen.forEach(el => el.classList.add("visible"));
+}
+
+// ==========================================
+// Motion graphics (hechos con HyperFrames: ver la carpeta _motion)
+// ==========================================
+// La portada (el diagnóstico, que se reproduce una vez) se decide en el script que está junto al video.
+const moverPoco = window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+  Boolean(navigator.connection && navigator.connection.saveData);
+
+// Optimizador: la demo corre solo mientras está a la vista. Con "reducir movimiento" o ahorro de
+// datos no arranca sola: queda la pantalla inicial con controles para verla si se quiere.
+const demo = document.querySelector("[data-demo]");
+if (demo) {
+  if (moverPoco || !("IntersectionObserver" in window)) {
+    demo.controls = true;
+  } else {
+    new IntersectionObserver(([entrada]) => {
+      if (entrada.isIntersecting) {
+        demo.preload = "auto";
+        const intento = demo.play();
+        if (intento && typeof intento.catch === "function") intento.catch(() => { demo.controls = true; });
+      } else {
+        demo.pause();
+      }
+    }, { threshold: 0.35 }).observe(demo);
+  }
 }
