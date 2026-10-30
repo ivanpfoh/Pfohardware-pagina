@@ -562,3 +562,5 @@ main { position: relative; }
   .site-header.con-scroll { -webkit-backdrop-filter: none; backdrop-filter: none; background: rgba(5, 8, 10, .94); }
   body.menu-abierto .site-header { transform: none; background: transparent; border-bottom-color: transparent; }
 }
+/* La tira fijada es más ancha que la pantalla: se recorta en la sección para que la página no se desplace de costado */
+.trabajos { overflow-x: clip; position: relative; z-index: 2; }
