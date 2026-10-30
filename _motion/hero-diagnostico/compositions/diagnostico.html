@@ -105,6 +105,24 @@
       color: var(--brand-1);
       font-weight: 700;
     }
+    /* El logo de la marca: grande al centro (como la tarjeta de antes) y después queda de insignia */
+    #diag-chip {
+      position: absolute;
+      left: 365px;
+      top: 265px;
+      width: 270px;
+      height: 270px;
+      border-radius: 46px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(#0b1114, #0b1114) padding-box, linear-gradient(135deg, #00f5a0, #1fddf5) border-box;
+      border: 3px solid transparent;
+      box-shadow: 0 0 90px rgba(18, 232, 214, 0.28);
+    }
+    #diag-chip img {
+      width: 150px;
+      height: auto;
+    }
     #diag-estado {
       position: absolute;
       left: 50px;
@@ -181,6 +199,8 @@
       <span id="placa-etiqueta" class="etiqueta"><i></i>PLACA · <b>OK</b></span>
     </div>
 
+    <div id="diag-chip"><img src="assets/logo-ph.png" alt="" /></div>
+
     <div id="diag-estado">
       <small>ESTADO DEL SISTEMA</small>
       <div class="valor" data-layout-allow-overlap>
@@ -201,15 +221,19 @@
       { id: "placa", marca: [662, 578], etiqueta: { left: 610, top: 640 }, lado: "abajo", t: 1.25 },
     ];
 
+    const D = 1.2; // presentación del logo antes del diagnóstico
     const tl = gsap.timeline({ paused: true });
 
+    // Logo: arranca grande al centro y queda de insignia arriba a la derecha cuando empieza el barrido
+    tl.fromTo("#diag-chip", { x: 0, y: 0, scale: 1 }, { x: 386, y: -301, scale: 0.5, duration: 0.7, ease: "power3.inOut" }, 0.9);
+
     // Cámara: llega un poco cerca y se asienta mientras termina el diagnóstico; el final queda quieto
-    tl.fromTo("#diag-camara", { scale: 1.06, transformOrigin: "50% 45%" }, { scale: 1, transformOrigin: "50% 45%", duration: 2.6, ease: "power3.out" }, 0);
+    tl.fromTo("#diag-camara", { scale: 1.06, transformOrigin: "50% 45%" }, { scale: 1, transformOrigin: "50% 45%", duration: 2.6, ease: "power3.out" }, D);
 
     // Barrido: la línea baja y deja la foto con su luz real detrás
-    tl.fromTo("#diag-scan", { y: -140, opacity: 1 }, { y: 660, duration: 1.4, ease: "power2.inOut" }, 0.15);
-    tl.fromTo("#diag-foto-clara", { clipPath: "inset(0% 0% 100% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.4, ease: "power2.inOut" }, 0.15);
-    tl.to("#diag-scan", { opacity: 0, duration: 0.2, ease: "power1.out" }, 1.4);
+    tl.fromTo("#diag-scan", { y: -140, opacity: 1 }, { y: 660, duration: 1.4, ease: "power2.inOut" }, D + 0.15);
+    tl.fromTo("#diag-foto-clara", { clipPath: "inset(0% 0% 100% 0%)" }, { clipPath: "inset(0% 0% 0% 0%)", duration: 1.4, ease: "power2.inOut" }, D + 0.15);
+    tl.to("#diag-scan", { opacity: 0, duration: 0.2, ease: "power1.out" }, D + 1.4);
 
     componentes.forEach(({ id, marca: [mx, my], etiqueta, lado, t }) => {
       const etq = document.getElementById(`${id}-etiqueta`);
@@ -233,21 +257,21 @@
       marca.style.top = `${my - RADIO}px`;
       const grados = (angulo * 180) / Math.PI;
 
-      tl.fromTo(marca, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(1.7)" }, t);
+      tl.fromTo(marca, { scale: 0.6, opacity: 0 }, { scale: 1, opacity: 1, duration: 0.35, ease: "back.out(1.7)" }, D + t);
       tl.fromTo(
         guia,
         { scaleX: 0, rotation: grados, transformOrigin: "0% 50%" },
         { scaleX: 1, rotation: grados, transformOrigin: "0% 50%", duration: 0.28, ease: "power3.out" },
-        t + 0.08,
+        D + t + 0.08,
       );
-      tl.fromTo(etq, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, t + 0.2);
+      tl.fromTo(etq, { opacity: 0, filter: "blur(6px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.2, ease: "power4.out" }, D + t + 0.2);
     });
 
     // Estado: avanza mientras revisa y pasa a "Listo"
-    tl.fromTo("#diag-barra", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, transformOrigin: "0% 50%", duration: 1.95, ease: "none" }, 0.15);
-    tl.fromTo("#diag-analiza", { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(8px)", duration: 0.13, ease: "power2.in" }, 2.15);
-    tl.fromTo("#diag-listo", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, ease: "power4.out" }, 2.22);
-    tl.fromTo("#diag-punto", { scale: 0.6 }, { scale: 1, duration: 0.35, ease: "back.out(1.7)" }, 2.22);
+    tl.fromTo("#diag-barra", { scaleX: 0, transformOrigin: "0% 50%" }, { scaleX: 1, transformOrigin: "0% 50%", duration: 1.95, ease: "none" }, D + 0.15);
+    tl.fromTo("#diag-analiza", { opacity: 1, filter: "blur(0px)" }, { opacity: 0, filter: "blur(8px)", duration: 0.13, ease: "power2.in" }, D + 2.15);
+    tl.fromTo("#diag-listo", { opacity: 0, filter: "blur(8px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.15, ease: "power4.out" }, D + 2.22);
+    tl.fromTo("#diag-punto", { scale: 0.6 }, { scale: 1, duration: 0.35, ease: "back.out(1.7)" }, D + 2.22);
 
     window.__timelines["diagnostico"] = tl;
   </script>

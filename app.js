@@ -136,8 +136,18 @@ if ("IntersectionObserver" in window) {
     });
   }, { rootMargin: "0px 0px -8% 0px" });
   aparecen.forEach(el => observador.observe(el));
+  document.querySelectorAll("[data-anim]").forEach(el => observador.observe(el));
 } else {
   aparecen.forEach(el => el.classList.add("visible"));
+  document.querySelectorAll("[data-anim]").forEach(el => el.classList.add("visible"));
+}
+
+// Encabezado con sombra apenas se baja
+const encabezado = document.querySelector(".site-header");
+if (encabezado) {
+  const marcar = () => encabezado.classList.toggle("con-scroll", window.scrollY > 8);
+  marcar();
+  window.addEventListener("scroll", marcar, { passive: true });
 }
 
 // ==========================================

@@ -374,9 +374,60 @@ dialog.lightbox[open]::backdrop { background: rgba(0, 0, 0, .82); transition-dur
 .reveal.visible { opacity: 1; transform: none; }
 .no-js .reveal { opacity: 1; transform: none; }
 
+/* ---------- Animaciones de la página ---------- */
+/* Portada (todas las páginas): entra escalonada al cargar, una sola vez */
+@keyframes entrar { from { opacity: 0; transform: translateY(14px); filter: blur(6px); } }
+@keyframes entrar-tarjeta { from { opacity: 0; transform: translateY(18px) scale(.97); } }
+@keyframes trazar { to { stroke-dashoffset: 0; } }
+.hero .eyebrow, .hero h1, .hero .lead, .hero .actions, .hero .checks, .hero .badge, .hero-card {
+  animation: entrar 700ms var(--ease-out) both;
+}
+.hero .eyebrow, .hero .badge { animation-delay: 80ms; }
+.hero h1 { animation-delay: 170ms; }
+.hero .lead { animation-delay: 260ms; }
+.hero .actions { animation-delay: 350ms; }
+.hero .checks { animation-delay: 440ms; }
+.hero-card { animation-name: entrar-tarjeta; animation-duration: 900ms; animation-delay: 300ms; }
+/* Las tildes se dibujan una detrás de otra */
+.hero .checks path { stroke-dasharray: 24; stroke-dashoffset: 24; animation: trazar 450ms var(--ease-out) forwards; }
+.hero .checks li:nth-child(1) path { animation-delay: 700ms; }
+.hero .checks li:nth-child(2) path { animation-delay: 820ms; }
+.hero .checks li:nth-child(3) path { animation-delay: 940ms; }
+
+/* Al aparecer: la línea del título crece y los íconos llegan apenas después de su tarjeta */
+.reveal .eyebrow::before { transform: scaleX(0); transform-origin: left; transition: transform 600ms var(--ease-out) calc(var(--d, 0ms) + 200ms); }
+.reveal.visible .eyebrow::before { transform: none; }
+.reveal .card-icon { opacity: 0; transform: scale(.85); transition: opacity 400ms var(--ease-out) calc(var(--d, 0ms) + 150ms), transform 500ms cubic-bezier(.34, 1.4, .64, 1) calc(var(--d, 0ms) + 150ms); }
+.reveal.visible .card-icon { opacity: 1; transform: none; }
+
+/* Fotos de trabajos: se revelan de abajo hacia arriba y la imagen se asienta */
+.photo.reveal { opacity: 1; transform: none; clip-path: inset(100% 0 0 0 round 14px); transition: clip-path 900ms var(--ease-in-out) var(--d, 0ms); }
+.photo.reveal.visible { clip-path: inset(0 0 0 0 round 14px); }
+.photo.reveal img { transform: scale(1.12); transition: transform 1200ms var(--ease-out) var(--d, 0ms); }
+.photo.reveal.visible img { transform: none; transition: transform 400ms var(--ease-out); }
+.no-js .photo.reveal { clip-path: none; }
+.no-js .photo.reveal img { transform: none; }
+
+/* Método: una línea une los cuatro pasos cuando aparecen */
+.steps { position: relative; }
+.steps::before {
+  content: ""; position: absolute; left: 24px; right: 24px; top: -18px; height: 2px; border-radius: 2px;
+  background: var(--gradient); opacity: .7; transform: scaleX(0); transform-origin: left;
+  transition: transform 1400ms var(--ease-in-out) 250ms;
+}
+.steps.visible::before { transform: none; }
+@media (max-width: 1020px) { .steps::before { display: none; } }
+
+/* Encabezado: gana sombra al bajar, para separarse del contenido */
+.site-header { transition: box-shadow 250ms ease, background-color 250ms ease; }
+.site-header.con-scroll { background: rgba(5, 8, 10, .92); box-shadow: 0 10px 30px rgba(0, 0, 0, .35); }
+
+.btn svg { transition: transform 200ms var(--ease-out); }
+
 /* ---------- Hover: solo con mouse (en el celular el hover queda "pegado" después de tocar) ---------- */
 @media (hover: hover) and (pointer: fine) {
   .btn-primary:hover { filter: brightness(1.08); }
+  .btn:hover svg, .card-link:hover svg { transform: translateX(3px); }
   .btn-secondary:hover { background: rgba(230, 237, 243, .05); border-color: #34474E; }
   .link:hover { text-decoration-color: var(--brand); }
   .nav a:hover { color: var(--text); background: rgba(230, 237, 243, .05); }
@@ -443,4 +494,10 @@ dialog.lightbox[open]::backdrop { background: rgba(0, 0, 0, .82); transition-dur
   .nav, .nav.open, dialog.lightbox, dialog.lightbox[open] { transform: none; }
   .photo img, .menu-toggle span { transition: none; }
   .photo:hover img { transform: none; }
+  .hero .eyebrow, .hero h1, .hero .lead, .hero .actions, .hero .checks, .hero .badge, .hero-card { animation: none; }
+  .hero .checks path { animation: none; stroke-dashoffset: 0; }
+  .reveal .eyebrow::before, .reveal .card-icon, .steps::before { transform: none; transition: opacity 300ms ease; }
+  .photo.reveal { clip-path: none; transition: none; }
+  .photo.reveal img { transform: none; }
+  .btn:hover svg, .card-link:hover svg { transform: none; }
 }
