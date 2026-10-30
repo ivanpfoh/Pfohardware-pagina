@@ -23,9 +23,12 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700&family=Space+Grotesk:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script>document.documentElement.classList.remove("no-js");</script>
+  <script src="js/vendor/gsap.min.js" defer></script>
+  <script src="js/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="app.js" defer></script>
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -50,7 +53,7 @@
     <div class="container header-inner">
       <a class="brand" href="index.html" aria-label="PfoHardware, inicio">
         <img src="img/logo-ph-96.png" alt="" width="40" height="40">
-        <span><strong>PfoHardware</strong><small>Diagnóstico · Mantenimiento · Upgrades</small></span>
+        <span><strong>PfoHardware</strong><small>Diagnóstico, mantenimiento y upgrades</small></span>
       </a>
       <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav"><span></span><span></span></button>
       <nav class="nav" id="nav" aria-label="Navegación principal">
@@ -63,126 +66,101 @@
     </div>
   </header>
 
-  <main id="contenido">
-    <!-- Presentación -->
-    <section class="hero backdrop">
+  <main id="contenido" class="con-pista">
+    <section class="hero" data-tone="base">
+      <div class="hero-fondo" data-shader></div>
+      <div class="hero-grilla" aria-hidden="true"></div>
       <div class="container hero-grid">
         <div>
-          <p class="eyebrow">Servicio técnico en Recoleta · Capital Federal</p>
-          <h1>Tu equipo,<br><span class="text-gradient">bien resuelto.</span></h1>
+          <p class="kicker">Servicio técnico en Recoleta, Capital Federal</p>
+          <h1><span class="line"><span>Tu equipo,</span></span><span class="line"><span>bien resuelto.</span></span></h1>
           <p class="lead">Diagnóstico claro, mantenimiento cuidadoso y upgrades que realmente mejoran tu PC o notebook. Sin vueltas ni gastos innecesarios.</p>
           <div class="actions">
-            <a class="btn btn-primary btn-lg" href="contacto.html">Pedir presupuesto
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="btn btn-primary btn-lg" href="contacto.html">Pedir presupuesto <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
             <a class="btn btn-secondary btn-lg" href="servicios.html">Ver servicios</a>
           </div>
           <ul class="checks">
-            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Presupuesto claro</li>
-            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Trabajo documentado</li>
-            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Retiro y entrega</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Presupuesto claro</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Trabajo documentado</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Retiro y entrega</li>
           </ul>
         </div>
         <div class="hero-card" aria-hidden="true">
-          <div class="hero-card-bar"><i></i><i></i><i></i><small>PH · DIAGNÓSTICO</small></div>
-          <!-- Motion graphic (HyperFrames, _motion/hero-diagnostico): se reproduce una vez y queda en "Listo" -->
-          <div class="board">
-            <video class="board-video" id="video-diagnostico" muted playsinline preload="auto" disablepictureinpicture
-                   poster="img/motion/hero-diagnostico-inicio.webp" width="1000" height="800">
-              <source src="img/motion/hero-diagnostico.mp4" type="video/mp4">
-            </video>
-            <script>
-              // Se decide antes de cargar nada: con "reducir movimiento" o ahorro de datos (o si el navegador no
-              // deja reproducir, como el ahorro de batería del iPhone) queda directamente el resultado final
-              (function () {
-                const v = document.getElementById("video-diagnostico");
-                const final = () => { v.poster = "img/motion/hero-diagnostico-final.webp"; };
-                if ((window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) ||
-                    (navigator.connection && navigator.connection.saveData)) {
-                  v.preload = "none";
-                  final();
-                  return;
-                }
-                v.addEventListener("error", final, true);
-                const reproducir = () => { const intento = v.play(); if (intento && intento.catch) intento.catch(final); };
-                // Arranca cuando se ve (en el celular la tarjeta queda más abajo que el título)
-                if (!("IntersectionObserver" in window)) { reproducir(); return; }
-                const vista = new IntersectionObserver(([e]) => {
-                  // Una pausa para que el logo se vea grande antes de que empiece el diagnóstico
-                  if (e.isIntersecting) { vista.disconnect(); setTimeout(reproducir, 1200); }
-                }, { threshold: 0.5 });
-                vista.observe(v);
-              })();
-            </script>
+          <div class="hero-card-inner">
+            <div class="hero-card-bar"><i></i><i></i><i></i><small>PH · DIAGNÓSTICO</small></div>
+            <!-- Motion graphic (HyperFrames, _motion/hero-diagnostico): se reproduce una vez y queda en "Listo" -->
+            <div class="board">
+              <video class="board-video" id="video-diagnostico" muted playsinline preload="auto" disablepictureinpicture
+                     poster="img/motion/hero-diagnostico-inicio.webp" width="1000" height="800">
+                <source src="img/motion/hero-diagnostico.mp4" type="video/mp4">
+              </video>
+              <script>
+                // Se decide antes de cargar nada: con "reducir movimiento" o ahorro de datos (o si el navegador no
+                // deja reproducir, como el ahorro de batería del iPhone) queda directamente el resultado final
+                (function () {
+                  const v = document.getElementById("video-diagnostico");
+                  const final = () => { v.poster = "img/motion/hero-diagnostico-final.webp"; };
+                  if ((window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) ||
+                      (navigator.connection && navigator.connection.saveData)) {
+                    v.preload = "none";
+                    final();
+                    return;
+                  }
+                  v.addEventListener("error", final, true);
+                  const reproducir = () => { const intento = v.play(); if (intento && intento.catch) intento.catch(final); };
+                  // Arranca cuando se ve (en el celular la tarjeta queda más abajo que el título)
+                  if (!("IntersectionObserver" in window)) { reproducir(); return; }
+                  const vista = new IntersectionObserver(([e]) => {
+                    // Una pausa para que el logo se vea grande antes de que empiece el diagnóstico
+                    if (e.isIntersecting) { vista.disconnect(); setTimeout(reproducir, 1600); }
+                  }, { threshold: 0.5 });
+                  vista.observe(v);
+                })();
+              </script>
+            </div>
+            <div class="hero-card-caption"><strong>Diagnóstico preciso</strong><span>Hardware y software</span></div>
           </div>
-          <div class="hero-card-caption"><strong>Diagnóstico preciso</strong><span>Hardware + software</span></div>
         </div>
       </div>
+      <span class="scroll-cue" aria-hidden="true"></span>
     </section>
 
-    <!-- Servicios -->
-    <section class="section" id="servicios">
+    <section class="section" id="servicios" data-tone="base">
       <div class="container">
-        <div class="section-head reveal">
-          <p class="eyebrow">Servicios</p>
-          <h2>Lo que puedo hacer por tu equipo</h2>
-          <p>Desde una PC lenta hasta una actualización completa: primero encuentro la causa, después te explico las opciones.</p>
+        <div class="section-head">
+          <p class="kicker" data-nodo>Servicios</p>
+          <h2><span class="line"><span>Lo que puedo hacer</span></span><span class="line"><span>por tu equipo</span></span></h2>
+          <p class="reveal">Desde una PC lenta hasta una actualización completa: primero encuentro la causa, después te explico las opciones.</p>
         </div>
-        <div class="grid grid-3">
-          <article class="card reveal">
-            <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
-            <h3>Diagnóstico completo</h3>
-            <p>Pruebas de hardware, temperaturas, discos y sistema. Recibís una explicación clara y un presupuesto antes de avanzar.</p>
-          </article>
-          <article class="card reveal">
-            <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/><path d="M17.5 8a2.5 2.5 0 1 1 2 4H2"/></svg></div>
-            <h3>Limpieza y refrigeración</h3>
-            <p>Limpieza interna, cambio de pasta térmica y revisión del flujo de aire para cuidar rendimiento y vida útil.</p>
-          </article>
-          <article class="card reveal">
-            <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg></div>
-            <h3>Upgrades con criterio</h3>
-            <p>SSD, memoria y componentes elegidos según tu uso y presupuesto. Migración y clonación incluidas cuando corresponde.</p>
-          </article>
-          <article class="card reveal">
-            <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
-            <h3>Formateo y sistemas</h3>
-            <p>Instalación y configuración de Windows o Linux, drivers, actualizaciones y puesta a punto segura.</p>
-          </article>
-          <article class="card reveal">
-            <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg></div>
-            <h3>Reparación de componentes</h3>
-            <p>Diagnóstico de placa, conectores y piezas dañadas. Te digo con honestidad cuándo conviene reparar y cuándo reemplazar.</p>
-          </article>
-          <article class="card reveal">
-            <div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1"/></svg></div>
-            <h3>Soporte remoto</h3>
-            <p>Asistencia a distancia para problemas de software, configuración y asesoramiento de seguridad.</p>
-          </article>
-        </div>
-        <a class="card-link more" href="servicios.html">Ver los servicios en detalle
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <ul class="servicios-lista">
+          <li class="reveal"><a class="servicio" href="servicios.html#diagnostico"><span class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span><h3>Diagnóstico completo</h3><p>Pruebas de hardware, temperaturas, discos y sistema. Recibís una explicación clara y un presupuesto antes de avanzar.</p><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+          <li class="reveal"><a class="servicio" href="servicios.html#limpieza"><span class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.6 4.6A2 2 0 1 1 11 8H2"/><path d="M12.6 19.4A2 2 0 1 0 14 16H2"/><path d="M17.5 8a2.5 2.5 0 1 1 2 4H2"/></svg></span><h3>Limpieza y refrigeración</h3><p>Limpieza interna, cambio de pasta térmica y revisión del flujo de aire para cuidar rendimiento y vida útil.</p><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+          <li class="reveal"><a class="servicio" href="servicios.html#upgrades"><span class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg></span><h3>Upgrades con criterio</h3><p>SSD, memoria y componentes elegidos según tu uso y presupuesto. Migración y clonación incluidas cuando corresponde.</p><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+          <li class="reveal"><a class="servicio" href="servicios.html#formateo"><span class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span><h3>Formateo y sistemas</h3><p>Instalación y configuración de Windows o Linux, drivers, actualizaciones y puesta a punto segura.</p><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+          <li class="reveal"><a class="servicio" href="servicios.html#reparacion"><span class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.6 2.6-2.4-.6-.6-2.4z"/></svg></span><h3>Reparación de componentes</h3><p>Diagnóstico de placa, conectores y piezas dañadas. Te digo con honestidad cuándo conviene reparar y cuándo reemplazar.</p><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+          <li class="reveal"><a class="servicio" href="servicios.html#remoto"><span class="icono"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.55a11 11 0 0 1 14 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1"/></svg></span><h3>Soporte remoto</h3><p>Asistencia a distancia para problemas de software, configuración y asesoramiento de seguridad.</p><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M9 7h8v8"/></svg></a></li>
+        </ul>
       </div>
     </section>
 
-    <!-- Optimizador -->
-    <section class="section section-alt" id="optimizador" aria-labelledby="optimizador-titulo">
+    <section class="section" id="optimizador" data-tone="teal" aria-labelledby="optimizador-titulo">
       <div class="container">
         <div class="product">
-          <div class="reveal">
-            <span class="badge"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-13.051-1.802"/></svg>Para Windows 10 y 11</span>
-            <h2 id="optimizador-titulo">Optimizador de Sistema PfoHardware</h2>
-            <p class="lead">Un programa para Windows diseñado para mejorar la fluidez y el rendimiento de tu PC con un solo clic, sin conocimientos técnicos. Al aprobarse el pago recibís tu clave y el enlace de descarga en pantalla y por mail.</p>
+          <div class="product-texto">
+            <span class="badge" data-nodo><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-13.051-1.802"/></svg>Para Windows 10 y 11</span>
+            <h2 id="optimizador-titulo"><span class="line"><span>Optimizador de Sistema</span></span><span class="line"><span>PfoHardware</span></span></h2>
+            <p class="lead reveal">Un programa para Windows diseñado para mejorar la fluidez y el rendimiento de tu PC con un solo clic, sin conocimientos técnicos. Al aprobarse el pago recibís tu clave y el enlace de descarga en pantalla y por mail.</p>
             <div class="modes">
-              <div class="mode">
+              <div class="mode reveal">
                 <h3>Optimización completa</h3>
                 <p>Deja toda la PC más liviana: arranca más rápido, con menos programas y permisos en segundo plano, y rinde más en juegos.</p>
               </div>
-              <div class="mode">
+              <div class="mode reveal">
                 <h3>Solo juegos</h3>
                 <p>Para jugar: además ajusta tu placa de video NVIDIA o Intel a máximo rendimiento, sin tocar tus programas de inicio ni tu privacidad.</p>
               </div>
             </div>
-            <ul class="specs" aria-label="Requisitos del sistema">
+            <ul class="specs reveal" aria-label="Requisitos del sistema">
               <li><strong>Windows 10 u 11</strong> (64 bits)</li>
               <li><strong>Intel o AMD</strong>, cualquier procesador</li>
               <li><strong>2 GB de RAM</strong> o más</li>
@@ -191,11 +169,13 @@
           </div>
           <!-- Motion graphic (HyperFrames, _motion/demo-optimizador) con las pantallas reales del programa -->
           <figure class="shot reveal">
-            <video class="shot-video" data-demo muted loop playsinline preload="none" disablepictureinpicture
-                   poster="img/motion/demo-optimizador-poster.webp" width="900" height="966"
-                   aria-label="Demostración del Optimizador PfoHardware: un clic en Optimizar ahora, el anillo de progreso llega al 100 % y aparece Optimización completada, con la opción Deshacer cambios.">
-              <source src="img/motion/demo-optimizador.mp4" type="video/mp4">
-            </video>
+            <div class="shot-frame">
+              <video class="shot-video" data-demo muted loop playsinline preload="none" disablepictureinpicture
+                     poster="img/motion/demo-optimizador-poster.webp" width="900" height="966"
+                     aria-label="Demostración del Optimizador PfoHardware: un clic en Optimizar ahora, el anillo de progreso llega al 100 % y aparece Optimización completada, con la opción Deshacer cambios.">
+                <source src="img/motion/demo-optimizador.mp4" type="video/mp4">
+              </video>
+            </div>
             <figcaption>El optimizador en acción: un clic y listo.</figcaption>
           </figure>
         </div>
@@ -213,32 +193,32 @@
             <p class="legal" id="software-legal"><strong>Compra y licencia:</strong> pago único con Mercado Pago, sin suscripciones. La licencia es para 1 computadora con Windows 10 u 11. Tenés <strong>10 días corridos para arrepentirte</strong> de la compra (Ley 24.240); si pedís la devolución, la licencia se desactiva. Ante cualquier duda o problema, contás con mi <strong>soporte directo y personal</strong>.
               <br><a class="link" href="https://wa.me/5492974299737?text=Hola!%20Quiero%20ejercer%20el%20bot%C3%B3n%20de%20arrepentimiento%20de%20mi%20compra%20del%20optimizador.%20Mi%20n%C3%BAmero%20de%20operaci%C3%B3n%20es%3A%20" target="_blank" rel="noopener noreferrer">Botón de arrepentimiento</a></p>
           </div>
-          <div class="reveal">
-            <div class="features">
+          <div>
+            <div class="features reveal">
               <div class="feature">
-                <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+                <div class="icono"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
                 <h3>Seguro y reversible</h3>
                 <p>Antes de optimizar guarda tu configuración y, si el equipo lo permite, crea un punto de restauración de Windows: con <strong>Deshacer cambios</strong> volvés todo a como estaba. Nunca vacía la Papelera sin preguntarte ni desactiva tu antivirus, el firewall o las actualizaciones.</p>
               </div>
               <div class="feature">
-                <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 15a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2z"/><path d="M3 15a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 2z"/></svg></div>
+                <div class="icono"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14v-2a9 9 0 0 1 18 0v2"/><path d="M21 15a2 2 0 0 1-2 2h-1v-6h1a2 2 0 0 1 2 2z"/><path d="M3 15a2 2 0 0 0 2 2h1v-6H5a2 2 0 0 0-2 2z"/></svg></div>
                 <h3>Soporte directo y personal</h3>
                 <p>Ante cualquier duda o problema, te atiendo yo mismo de forma directa y te ayudo a resolverlo.</p>
               </div>
               <div class="feature">
-                <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/><path d="M3 12A9 9 0 0 1 18.5 5.8L21 8"/><path d="M21 3v5h-5"/></svg></div>
+                <div class="icono"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 0 1-15.5 6.2L3 16"/><path d="M3 21v-5h5"/><path d="M3 12A9 9 0 0 1 18.5 5.8L21 8"/><path d="M21 3v5h-5"/></svg></div>
                 <h3>Actualizaciones continuas</h3>
                 <p>Sigo trabajando en mejoras: si encuentro nuevas formas de optimizar tu computadora, actualizo el programa, y él mismo te avisa cuando hay una versión nueva.</p>
               </div>
               <div class="feature">
-                <div class="card-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
+                <div class="icono"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></div>
                 <h3>Compra transparente</h3>
                 <p>Pagás una sola vez. Tu clave te llega por mail, queda vinculada a tu computadora y la recuperás cuando quieras con tu número de operación.</p>
               </div>
             </div>
-            <blockquote class="quote">
+            <blockquote class="quote reveal">
               “Mi intención es mejorar la velocidad y fluidez de tu computadora porque entiendo esa molestia. Este optimizador lo creé y utilicé personalmente en mis propios equipos con excelentes resultados; funcionó tan bien que decidí ponerlo a disposición de todos. Tenés mi compromiso de soporte directo y continuo.”
-              <footer>— Iván Pfoh, fundador de PfoHardware</footer>
+              <footer>Iván Pfoh, fundador de PfoHardware</footer>
             </blockquote>
           </div>
         </div>
@@ -271,62 +251,64 @@
       </div>
     </section>
 
-    <!-- Trabajos -->
-    <section class="section" id="trabajos">
+    <section class="section trabajos" id="trabajos" data-tone="ink" data-tira>
       <div class="container">
-        <div class="section-head reveal">
-          <p class="eyebrow">Trabajos realizados</p>
-          <h2>Cuidado en cada detalle.</h2>
-        </div>
-        <div class="gallery">
-          <a class="photo reveal" href="img/trabajos/pc-antes-limpieza-1600.webp" data-gallery><img src="img/trabajos/pc-antes-limpieza-640.webp" alt="PC antes de la limpieza" width="540" height="720" loading="lazy"><span class="photo-tag">Antes</span><span class="photo-caption">PC antes de la limpieza</span></a>
-          <a class="photo reveal" href="img/trabajos/pc-despues-limpieza-1600.webp" data-gallery><img src="img/trabajos/pc-despues-limpieza-640.webp" alt="PC después de la limpieza" width="540" height="720" loading="lazy"><span class="photo-tag">Después</span><span class="photo-caption">PC después de la limpieza</span></a>
-          <a class="photo reveal" href="img/trabajos/notebook-mantenimiento-1600.webp" data-gallery><img src="img/trabajos/notebook-mantenimiento-640.webp" alt="Mantenimiento de notebook" width="499" height="376" loading="lazy"><span class="photo-caption">Mantenimiento de notebook</span></a>
-          <a class="photo reveal" href="img/trabajos/notebook-revision-interna-1600.webp" data-gallery><img src="img/trabajos/notebook-revision-interna-640.webp" alt="Revisión interna de notebook" width="540" height="720" loading="lazy"><span class="photo-caption">Revisión interna de notebook</span></a>
-          <a class="photo reveal" href="img/trabajos/ps4-limpieza-1600.webp" data-gallery><img src="img/trabajos/ps4-limpieza-640.webp" alt="Limpieza de PlayStation 4" width="506" height="646" loading="lazy"><span class="photo-caption">Limpieza de PlayStation 4</span></a>
-          <a class="photo reveal" href="img/trabajos/notebook-modulo-pantalla-1600.webp" data-gallery><img src="img/trabajos/notebook-modulo-pantalla-640.webp" alt="Cambio de módulo de pantalla" width="499" height="637" loading="lazy"><span class="photo-caption">Cambio de módulo de pantalla</span></a>
-          <a class="photo reveal" href="img/trabajos/armado-pc-1600.webp" data-gallery><img src="img/trabajos/armado-pc-640.webp" alt="Armado de PC" width="496" height="485" loading="lazy"><span class="photo-caption">Armado de PC</span></a>
-          <a class="photo reveal" href="img/trabajos/pc-escritorio-1600.webp" data-gallery><img src="img/trabajos/pc-escritorio-640.webp" alt="Mantenimiento de computadora de escritorio" width="540" height="720" loading="lazy"><span class="photo-caption">Mantenimiento de computadora</span></a>
-          <a class="photo reveal" href="img/trabajos/notebook-diagnostico-arranque-1600.webp" data-gallery><img src="img/trabajos/notebook-diagnostico-arranque-640.webp" alt="Diagnóstico de arranque en una notebook" width="720" height="540" loading="lazy"><span class="photo-caption">Diagnóstico de arranque en notebook</span></a>
-        </div>
-        <a class="card-link more" href="https://instagram.com/pfohardware" target="_blank" rel="noopener noreferrer">Más trabajos en Instagram
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
-      </div>
-    </section>
-
-    <!-- Método -->
-    <section class="section section-alt" id="proceso">
-      <div class="container">
-        <div class="section-head reveal">
-          <p class="eyebrow">Método de trabajo</p>
-          <h2>De la falla a la solución.</h2>
-        </div>
-        <div class="steps" data-anim>
-          <article class="step reveal"><b class="text-gradient">01</b><h3>Revisión</h3><p>Escucho qué pasa y reviso el equipo con pruebas concretas.</p></article>
-          <article class="step reveal"><b class="text-gradient">02</b><h3>Propuesta</h3><p>Te explico el problema, las alternativas y el costo total.</p></article>
-          <article class="step reveal"><b class="text-gradient">03</b><h3>Resolución</h3><p>Realizo el trabajo acordado y verifico estabilidad y rendimiento.</p></article>
-          <article class="step reveal"><b class="text-gradient">04</b><h3>Entrega</h3><p>Recibís el equipo probado, limpio y con recomendaciones de uso.</p></article>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contacto -->
-    <section class="section" id="contacto">
-      <div class="container">
-        <div class="cta reveal">
+        <div class="section-head trabajos-head">
           <div>
-            <p class="eyebrow">Hablemos de tu equipo</p>
-            <h2>¿Algo no funciona como debería?</h2>
+            <p class="kicker" data-nodo>Trabajos realizados</p>
+            <h2><span class="line"><span>Trabajos reales,</span></span><span class="line"><span>de cerca.</span></span></h2>
+          </div>
+          <div class="tira-ayuda">
+            <button type="button" data-mover="-1" aria-label="Foto anterior"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+            <button type="button" data-mover="1" aria-label="Foto siguiente"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          </div>
+        </div>
+      </div>
+      <div class="tira">
+        <a class="photo" href="img/trabajos/pc-antes-limpieza-1600.webp" data-gallery style="--ar: 540 / 720"><img src="img/trabajos/pc-antes-limpieza-640.webp" alt="PC antes de la limpieza" width="540" height="720" loading="lazy"><span class="photo-tag">Antes</span><span class="photo-caption">PC antes de la limpieza</span></a>
+        <a class="photo" href="img/trabajos/pc-despues-limpieza-1600.webp" data-gallery style="--ar: 540 / 720"><img src="img/trabajos/pc-despues-limpieza-640.webp" alt="PC después de la limpieza" width="540" height="720" loading="lazy"><span class="photo-tag despues">Después</span><span class="photo-caption">PC después de la limpieza</span></a>
+        <a class="photo" href="img/trabajos/notebook-mantenimiento-1600.webp" data-gallery style="--ar: 499 / 376"><img src="img/trabajos/notebook-mantenimiento-640.webp" alt="Mantenimiento de notebook" width="499" height="376" loading="lazy"><span class="photo-caption">Mantenimiento de notebook</span></a>
+        <a class="photo" href="img/trabajos/notebook-revision-interna-1600.webp" data-gallery style="--ar: 540 / 720"><img src="img/trabajos/notebook-revision-interna-640.webp" alt="Revisión interna de notebook" width="540" height="720" loading="lazy"><span class="photo-caption">Revisión interna de notebook</span></a>
+        <a class="photo" href="img/trabajos/ps4-limpieza-1600.webp" data-gallery style="--ar: 506 / 646"><img src="img/trabajos/ps4-limpieza-640.webp" alt="Limpieza de PlayStation 4" width="506" height="646" loading="lazy"><span class="photo-caption">Limpieza de PlayStation 4</span></a>
+        <a class="photo" href="img/trabajos/notebook-modulo-pantalla-1600.webp" data-gallery style="--ar: 499 / 637"><img src="img/trabajos/notebook-modulo-pantalla-640.webp" alt="Cambio de módulo de pantalla" width="499" height="637" loading="lazy"><span class="photo-caption">Cambio de módulo de pantalla</span></a>
+        <a class="photo" href="img/trabajos/armado-pc-1600.webp" data-gallery style="--ar: 496 / 485"><img src="img/trabajos/armado-pc-640.webp" alt="Armado de PC" width="496" height="485" loading="lazy"><span class="photo-caption">Armado de PC</span></a>
+        <a class="photo" href="img/trabajos/pc-escritorio-1600.webp" data-gallery style="--ar: 540 / 720"><img src="img/trabajos/pc-escritorio-640.webp" alt="Mantenimiento de computadora de escritorio" width="540" height="720" loading="lazy"><span class="photo-caption">Mantenimiento de computadora</span></a>
+        <a class="photo" href="img/trabajos/notebook-diagnostico-arranque-1600.webp" data-gallery style="--ar: 720 / 540"><img src="img/trabajos/notebook-diagnostico-arranque-640.webp" alt="Diagnóstico de arranque en una notebook" width="720" height="540" loading="lazy"><span class="photo-caption">Diagnóstico de arranque en notebook</span></a>
+      </div>
+      <div class="container">
+        <a class="arrow-link mas" href="https://instagram.com/pfohardware" target="_blank" rel="noopener noreferrer">Más trabajos en Instagram <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      </div>
+    </section>
+
+    <section class="section" id="proceso" data-tone="copper">
+      <div class="container">
+        <div class="section-head">
+          <p class="kicker" data-nodo>Método de trabajo</p>
+          <h2><span class="line"><span>De la falla</span></span><span class="line"><span>a la solución.</span></span></h2>
+        </div>
+        <ol class="metodo">
+          <li class="paso reveal"><b>Paso 1</b><h3>Revisión</h3><p>Escucho qué pasa y reviso el equipo con pruebas concretas.</p></li>
+          <li class="paso reveal"><b>Paso 2</b><h3>Propuesta</h3><p>Te explico el problema, las alternativas y el costo total.</p></li>
+          <li class="paso reveal"><b>Paso 3</b><h3>Resolución</h3><p>Hago el trabajo acordado y verifico estabilidad y rendimiento.</p></li>
+          <li class="paso reveal"><b>Paso 4</b><h3>Entrega</h3><p>Recibís el equipo probado, limpio y con recomendaciones de uso.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section cierre" id="contacto" data-tone="base">
+      <div class="container">
+        <p class="kicker" data-nodo>Hablemos de tu equipo</p>
+        <h2><span class="line"><span>¿Algo no funciona</span></span><span class="line"><span>como debería?</span></span></h2>
+        <div class="cierre-grid">
+          <div class="reveal">
             <p>Contame qué está pasando. Coordinamos una revisión, retiro y entrega o asistencia según tu caso.</p>
             <div class="actions">
-              <a class="btn btn-primary" href="mailto:ivanpfohh85@gmail.com" data-mail>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>Escribirme por email</a>
-              <a class="btn btn-secondary" href="https://instagram.com/pfohardware" target="_blank" rel="noopener noreferrer">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>Instagram</a>
-              <a class="btn btn-secondary" data-whatsapp hidden>WhatsApp</a>
+              <a class="btn btn-primary btn-lg" href="mailto:ivanpfohh85@gmail.com" data-mail>Escribirme por email <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+              <a class="btn btn-secondary btn-lg" href="https://instagram.com/pfohardware" target="_blank" rel="noopener noreferrer">Instagram</a>
+              <a class="btn btn-secondary btn-lg" data-whatsapp hidden>WhatsApp</a>
             </div>
           </div>
-          <div class="cta-meta">
+          <div class="cierre-meta reveal">
             <span>Atención en</span>
             <strong>Recoleta</strong>
             <small>Capital Federal</small>
@@ -363,8 +345,9 @@
           </ul>
         </div>
       </div>
+      <p class="footer-marca" aria-hidden="true">PfoHardware</p>
       <div class="footer-bottom">
-        <span>© 2026 Iván Pfoh · PfoHardware</span>
+        <span>© 2026 Iván Pfoh, PfoHardware</span>
         <a href="https://wa.me/5492974299737?text=Hola!%20Quiero%20ejercer%20el%20bot%C3%B3n%20de%20arrepentimiento%20de%20mi%20compra%20del%20optimizador.%20Mi%20n%C3%BAmero%20de%20operaci%C3%B3n%20es%3A%20" target="_blank" rel="noopener noreferrer">Botón de arrepentimiento</a>
       </div>
     </div>
@@ -375,6 +358,5 @@
     <figure><img alt=""><figcaption></figcaption></figure>
     <div class="lightbox-controls"><button type="button" data-prev>← Anterior</button><button type="button" data-next>Siguiente →</button></div>
   </dialog>
-  <script src="app.js"></script>
 </body>
 </html>
