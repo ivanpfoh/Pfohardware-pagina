@@ -250,6 +250,11 @@ dialog button{background:#152a22;border:1px solid #386352;border-radius:4px;colo
   line-height: 1.65;
 }
 
+.software-sale .legal-text a {
+  color: var(--software-accent);
+  text-underline-offset: 3px;
+}
+
 .download-page {
   min-height: 65vh;
   padding-top: 72px;
@@ -277,6 +282,184 @@ dialog button{background:#152a22;border:1px solid #386352;border-radius:4px;colo
 .download-help a {
   color: var(--software-accent);
   overflow-wrap: anywhere;
+}
+
+/* Bloque de confianza, soporte y seguridad */
+.software-trust {
+  grid-column: 1 / -1;
+  margin-top: 24px;
+  padding-top: 36px;
+  border-top: 1px solid #1a332a;
+}
+
+.software-trust-header {
+  margin-bottom: 24px;
+}
+
+.trust-badge {
+  display: inline-block;
+  font: 600 .72rem monospace;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+  color: var(--software-accent);
+  background: rgba(0, 255, 196, 0.08);
+  border: 1px solid rgba(0, 255, 196, 0.25);
+  padding: 4px 10px;
+  border-radius: 3px;
+  margin-bottom: 12px;
+}
+
+.software-trust-header h3 {
+  font: 600 clamp(1.4rem, 2.5vw, 1.85rem) "Space Grotesk", sans-serif;
+  letter-spacing: -.03em;
+  color: var(--text);
+  margin: 0 0 12px;
+}
+
+.trust-lead {
+  color: #c0d3cb;
+  font-size: .98rem;
+  line-height: 1.65;
+  margin: 0;
+  max-width: 860px;
+  font-style: italic;
+  border-left: 2px solid var(--software-accent);
+  padding-left: 14px;
+}
+
+.trust-lead strong {
+  font-style: normal;
+  color: var(--software-accent);
+}
+
+.trust-cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.trust-card {
+  background: #09120e;
+  border: 1px solid #193127;
+  border-radius: 6px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  transition: border-color .2s;
+}
+
+.trust-card:hover {
+  border-color: #245e4e;
+}
+
+.trust-icon {
+  font-size: 1.5rem;
+  margin-bottom: 12px;
+  line-height: 1;
+}
+
+.trust-card h4 {
+  font: 600 1.12rem "Space Grotesk", sans-serif;
+  color: var(--text);
+  margin: 0 0 8px;
+}
+
+.trust-card p {
+  color: var(--muted, #9bada6);
+  font-size: .88rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.trust-contact-row {
+  margin-top: 22px;
+  padding: 16px 20px;
+  background: rgba(0, 230, 189, 0.04);
+  border: 1px solid #1a3c33;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.trust-contact-row span {
+  font-size: .88rem;
+  color: #cbe3db;
+  font-weight: 500;
+}
+
+.trust-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.trust-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #0c1a15;
+  border: 1px solid #1e4d3f;
+  color: var(--software-accent);
+  padding: 8px 14px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-size: .85rem;
+  font-weight: 600;
+  transition: transform .2s, border-color .2s;
+}
+
+.trust-link:hover {
+  transform: translateY(-2px);
+  border-color: var(--software-accent);
+}
+
+.download-support-banner {
+  margin-top: 24px;
+  padding: 20px 24px;
+  background: rgba(0, 230, 189, 0.05);
+  border: 1px solid #1c4b3f;
+  border-radius: 6px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.download-support-banner .support-banner-icon {
+  font-size: 1.8rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.download-support-banner h3 {
+  font: 600 1.15rem "Space Grotesk", sans-serif;
+  margin: 0 0 6px;
+  color: var(--text);
+}
+
+.download-support-banner p {
+  color: #a8bfb6;
+  font-size: .9rem;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.download-support-banner a {
+  color: var(--software-accent);
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .trust-cards {
+    grid-template-columns: 1fr;
+  }
+  .trust-contact-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 /* Guía rápida de instalación y aviso de Windows SmartScreen */
