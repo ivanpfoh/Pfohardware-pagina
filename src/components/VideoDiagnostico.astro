@@ -1,0 +1,39 @@
+---
+// Motion graphic de HyperFrames (_motion/hero-diagnostico): un diagnóstico sobre una PC real que arranca con
+// el logo PH grande. Se reproduce una vez al verse y queda en "Listo".
+// Con "reducir movimiento" o ahorro de datos queda directamente el último cuadro.
+interface Props { id?: string; class?: string }
+const { id = "video-diagnostico", class: clase = "" } = Astro.props;
+---
+<figure class:list={["diagnostico", clase]} data-ui>
+  <video id={id} class="diagnostico-video" muted playsinline preload="none" disablepictureinpicture
+    poster="img/motion/hero-diagnostico-inicio.webp" width="1000" height="800" data-diagnostico
+    aria-label="Diagnóstico de una PC real: aparece el logo PH, se revisan la CPU, la RAM, la ventilación y la placa, y el estado del sistema queda en Listo.">
+    <source src="img/motion/hero-diagnostico.mp4" type="video/mp4" />
+  </video>
+  <figcaption><span>Diagnóstico de hardware y software</span><span class="dim">Sobre una PC real</span></figcaption>
+</figure>
+
+<script>
+  import { ahorroDatos, moverPoco } from "../scripts/base";
+
+  document.querySelectorAll<HTMLVideoElement>("video[data-diagnostico]").forEach((v) => {
+    const final = (): void => { v.poster = "img/motion/hero-diagnostico-final.webp"; };
+    if (moverPoco() || ahorroDatos() || !("IntersectionObserver" in window)) { final(); return; }
+    v.addEventListener("error", final, true);
+    const vista = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return;
+      vista.disconnect();
+      v.preload = "auto";
+      // Una pausa para que el logo se vea grande antes de que arranque el diagnóstico
+      setTimeout(() => { v.play().catch(final); }, 1200);
+    }, { threshold: 0.5 });
+    vista.observe(v);
+  });
+</script>
+
+<style>
+  .diagnostico { margin: 0; }
+  .diagnostico-video { width: 100%; aspect-ratio: 5 / 4; object-fit: cover; border-radius: var(--radio-ventana); background: #000; }
+  .diagnostico figcaption { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-top: 14px; font-size: var(--t-chico); font-weight: 600; }
+</style>

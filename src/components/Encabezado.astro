@@ -1,0 +1,111 @@
+---
+import { COMPRAR, PRECIO } from "../consts";
+
+interface Props {
+  actual?: "inicio" | "servicios" | "quiensoy" | "contacto" | "descarga" | "otra";
+}
+const { actual = "otra" } = Astro.props;
+const enlaces = [
+  { href: "index.html#optimizador", texto: "Optimizador", id: "inicio" },
+  { href: "servicios.html", texto: "Servicio técnico", id: "servicios" },
+  { href: "index.html#trabajos", texto: "Trabajos", id: "" },
+  { href: "quiensoy.html", texto: "Quién soy", id: "quiensoy" },
+  { href: "contacto.html", texto: "Contacto", id: "contacto" },
+];
+---
+<header class="encabezado" data-encabezado>
+  <div class="contenedor encabezado-fila">
+    <a class="marca" href="index.html" aria-label="PfoHardware, inicio">
+      <img src="img/logo-ph-96.png" alt="" width="36" height="36" />
+      <span>PfoHardware</span>
+    </a>
+    <a class="boton boton-panel encabezado-comprar" href={COMPRAR}>Comprar</a>
+    <button class="menu-boton" type="button" aria-expanded="false" aria-controls="menu" data-menu-boton>
+      <span class="visually-hidden" data-menu-texto>Abrir menú</span>
+      <span class="menu-rayas" aria-hidden="true"><i></i><i></i></span>
+    </button>
+    <nav class="menu" id="menu" aria-label="Navegación principal" data-menu>
+      <ul>
+        {enlaces.map((e) => (
+          <li><a href={e.href} aria-current={e.id && e.id === actual && e.id !== "inicio" ? "page" : undefined}>{e.texto}</a></li>
+        ))}
+      </ul>
+      <a class="boton boton-panel menu-comprar" href={COMPRAR}>Comprar <span class="num">{PRECIO}</span></a>
+      <a class="menu-ya" href="descarga.html" aria-current={actual === "descarga" ? "page" : undefined}>Ya lo compré</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .encabezado {
+    position: fixed; inset: 0 0 auto; z-index: 100; view-transition-name: encabezado;
+    transition: background-color 300ms ease, transform 300ms var(--ease-out);
+  }
+  .encabezado.con-fondo { background: rgba(5, 8, 10, 0.94); }
+  .encabezado.oculto { transform: translateY(-100%); }
+  .encabezado-fila { height: var(--header); display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+  .marca { position: relative; z-index: 2; display: inline-flex; align-items: center; gap: 12px; text-decoration: none; font: 600 1.14rem/1 var(--letra-titulo); letter-spacing: -0.01em; }
+  .marca img { width: 36px; height: 36px; transition: transform 500ms var(--ease-out); }
+  @media (hover: hover) and (pointer: fine) { .marca:hover img { transform: rotate(-8deg) scale(1.06); } }
+
+  .menu { display: flex; align-items: center; gap: 8px; }
+  .menu ul { display: flex; list-style: none; gap: 2px; }
+  .menu ul a {
+    position: relative; display: block; padding: 10px 12px; color: var(--texto-dim); text-decoration: none; font-weight: 600; font-size: 0.95rem;
+    transition: color 200ms ease;
+  }
+  .menu ul a::after {
+    content: ""; position: absolute; left: 12px; right: 12px; bottom: 4px; height: 2px; border-radius: 2px; background: var(--degrade);
+    transform: scaleX(0); transform-origin: right; transition: transform 320ms var(--ease-out);
+  }
+  .menu ul a[aria-current="page"] { color: var(--texto); }
+  .menu ul a[aria-current="page"]::after { transform: scaleX(1); }
+  @media (hover: hover) and (pointer: fine) {
+    .menu ul a:hover { color: var(--texto); }
+    .menu ul a:hover::after { transform: scaleX(1); transform-origin: left; }
+  }
+  .menu-comprar { min-height: 44px; padding: 10px 18px; font-size: 0.95rem; margin-left: 8px; color: var(--marca-1); }
+  .menu-ya { display: none; }
+  /* En el celular, Comprar queda a mano arriba, al lado del menú */
+  .encabezado-comprar { display: none; min-height: 44px; padding: 8px 16px; font-size: 0.95rem; color: var(--marca-1); margin-left: auto; position: relative; z-index: 2; }
+
+  .menu-boton {
+    display: none; position: relative; z-index: 2; width: 48px; height: 48px; border-radius: var(--radio);
+    border: 0; background: var(--panel); cursor: pointer; transition: transform 160ms var(--ease-out);
+  }
+  .menu-boton:active { transform: scale(0.94); }
+  .menu-rayas { display: grid; gap: 6px; justify-items: center; }
+  .menu-rayas i { display: block; width: 18px; height: 2px; border-radius: 2px; background: var(--texto); transition: transform 320ms var(--ease-out); }
+  .menu-boton[aria-expanded="true"] .menu-rayas i:first-child { transform: translateY(4px) rotate(45deg); }
+  .menu-boton[aria-expanded="true"] .menu-rayas i:last-child { transform: translateY(-4px) rotate(-45deg); }
+
+  @media (max-width: 960px) and (prefers-reduced-motion: reduce) {
+    .menu, .menu.abierto { clip-path: none; transition: opacity 250ms ease, visibility 0s linear 250ms; }
+    .menu:not(.abierto) { opacity: 0; }
+    .menu.abierto { opacity: 1; transition: opacity 250ms ease, visibility 0s; }
+  }
+  @media (max-width: 960px) {
+    .menu-boton { display: grid; place-items: center; }
+    .encabezado-comprar { display: inline-flex; }
+    .encabezado:has(.menu.abierto) .encabezado-comprar { visibility: hidden; }
+    .encabezado-fila { gap: 10px; }
+    .menu {
+      position: fixed; inset: 0; z-index: 1; flex-direction: column; align-items: stretch; justify-content: flex-end; gap: 0;
+      padding: calc(var(--header) + 24px) var(--margen) max(32px, env(safe-area-inset-bottom)); background: var(--fondo);
+      visibility: hidden; clip-path: inset(0 0 100% 0);
+      transition: clip-path 280ms var(--ease-in-out), visibility 0s linear 280ms;
+    }
+    .menu.abierto { visibility: visible; clip-path: inset(0 0 0 0); transition: clip-path 420ms var(--ease-in-out), visibility 0s; }
+    .menu ul { flex-direction: column; gap: 0; }
+    .menu ul a { padding: 10px 0; font: 600 clamp(2.1rem, 10vw, 3rem)/1.12 var(--letra-titulo); letter-spacing: -0.035em; color: var(--texto); opacity: 0; transform: translateY(20px); transition: opacity 250ms ease, transform 250ms ease; }
+    .menu ul a::after { display: none; }
+    .menu ul a[aria-current="page"] { color: var(--marca); }
+    .menu.abierto ul a { opacity: 1; transform: none; transition: opacity 300ms ease, transform 420ms var(--ease-out); }
+    .menu.abierto li:nth-child(2) a { transition-delay: 40ms; }
+    .menu.abierto li:nth-child(3) a { transition-delay: 80ms; }
+    .menu.abierto li:nth-child(4) a { transition-delay: 120ms; }
+    .menu.abierto li:nth-child(5) a { transition-delay: 160ms; }
+    .menu-comprar { margin: 28px 0 0; min-height: 60px; font-size: 1.1rem; }
+    .menu-ya { display: block; margin-top: 16px; padding: 10px 0; text-align: center; color: var(--texto-dim); font-weight: 600; }
+  }
+</style>

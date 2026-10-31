@@ -1,0 +1,100 @@
+---
+// El servicio técnico en la portada: el video del diagnóstico y la lista de servicios.
+// En escritorio, al pasar el mouse por un servicio aparece una foto real de ese tipo de trabajo.
+import Icono from "./Icono.astro";
+import VideoDiagnostico from "./VideoDiagnostico.astro";
+import { servicios } from "../data/servicios";
+import { MAIL_CONSULTA } from "../consts";
+---
+<section class="servicio-inicio" id="servicio" aria-labelledby="servicio-titulo">
+  <div class="contenedor">
+    <div class="si-cabeza">
+      <h2 id="servicio-titulo" data-titulo><span class="linea"><span>¿Preferís que</span></span><span class="linea"><span>lo revise yo?</span></span></h2>
+      <p data-entra>También hago servicio técnico de PCs, notebooks y consolas en Recoleta, Capital Federal. Primero encuentro la causa, después te explico las opciones y el costo.</p>
+    </div>
+    <div class="si-grilla">
+      <VideoDiagnostico id="video-diagnostico-inicio" class="si-video" />
+      <div>
+        <ul class="si-lista" data-lista-servicios>
+          {servicios.map((s) => (
+            <li data-entra>
+              <a href={`servicios.html#${s.id}`} data-foto={s.foto?.src}>
+                <span class="si-icono"><Icono nombre={s.icono} tam={20} /></span>
+                <span class="si-nombre">{s.titulo}</span>
+                <Icono nombre="diagonal" tam={18} class="si-flecha" />
+              </a>
+            </li>
+          ))}
+        </ul>
+        <div class="si-acciones" data-entra>
+          <a class="boton boton-marca boton-grande" href={MAIL_CONSULTA}>Pedir presupuesto <Icono nombre="flecha" tam={18} /></a>
+          <a class="boton boton-panel boton-grande" href="servicios.html">Ver los servicios</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <img class="si-vista" alt="" aria-hidden="true" data-vista width="320" height="240" />
+</section>
+
+<script>
+  // Vista previa que sigue al mouse (solo con mouse y con movimiento permitido)
+  import { moverPoco } from "../scripts/base";
+  const lista = document.querySelector<HTMLElement>("[data-lista-servicios]");
+  const vista = document.querySelector<HTMLImageElement>("[data-vista]");
+  if (lista && vista && !moverPoco() && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    let x = 0, y = 0, vx = 0, vy = 0, activo = false, id = 0;
+    const seguir = (): void => {
+      vx += (x - vx) * 0.18; vy += (y - vy) * 0.18;
+      vista.style.transform = `translate3d(${vx + 24}px, ${vy - 90}px, 0) rotate(${Math.max(-6, Math.min(6, (x - vx) * 0.08))}deg)`;
+      id = activo || Math.abs(x - vx) > 0.5 ? requestAnimationFrame(seguir) : 0;
+    };
+    lista.querySelectorAll<HTMLAnchorElement>("a[data-foto]").forEach((a) => {
+      a.addEventListener("pointerenter", (e) => {
+        if (!a.dataset.foto) return;
+        vista.src = a.dataset.foto;
+        if (!activo) { vx = x = e.clientX; vy = y = e.clientY; }
+        activo = true;
+        vista.classList.add("visible");
+        if (!id) id = requestAnimationFrame(seguir);
+      });
+      a.addEventListener("pointerleave", () => { activo = false; vista.classList.remove("visible"); });
+    });
+    lista.addEventListener("pointermove", (e) => { x = e.clientX; y = e.clientY; });
+  }
+</script>
+
+<style>
+  .servicio-inicio { position: relative; padding-block: var(--seccion); background: var(--campo-1); }
+  .si-cabeza { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 80px); align-items: end; }
+  .si-cabeza p { max-width: 30em; font-size: 1.1rem; }
+  .si-grilla { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 80px); align-items: start; margin-top: clamp(40px, 5vw, 72px); }
+  .si-lista { list-style: none; display: grid; gap: 6px; }
+  .si-lista a {
+    position: relative; display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 16px; padding: 16px 18px;
+    border-radius: var(--radio); text-decoration: none; isolation: isolate; overflow: hidden; transition: background-color 250ms ease;
+  }
+  .si-lista a::before {
+    content: ""; position: absolute; inset: 0; z-index: -1; background: #0C2A23;
+    transform: scaleX(0); transform-origin: left; transition: transform 500ms var(--ease-out);
+  }
+  .si-icono { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 10px; background: var(--panel); color: var(--marca-1); }
+  .si-nombre { font: 600 clamp(1.15rem, 1.6vw, 1.4rem)/1.2 var(--letra-titulo); letter-spacing: -0.015em; transition: transform 400ms var(--ease-out); }
+  .si-lista :global(.si-flecha) { color: var(--texto-dim); transition: transform 400ms var(--ease-out), color 200ms ease; }
+  @media (hover: hover) and (pointer: fine) {
+    .si-lista a:hover::before { transform: scaleX(1); }
+    .si-lista a:hover .si-nombre { transform: translateX(6px); }
+    .si-lista a:hover :global(.si-flecha) { transform: translate(3px, -3px); color: var(--marca-1); }
+  }
+  .si-acciones { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .si-vista {
+    position: fixed; left: 0; top: 0; z-index: 50; width: 240px; height: 180px; object-fit: cover; border-radius: var(--radio);
+    pointer-events: none; opacity: 0; scale: 0.85; transition: opacity 250ms ease, scale 400ms var(--ease-out);
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8); /* taste-skill-ignore: vista previa que flota sobre la página */
+  }
+  .si-vista:not([src]) { display: none; }
+  .si-vista.visible { opacity: 1; scale: 1; }
+  @media (max-width: 900px) {
+    .si-cabeza, .si-grilla { grid-template-columns: 1fr; }
+    .si-acciones .boton { flex: 1 1 100%; }
+  }
+</style>

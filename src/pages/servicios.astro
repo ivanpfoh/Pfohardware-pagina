@@ -1,0 +1,104 @@
+---
+import Base from "../layouts/Base.astro";
+import Icono from "../components/Icono.astro";
+import VideoDiagnostico from "../components/VideoDiagnostico.astro";
+import Metodo from "../components/Metodo.astro";
+import CierreServicio from "../components/CierreServicio.astro";
+import { MAIL_CONSULTA, PRECIO } from "../consts";
+import { servicios } from "../data/servicios";
+---
+<Base
+  titulo="Servicio técnico · PfoHardware, Recoleta, CABA"
+  descripcion="Diagnóstico, limpieza y refrigeración, upgrades, formateo, reparación de componentes y soporte remoto para PCs y notebooks en Recoleta, Capital Federal."
+  ruta="servicios.html"
+  actual="servicios"
+  ogTitulo="Servicio técnico · PfoHardware"
+  ogDescripcion="Diagnóstico, mantenimiento, upgrades y soporte para PCs y notebooks en Recoleta, Capital Federal."
+>
+  <section class="arriba" aria-labelledby="servicios-titulo">
+    <div class="contenedor">
+      <div class="arriba-fila">
+        <div class="arriba-texto">
+          <h1 id="servicios-titulo" data-titulo><span class="linea"><span>Primero la causa,</span></span><span class="linea"><span>después la solución.</span></span></h1>
+          <p class="bajada" data-entra>Servicio técnico de PCs y notebooks en Recoleta, Capital Federal. Desde una PC lenta hasta una actualización completa: primero encuentro la causa, después te explico las opciones y el costo.</p>
+          <div class="acciones" data-entra>
+            <a class="boton boton-marca boton-grande" href={MAIL_CONSULTA}>Pedir presupuesto <Icono nombre="flecha" tam={18} /></a>
+            <a class="boton boton-panel boton-grande" href="index.html#trabajos">Ver trabajos</a>
+          </div>
+        </div>
+        <VideoDiagnostico class="arriba-video" />
+      </div>
+    </div>
+  </section>
+
+  <section class="seccion lista" aria-labelledby="que-hago">
+    <div class="contenedor">
+      <h2 id="que-hago" data-titulo><span class="linea"><span>Lo que hago</span></span><span class="linea"><span>por tu equipo</span></span></h2>
+      <ul class="servicios">
+        {servicios.map((s) => (
+          <li class="servicio" id={s.id} data-entra>
+            <h3><span class="servicio-icono"><Icono nombre={s.icono} tam={22} /></span>{s.titulo}</h3>
+            <div>
+              <p>{s.texto}</p>
+              <ul class="servicio-items">
+                {s.items.map((i) => <li><Icono nombre="check" tam={16} grosor={2.6} />{i}</li>)}
+              </ul>
+            </div>
+            {s.foto
+              ? <img class="servicio-foto" src={s.foto.src} alt={s.foto.alt} width="640" height="480" loading="lazy" decoding="async" />
+              : <span class="servicio-foto servicio-foto-vacia" aria-hidden="true"></span>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <Metodo />
+
+  <section class="optimizador-banda" aria-labelledby="banda-titulo">
+    <div class="contenedor banda-fila">
+      <div>
+        <h2 id="banda-titulo" data-entra>¿Preferís hacerlo vos?</h2>
+        <p data-entra>El Optimizador PfoHardware deja tu PC con Windows más fluida con un clic, sin saber de computación. Pago único de <span class="num">{PRECIO}</span>.</p>
+      </div>
+      <a class="boton boton-oscuro boton-grande" href="index.html#optimizador" data-entra>Conocer el Optimizador <Icono nombre="flecha" tam={18} /></a>
+    </div>
+  </section>
+
+  <CierreServicio />
+</Base>
+
+<style>
+  .arriba { padding: calc(var(--header) + clamp(56px, 8vw, 112px)) 0 clamp(64px, 8vw, 120px); background: var(--campo-1); }
+  .arriba-fila { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 80px); align-items: center; }
+  .arriba h1 { font-size: clamp(2.2rem, 5.2vw, 4.8rem); }
+  .bajada { margin-top: 28px; }
+  .bajada { font-size: 1.15rem; }
+  .acciones { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+  .lista { background: var(--campo-2); }
+  .servicios { list-style: none; display: grid; gap: clamp(40px, 5vw, 64px); margin-top: clamp(48px, 6vw, 88px); }
+  .servicio { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr) minmax(0, 0.75fr); gap: clamp(20px, 4vw, 64px); align-items: start; scroll-margin-top: calc(var(--header) + 32px); }
+  /* Una foto real de ese tipo de trabajo, con el mismo recorte para todas */
+  .servicio-foto { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radio); background: var(--panel); }
+  .servicio-foto-vacia { display: block; background: transparent; }
+  .servicio h3 { display: flex; align-items: center; gap: 18px; font-size: clamp(1.6rem, 2.8vw, 2.4rem); letter-spacing: -0.03em; }
+  .servicio-icono { display: grid; place-items: center; flex: none; width: 52px; height: 52px; border-radius: var(--radio); background: #0C2A23; color: var(--marca-1); }
+  .servicio p { font-size: 1.1rem; max-width: 34em; }
+  .servicio-items { list-style: none; display: grid; gap: 8px; }
+  .servicio-items li { display: flex; align-items: center; gap: 10px; color: var(--texto-dim); font-weight: 600; }
+  .servicio-items :global(svg) { color: var(--marca-1); }
+
+  /* El botón degradé del programa, a escala de sección */
+  .optimizador-banda { padding-block: clamp(72px, 9vw, 128px); background: var(--degrade); color: var(--texto-marca); }
+  .banda-fila { display: flex; justify-content: space-between; align-items: center; gap: 32px; flex-wrap: wrap; }
+  .optimizador-banda h2 { font-size: clamp(2.2rem, 4.6vw, 4rem); }
+  .optimizador-banda p { margin: 16px 0 0; font-size: 1.15rem; max-width: 34em; font-weight: 600; }
+
+  @media (max-width: 900px) {
+    .arriba-fila, .servicio { grid-template-columns: 1fr; }
+    .servicio-foto-vacia { display: none; }
+    .acciones .boton { flex: 1 1 100%; }
+    .optimizador-banda .boton { width: 100%; }
+  }
+</style>

@@ -1,0 +1,32 @@
+---
+import Icono from "./Icono.astro";
+import { EMAIL, INSTAGRAM, MAIL_CONSULTA } from "../consts";
+---
+<section class="cierre" id="contacto-servicio" aria-labelledby="cierre-titulo">
+  <div class="contenedor cierre-grilla">
+    <h2 id="cierre-titulo" data-titulo><span class="linea"><span>¿Algo no funciona</span></span><span class="linea"><span>como debería?</span></span></h2>
+    <div class="cierre-texto">
+      <p data-entra>Contame qué está pasando. Coordinamos una revisión, retiro y entrega o asistencia según tu caso, en Recoleta, Capital Federal.</p>
+      <div class="cierre-acciones" data-entra>
+        <a class="boton boton-marca boton-grande" href={MAIL_CONSULTA}>Pedir presupuesto por email <Icono nombre="flecha" tam={18} /></a>
+        <a class="boton boton-panel boton-grande" href={INSTAGRAM} target="_blank" rel="noopener noreferrer"><Icono nombre="instagram" tam={18} /> Instagram</a>
+      </div>
+      <p class="cierre-mail" data-entra><a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cierre { padding-block: var(--seccion); background: var(--campo-3); }
+  .cierre-grilla { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: end; }
+  .cierre h2 { font-size: clamp(2.6rem, 6.2vw, 5.6rem); line-height: 0.95; letter-spacing: -0.045em; }
+  .cierre-texto > p:first-child { font-size: 1.15rem; max-width: 30em; }
+  .cierre-acciones { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+  .cierre-mail { margin: 22px 0 0; }
+  .cierre-mail a { color: var(--texto-dim); text-decoration: none; font-weight: 600; overflow-wrap: anywhere; }
+  @media (hover: hover) and (pointer: fine) { .cierre-mail a:hover { color: var(--texto); } }
+  @media (max-width: 900px) {
+    .cierre-grilla { grid-template-columns: 1fr; }
+    .cierre-acciones .boton { flex: 1 1 100%; }
+  }
+</style>

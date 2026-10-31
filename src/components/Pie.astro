@@ -1,0 +1,57 @@
+---
+import { ARREPENTIMIENTO, EMAIL, GITHUB, INSTAGRAM } from "../consts";
+---
+<footer class="pie">
+  <div class="contenedor">
+    <div class="pie-grilla">
+      <div class="pie-quien">
+        <a class="pie-marca" href="index.html"><img src="img/logo-ph-96.png" alt="" width="40" height="40" loading="lazy" /><span>PfoHardware</span></a>
+        <p>El Optimizador de Sistema para Windows y el servicio técnico de PCs y notebooks de Iván Pfoh, en Recoleta, Capital Federal.</p>
+      </div>
+      <nav aria-label="Secciones del sitio">
+        <h2>Sitio</h2>
+        <ul>
+          <li><a href="index.html#optimizador">Optimizador</a></li>
+          <li><a href="servicios.html">Servicio técnico</a></li>
+          <li><a href="index.html#trabajos">Trabajos</a></li>
+          <li><a href="quiensoy.html">Quién soy</a></li>
+          <li><a href="descarga.html">Ya compré el Optimizador</a></li>
+        </ul>
+      </nav>
+      <div>
+        <h2>Contacto</h2>
+        <ul>
+          <li><a href={`mailto:${EMAIL}`}>{EMAIL}</a></li>
+          <li><a href={INSTAGRAM} target="_blank" rel="noopener noreferrer">Instagram @pfohardware</a></li>
+          <li><a href={GITHUB} target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="pie-nombre" aria-hidden="true" data-nombre>PfoHardware</p>
+    <div class="pie-abajo">
+      <span>© 2026 Iván Pfoh, PfoHardware</span>
+      <a href={ARREPENTIMIENTO} target="_blank" rel="noopener noreferrer">Botón de arrepentimiento</a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .pie { position: relative; padding: clamp(72px, 9vw, 120px) 0 28px; background: var(--campo-2); overflow: clip; }
+  .pie-grilla { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: 40px; }
+  .pie-marca { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; font: 600 1.2rem/1 var(--letra-titulo); }
+  .pie-quien p { margin-top: 18px; max-width: 30em; color: var(--texto-dim); }
+  .pie h2 { font: 600 0.95rem/1 var(--letra); letter-spacing: 0; margin-bottom: 18px; color: var(--texto); }
+  .pie ul { list-style: none; display: grid; gap: 12px; }
+  .pie ul a { color: var(--texto-dim); text-decoration: none; transition: color 200ms ease; overflow-wrap: anywhere; }
+  @media (hover: hover) and (pointer: fine) { .pie ul a:hover { color: var(--texto); } }
+  /* El nombre vuelve a todo el ancho, como cierre */
+  .pie-nombre {
+    margin: clamp(56px, 8vw, 96px) 0 20px; font: 600 clamp(3.2rem, 16.4vw, 15.5rem)/0.8 var(--letra-titulo); letter-spacing: -0.06em;
+    white-space: nowrap; color: #306F5E; -webkit-user-select: none; user-select: none;
+  }
+  .pie-abajo { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; color: var(--pie); font-size: var(--t-chico); }
+  .pie-abajo a { color: var(--pie); }
+  @media (max-width: 760px) {
+    .pie-grilla { grid-template-columns: 1fr; }
+  }
+</style>

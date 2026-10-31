@@ -1,0 +1,90 @@
+---
+import Base from "../layouts/Base.astro";
+import PortadaPrograma from "../components/PortadaPrograma.astro";
+import ComoFunciona from "../components/ComoFunciona.astro";
+import Seguro from "../components/Seguro.astro";
+import Compra from "../components/Compra.astro";
+import Preguntas from "../components/Preguntas.astro";
+import ServicioInicio from "../components/ServicioInicio.astro";
+import Trabajos from "../components/Trabajos.astro";
+import CierreServicio from "../components/CierreServicio.astro";
+import Visor from "../components/Visor.astro";
+import { EMAIL, INSTAGRAM, SITIO } from "../consts";
+
+const datos = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: "PfoHardware",
+  description: "Servicio técnico de PCs y notebooks: diagnóstico, mantenimiento, upgrades y soporte. Optimizador de Sistema para Windows.",
+  url: SITIO,
+  image: SITIO + "img/og-pfohardware.jpg",
+  logo: SITIO + "img/favicon-192.png",
+  email: EMAIL,
+  address: { "@type": "PostalAddress", addressLocality: "Recoleta", addressRegion: "Ciudad Autónoma de Buenos Aires", addressCountry: "AR" },
+  areaServed: "Ciudad Autónoma de Buenos Aires",
+  founder: { "@type": "Person", name: "Iván Pfoh" },
+  sameAs: [INSTAGRAM],
+};
+---
+<Base
+  titulo="Optimizador PfoHardware · Tu PC con Windows, más fluida con un clic"
+  descripcion="El Optimizador de Sistema PfoHardware deja tu PC con Windows 10 u 11 más fluida con un clic, y se puede deshacer. Pago único de $10.000. También servicio técnico de PCs y notebooks en Recoleta, CABA."
+  actual="inicio"
+  ogTitulo="Optimizador PfoHardware · Tu PC, más fluida con un clic"
+  ogDescripcion="Para Windows 10 y 11. Un clic, se puede deshacer y tiene soporte directo. Pago único de $10.000. Y servicio técnico en Recoleta, Capital Federal."
+  datosEstructurados={datos}
+>
+  <PortadaPrograma />
+  <ComoFunciona />
+  <Seguro />
+  <Compra />
+
+  <section class="dudas" aria-labelledby="dudas-titulo">
+    <div class="contenedor dudas-grilla">
+      <div>
+        <h2 id="dudas-titulo" data-titulo><span class="linea"><span>Antes de</span></span><span class="linea"><span>comprar</span></span></h2>
+        <blockquote class="por-que" data-entra>
+          <p>“Mi intención es mejorar la velocidad y fluidez de tu computadora porque entiendo esa molestia. Este optimizador lo creé y utilicé personalmente en mis propios equipos con excelentes resultados; funcionó tan bien que decidí ponerlo a disposición de todos. Tenés mi compromiso de soporte directo y continuo.”</p>
+          <footer>Iván Pfoh, fundador de PfoHardware</footer>
+        </blockquote>
+      </div>
+      <div data-entra>
+        <Preguntas>
+          <details>
+            <summary>Windows muestra “Windows protegió su PC”. ¿Es normal?</summary>
+            <div class="faq-cuerpo">
+              <p>Sí. Al tratarse de un desarrollo independiente, Windows SmartScreen puede mostrar esa pantalla azul. Hacé clic en <strong>“Más información”</strong> y después en <strong>“Ejecutar de todas formas”</strong>.</p>
+              <p>El aviso aparece porque el programa todavía no tiene una firma digital comercial. No significa que tenga virus.</p>
+            </div>
+          </details>
+          <details>
+            <summary>¿Funciona en Mac o en Linux?</summary>
+            <div class="faq-cuerpo"><p>No. Es exclusivo para <strong>Windows 10 y 11</strong> (64 bits).</p></div>
+          </details>
+          <details>
+            <summary>¿Y si después no me gusta cómo queda?</summary>
+            <div class="faq-cuerpo"><p>Tocás <strong>Deshacer cambios</strong> y el programa vuelve tu PC a como estaba antes de optimizar. Además, tenés 10 días corridos para arrepentirte de la compra.</p></div>
+          </details>
+          <details>
+            <summary>¿Qué pasa si tengo un problema?</summary>
+            <div class="faq-cuerpo"><p>Me escribís a <a class="enlace" href={`mailto:${EMAIL}`}>{EMAIL}</a> o por Instagram a <a class="enlace" href={INSTAGRAM} target="_blank" rel="noopener noreferrer">@pfohardware</a>, y te atiendo yo, de forma directa y personal.</p></div>
+          </details>
+        </Preguntas>
+      </div>
+    </div>
+  </section>
+
+  <ServicioInicio />
+  <Trabajos />
+  <CierreServicio />
+  <Visor slot="despues" />
+</Base>
+
+<style>
+  .dudas { padding-block: var(--seccion); background: var(--campo-2); }
+  .dudas-grilla { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(36px, 6vw, 104px); align-items: start; }
+  .por-que { margin: clamp(32px, 4vw, 56px) 0 0; max-width: 30em; }
+  .por-que p { font: 500 clamp(1.05rem, 1.35vw, 1.2rem)/1.6 var(--letra); }
+  .por-que footer { margin-top: 12px; color: var(--texto-dim); font-size: var(--t-chico); font-weight: 600; }
+  @media (max-width: 900px) { .dudas-grilla { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=640" />
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        width: 1920px;
+        height: 640px;
+        overflow: hidden;
+        background: #05080a;
+      }
+      #root {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Campo del anillo de la portada de la web: el logo PH grande se vuelve el anillo del programa.
+         Termina igual que la portada en reposo; ahí la web lo cambia por el anillo que se toca. -->
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="2.6"
+      data-width="1920"
+      data-height="640"
+    >
+      <div
+        id="campo"
+        data-composition-id="campo"
+        data-composition-src="compositions/campo.html"
+        data-start="0"
+        data-duration="2.6"
+        data-track-index="0"
+        data-track-kind="graphics"
+        data-width="1920"
+        data-height="640"
+      ></div>
+    </div>
+    <script>
+      window.__timelines["main"] = gsap.timeline({ paused: true });
+    </script>
+  </body>
+</html>

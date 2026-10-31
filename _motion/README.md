@@ -1,12 +1,16 @@
 # Motion graphics de la web (HyperFrames)
 
-Fuente de los videos de `img/motion/`, hechos con [HyperFrames](https://hyperframes.heygen.com/) (HTML que se renderiza a video).
-Esta carpeta empieza con `_`, así que GitHub Pages no la publica.
+Estos son los proyectos de [HyperFrames](https://hyperframes.heygen.com/) (HTML que se renderiza a video) que generan los videos de `public/img/motion/`.
+La web se compila con Astro y solo publica lo que está en `public/` y `src/`, así que esta carpeta no sale a internet.
 
 | Proyecto | En la web | Qué muestra |
 | --- | --- | --- |
-| `hero-diagnostico` | Portada (tarjeta de diagnóstico) | Un diagnóstico sobre una PC real: barrido, etiquetas en cada componente y "Listo". Se reproduce una vez y queda en el último cuadro. |
-| `demo-optimizador` | Sección del Optimizador | Las pantallas reales del programa: clic en "Optimizar ahora", el anillo hasta 100 % y "Deshacer cambios". Se repite sin salto. |
+| `campo-portada` | Portada, dentro del campo del anillo | El logo PH grande que se achica hasta convertirse en el anillo del programa con su rayo. Su último cuadro es igual a la portada en reposo: ahí la web cambia el video por el anillo que se toca. Mide 3:1 y el anillo ocupa el 70 % del alto, igual que en la web. |
+| `hero-optimizador` | Cuadros sueltos en Deshacer, Así funciona y Descarga | El logo PH que se convierte en el Optimizador, toca "Optimizar ahora", el anillo llega al 100 % y queda "Optimización completada". El video entero no está en la web (sirve, por ejemplo, para Instagram). |
+| `hero-diagnostico` | Servicio técnico (portada de servicios y sección del inicio) | Un diagnóstico sobre una PC real: barrido, una etiqueta en cada componente ("CPU · OK", sin lecturas inventadas) y "Listo". Se reproduce una vez y queda en el último cuadro. |
+| `demo-optimizador` | Así funciona | La grabación de las pantallas reales del programa: clic en "Optimizar ahora", el anillo hasta 100 % y "Deshacer cambios". Se repite sin salto. |
+
+La letra de los videos es la del programa. Como en Windows es Segoe UI, acá se usa Selawik, su versión libre (`assets/fonts`).
 
 ## Editar y volver a generar
 
@@ -22,8 +26,8 @@ npx hyperframes render --output renders/hero-diagnostico.mp4 --quality delivery
 Después se comprime para la web (calidad pareja y arranque rápido):
 
 ```bash
-ffmpeg -i renders/hero-diagnostico.mp4 -an -c:v libx264 -preset veryslow -crf 27 -pix_fmt yuv420p -movflags +faststart ../../img/motion/hero-diagnostico.mp4
+ffmpeg -i renders/hero-diagnostico.mp4 -an -c:v libx264 -preset veryslow -crf 27 -pix_fmt yuv420p -movflags +faststart ../../public/img/motion/hero-diagnostico.mp4
 ```
 
-La demo usa `-crf 28`. Los pósters (`*-poster.webp`, `*-inicio.webp`, `*-final.webp`) son el primer y el último cuadro.
+`demo-optimizador` y `hero-optimizador` usan `-crf 28`, y `campo-portada` usa `-crf 30`. Los pósters (`*-poster.webp`, `*-inicio.webp`, `*-final.webp`) son el primer y el último cuadro. De `hero-optimizador` también salen `-programa.webp` (a los 2,6 s) y `-optimizando.webp` (a los 5,6 s).
 El material de la demo sale de las capturas reales del programa (`grabar_ui_v7.py`, en la carpeta de los reels).
