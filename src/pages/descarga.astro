@@ -11,7 +11,7 @@ const HASH = "E3C6F847FA481541A8525274E162F7C0E10ABAB8E47C69EA855EA0BD89C99BA3";
 const pantallas = [
   { src: "img/motion/hero-optimizador-programa.webp", alt: "El Optimizador abierto: Tu PC está lista para optimizar", texto: "Al abrirlo: elegís el modo y tocás Optimizar ahora." },
   { src: "img/motion/hero-optimizador-optimizando.webp", alt: "El Optimizador trabajando: el anillo de progreso y Optimizando tu PC", texto: "Mientras trabaja: el anillo avanza hasta el 100 %." },
-  { src: "img/motion/hero-optimizador-final.webp", alt: "El Optimizador al terminar: Optimización completada, con Deshacer cambios", texto: "Al terminar: si algo no te gusta, Deshacer cambios." },
+  { src: "img/motion/hero-optimizador-final.webp", alt: "El Optimizador al terminar: Optimización completada, con Deshacer cambios", texto: "Al terminar: si algo no te gusta, Deshacer cambios." },
   { src: "img/optimizador-app.webp", alt: "El Optimizador abierto otra vez, con la fecha de la última optimización", texto: "Cuando lo volvés a abrir, te muestra la última optimización." },
 ];
 ---
@@ -105,7 +105,7 @@ const pantallas = [
   .pantallas-fila { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
   .pantallas figure { margin: 0; }
   .pantallas img { width: 100%; aspect-ratio: 900 / 966; object-fit: cover; border-radius: var(--radio); background: var(--panel); }
-  .pantallas figcaption { margin-top: 12px; font-size: 0.95rem; }
+  .pantallas figcaption { margin-top: 12px; font-size: 0.95rem; text-wrap: pretty; }
   .seccion-chica { padding: clamp(72px, 9vw, 128px) 0; background: var(--campo-2); }
   .dos { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
   .hash { display: block; margin: 12px 0 14px; padding: 14px 16px; border-radius: 10px; overflow-wrap: anywhere; color: var(--marca); background: var(--fondo); }

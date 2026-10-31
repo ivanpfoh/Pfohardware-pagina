@@ -1,11 +1,17 @@
 <template>
   <style>
     /* Diagnóstico sobre una PC real de PfoHardware: barrido, cada componente revisado y el estado final "Listo".
-       Termina quieto en su último cuadro, que es el póster en la web. Paleta y tipografía del sitio.
+       Termina quieto en su último cuadro, que es el póster en la web. Paleta y letra del programa (Selawik, la versión libre de Segoe UI).
        Los textos van grandes porque en la web se ve a menos de la mitad de su tamaño (un tercio en el celular). */
+    /* La letra del programa: Segoe UI en Windows; acá, Selawik, su versión libre */
     @font-face {
-      font-family: "Space Grotesk";
-      src: url("assets/fonts/SpaceGrotesk-600.woff2") format("woff2");
+      font-family: "Selawik";
+      src: url("assets/fonts/selawik-400.woff2") format("woff2");
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: "Selawik";
+      src: url("assets/fonts/selawik-600.woff2") format("woff2");
       font-weight: 600;
     }
     #root {
@@ -13,7 +19,7 @@
       inset: 0;
       overflow: hidden;
       background: #05080a;
-      font-family: "JetBrains Mono", monospace;
+      font-family: "Selawik", sans-serif;
       color: #e6edf3;
       --brand-1: #00f5a0;
       --brand-2: #1fddf5;
@@ -89,7 +95,7 @@
       border-radius: 12px;
       background: var(--panel);
       border: 1px solid var(--line);
-      font-weight: 700;
+      font-weight: 600;
       font-size: 30px;
       letter-spacing: 0.04em;
       white-space: nowrap;
@@ -103,7 +109,7 @@
     }
     .etiqueta b {
       color: var(--brand-1);
-      font-weight: 700;
+      font-weight: 600;
     }
     /* El logo de la marca: grande al centro (como la tarjeta de antes) y después queda de insignia */
     #diag-chip {
@@ -136,8 +142,8 @@
     #diag-estado small {
       display: block;
       font-size: 22px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
+      font-weight: 600;
+      letter-spacing: 0;
       color: #8b949e;
     }
     #diag-estado .valor {
@@ -152,7 +158,7 @@
       display: flex;
       align-items: center;
       gap: 14px;
-      font: 600 42px/52px "Space Grotesk", sans-serif;
+      font: 600 42px/52px "Selawik", sans-serif;
       color: #e6edf3;
     }
     #diag-punto {
@@ -188,21 +194,21 @@
 
       <div id="cpu-guia" class="guia"></div>
       <div id="cpu-marca" class="marca"></div>
-      <span id="cpu-etiqueta" class="etiqueta"><i></i>CPU · <b>36 °C</b></span>
+      <span id="cpu-etiqueta" class="etiqueta"><i></i>CPU · <b>OK</b></span>
 
       <div id="vent-guia" class="guia"></div>
       <div id="vent-marca" class="marca"></div>
-      <span id="vent-etiqueta" class="etiqueta"><i></i>VENTILACIÓN · <b>OK</b></span>
+      <span id="vent-etiqueta" class="etiqueta"><i></i>Ventilación · <b>OK</b></span>
 
       <div id="placa-guia" class="guia"></div>
       <div id="placa-marca" class="marca"></div>
-      <span id="placa-etiqueta" class="etiqueta"><i></i>PLACA · <b>OK</b></span>
+      <span id="placa-etiqueta" class="etiqueta"><i></i>Placa · <b>OK</b></span>
     </div>
 
     <div id="diag-chip"><img src="assets/logo-ph.png" alt="" /></div>
 
     <div id="diag-estado">
-      <small>ESTADO DEL SISTEMA</small>
+      <small>Estado del sistema</small>
       <div class="valor" data-layout-allow-overlap>
         <span id="diag-analiza">Analizando…</span>
         <span id="diag-listo"><i id="diag-punto"></i>Listo</span>

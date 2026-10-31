@@ -5,7 +5,7 @@ import Icono from "./Icono.astro";
 ---
 <section class="seguro" id="seguro" aria-labelledby="seguro-titulo">
   <div class="contenedor seguro-grilla">
-    <div class="capas" data-capas aria-hidden="true">
+    <div class="capas" data-capas aria-hidden="true" data-ui>
       <figure class="capa capa-abajo">
         <img src="img/motion/hero-optimizador-programa.webp" alt="" width="900" height="966" loading="lazy" decoding="async" />
       </figure>
@@ -65,10 +65,10 @@ import Icono from "./Icono.astro";
 <style>
   .seguro { padding-block: var(--seccion); background: var(--campo-1); }
   .seguro-grilla { display: grid; grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: clamp(36px, 7vw, 120px); align-items: center; }
-  .capas { position: relative; aspect-ratio: 900 / 966; max-width: 560px; }
+  .capas { position: relative; aspect-ratio: 900 / 966; max-width: 560px; margin-top: 52px; }
   .capa { position: absolute; inset: 0; margin: 0; border-radius: var(--radio-ventana); overflow: hidden; border: 1px solid var(--borde); background: var(--fondo); } /* taste-skill-ignore: marco de la captura del programa */
   .capa img { width: 100%; height: 100%; object-fit: cover; }
-  .capas.con-fundido .capa-arriba { transition: opacity 900ms ease; }
+  .capas.con-fundido .capa-arriba { transition: none; }
   .capas.con-fundido.deshecho .capa-arriba { opacity: 0; }
   .capas.con-tiempo .capa-arriba { transition: clip-path 1200ms var(--ease-in-out); clip-path: inset(0% 0% 0% 0% round 14px); }
   .capas.con-tiempo.deshecho .capa-arriba { clip-path: inset(0% 100% 0% 0% round 14px); }
@@ -76,7 +76,7 @@ import Icono from "./Icono.astro";
   .capa-borde { position: absolute; top: -8px; bottom: -8px; left: 100%; width: 3px; margin-left: -1.5px; border-radius: 3px; background: var(--degrade); opacity: 0; pointer-events: none; }
   .capas.con-tiempo .capa-borde { opacity: 1; transition: left 1200ms var(--ease-in-out), opacity 300ms ease 1100ms; }
   .capas.con-tiempo.deshecho .capa-borde { left: 0%; opacity: 0; }
-  .capas-rotulo { position: absolute; left: 16px; bottom: 16px; margin: 0; font-weight: 600; font-size: 0.9rem; }
+  .capas-rotulo { position: absolute; left: 0; bottom: calc(100% + 12px); margin: 0; font-weight: 600; font-size: 0.9rem; }
   .capas-rotulo span { display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 10px; background: var(--panel); transition: opacity 300ms ease; }
   .rotulo-b { position: absolute; left: 0; bottom: 0; white-space: nowrap; opacity: 0; color: var(--marca-1); }
   .capas.deshecho .rotulo-a { opacity: 0; }

@@ -16,10 +16,10 @@ const { class: clase = "" } = Astro.props;
   .faq :global(summary::-webkit-details-marker) { display: none; }
   .faq :global(summary::after) {
     content: ""; flex: none; width: 11px; height: 11px; border-right: 2px solid var(--marca); border-bottom: 2px solid var(--marca);
-    transform: translateY(-3px) rotate(45deg); transition: transform 350ms var(--ease-out);
+    transform: translateY(-3px) rotate(45deg); transition: transform 300ms var(--ease-out);
   }
   .faq :global(details[open] > summary::after) { transform: translateY(3px) rotate(225deg); }
-  .faq :global(details::details-content) { block-size: 0; overflow: clip; transition: block-size 400ms var(--ease-out), content-visibility 400ms allow-discrete; }
+  .faq :global(details::details-content) { block-size: 0; overflow: clip; transition: block-size 300ms var(--ease-out), content-visibility 300ms allow-discrete; }
   .faq :global(details[open]::details-content) { block-size: auto; }
   .faq :global(.faq-cuerpo) { padding: 0 24px 22px; color: var(--texto); max-width: 70ch; }
   .faq :global(.faq-cuerpo ol) { padding-left: 1.2em; display: grid; gap: 10px; }

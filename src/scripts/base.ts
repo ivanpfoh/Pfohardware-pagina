@@ -91,6 +91,17 @@ function iniciarAnclas(): void {
 // Entradas: lo marcado con data-entra aparece al verse, escalonado dentro de cada grupo
 function iniciarEntradas(): void {
   const elementos = [...document.querySelectorAll<HTMLElement>("[data-entra], [data-titulo]")];
+  if (raiz.classList.contains("quieto") && "IntersectionObserver" in window) {
+    // "Reducir movimiento": la primera pantalla ya está; lo de más abajo aparece con un fundido, sin moverse
+    const abajo = elementos.filter((el) => el.hasAttribute("data-entra") && el.getBoundingClientRect().top > window.innerHeight);
+    elementos.filter((el) => !abajo.includes(el)).forEach((el) => el.classList.add("entro"));
+    abajo.forEach((el) => el.classList.add("abajo"));
+    const obs = new IntersectionObserver((entradas) => entradas.forEach((e) => {
+      if (e.isIntersecting) { e.target.classList.add("entro"); obs.unobserve(e.target); }
+    }), { rootMargin: "0px 0px -10% 0px" });
+    abajo.forEach((el) => obs.observe(el));
+    return;
+  }
   if (!raiz.classList.contains("mov") || !("IntersectionObserver" in window)) {
     elementos.forEach((el) => el.classList.add("entro"));
     return;

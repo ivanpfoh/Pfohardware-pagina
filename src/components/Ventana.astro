@@ -20,8 +20,8 @@ const { titulo = "Optimizador PfoHardware", class: clase = "", pagina = false, .
     background: var(--fondo); border: 1px solid var(--borde); /* taste-skill-ignore: ventana de Windows del programa (pieza data-ui) */
     box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(255, 255, 255, 0.015) inset; /* taste-skill-ignore: ventana de Windows del programa (pieza data-ui) */
   }
-  /* A escala de página: sin borde ni sombra, se separa del fondo por tono */
-  .ventana-pagina { border: 0; box-shadow: none; }
+  /* A escala de página: sin sombra; la separan del fondo el tono y el borde #17262A del programa */
+  .ventana-pagina { box-shadow: none; }
   .ventana-barra { display: flex; align-items: center; gap: 10px; height: 34px; padding: 0 12px; font-size: 13px; color: var(--texto-dim); background: #070B0D; }
   .ventana-barra img { width: 16px; height: 16px; }
   .ventana-botones { margin-left: auto; display: flex; gap: 22px; font-style: normal; }

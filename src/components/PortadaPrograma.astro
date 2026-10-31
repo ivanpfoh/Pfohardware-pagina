@@ -61,7 +61,7 @@ import { COMPRAR, PRECIO } from "../consts";
           </div>
         </div>
 
-        <div class="pp-pie">
+        <div class="pp-pie" data-ui>
           <p class="pp-nota" data-nota><i class="punto" aria-hidden="true"></i><span data-nota-texto>Demostración: se ve y responde como el programa, pero no toca tu PC.</span></p>
           <a class="boton pp-comprar" href={COMPRAR} data-comprar>Comprar y descargar <span class="num">· {PRECIO}</span> <Icono nombre="flecha" tam={18} /></a>
         </div>
@@ -190,28 +190,28 @@ import { COMPRAR, PRECIO } from "../consts";
 </script>
 
 <style>
-  /* El fondo de la portada es un tono más oscuro que la ventana, que tiene el negro del programa */
-  .portada { padding: calc(var(--header) + 4px) 0 clamp(48px, 7vw, 96px); background: #020405; }
+  /* El fondo de la portada es el tono de panel de la paleta; la ventana tiene el negro del programa */
+  .portada { padding: var(--header) 0 clamp(48px, 7vw, 96px); background: var(--campo-2); }
   .portada-ventana { max-width: 1240px; margin-inline: auto; }
 
   /* Medidas en proporción al ancho de la ventana (cqw) y del campo (cqh), como el programa */
   .pp {
     container-type: inline-size;
     display: grid; grid-template-rows: auto auto auto auto auto;
-    padding: clamp(18px, 2.4vw, 32px) clamp(18px, 3vw, 44px) clamp(16px, 1.8vw, 24px);
+    padding: clamp(16px, 1.7vw, 24px) clamp(18px, 3vw, 44px) clamp(12px, 1.1vw, 16px);
   }
   .pp-cabeza { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: clamp(14px, 1.6vw, 22px); align-items: start; }
   .pp-logo { width: clamp(40px, 4.2vw, 56px); height: auto; margin-top: 0.35em; }
-  .pp-nombre h1 { font-size: clamp(2.1rem, 4vw, 3.8rem); line-height: 0.98; letter-spacing: -0.04em; }
-  .pp-nombre p { margin: 10px 0 0; color: var(--texto-dim); font-size: clamp(0.95rem, 1.2vw, 1.12rem); }
+  .pp-nombre h1 { font-size: clamp(2.1rem, 3.7vw, 3.5rem); line-height: 0.98; letter-spacing: -0.04em; }
+  .pp-nombre p { margin: 8px 0 0; color: var(--texto-dim); font-size: clamp(0.95rem, 1.2vw, 1.12rem); }
   .pp-precio { margin: 0; display: grid; justify-items: end; text-align: right; line-height: 1.05; }
   .pp-precio strong { font: 600 clamp(1.7rem, 3.1vw, 3rem)/1 var(--letra-titulo); letter-spacing: -0.035em; }
   .pp-precio span { margin-top: 6px; color: var(--texto-dim); font-size: clamp(0.9rem, 1.1vw, 1.05rem); }
 
   .pp-campo {
     /* En escritorio el campo toma el alto que sobra para que la ventana entre entera en la pantalla */
-    position: relative; container-type: size; height: clamp(190px, calc(100svh - 600px), 400px);
-    margin: clamp(10px, 1.6vw, 22px) calc(clamp(18px, 3vw, 44px) * -1) 0;
+    position: relative; container-type: size; height: clamp(180px, calc(100svh - 596px), 400px);
+    margin: clamp(8px, 0.9vw, 12px) calc(clamp(18px, 3vw, 44px) * -1) 0;
     background-image: radial-gradient(rgba(36, 50, 56, 0.85) 0.3cqh, transparent 0.345cqh), radial-gradient(closest-side, rgba(18, 232, 214, 0.07), transparent); /* taste-skill-ignore: campo de puntos del programa (pieza data-ui) */
     background-size: 4cqh 4cqh, 60% 100%;
     background-position: center, center; background-repeat: repeat, no-repeat;
@@ -232,15 +232,16 @@ import { COMPRAR, PRECIO } from "../consts";
   @container (aspect-ratio < 3) { .pp-intro { object-fit: cover; } }
   .pp.en-vivo .pp-intro { opacity: 0; pointer-events: none; }
 
-  .pp-textos { text-align: center; margin-top: clamp(14px, 1.8vw, 24px); }
+  .pp-textos { text-align: center; margin-top: clamp(10px, 1vw, 14px); }
   .pp-titulo { margin: 0; font: 600 clamp(1.25rem, 2vw, 1.8rem)/1.2 var(--letra-titulo); letter-spacing: -0.015em; }
-  .pp-sub { margin: 8px auto 0; max-width: 46em; min-height: 3.2em; color: var(--texto-dim); font-size: clamp(0.95rem, 1.15vw, 1.08rem); text-wrap: balance; }
+  .pp-sub { margin: 6px auto 0; max-width: 72em; min-height: 1.6em; color: var(--texto-dim); font-size: clamp(0.95rem, 1.1vw, 1.05rem); text-wrap: balance; }
 
-  .pp-controles { display: none; gap: 12px; margin-top: clamp(14px, 1.8vw, 22px); }
+  /* Las tres filas de controles ocupan siempre el mismo alto: la ventana no cambia de tamaño entre estados */
+  .pp-controles { display: none; gap: 10px; margin-top: clamp(12px, 1.4vw, 18px); min-height: 130px; align-content: start; }
   .pp[data-estado="reposo"] .pp-solo-reposo,
   .pp[data-estado="trabajando"] .pp-solo-trabajando,
   .pp[data-estado="listo"] .pp-solo-listo { display: grid; }
-  .pp-solo-reposo { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .pp-solo-reposo { grid-template-columns: 1fr; }
   .pp-solo-trabajando { justify-items: center; }
 
   .pp-segmentos { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 5px; border-radius: var(--radio-ventana); background: var(--panel); border: 1px solid var(--borde); } /* taste-skill-ignore: selector de modos del programa (pieza data-ui) */
@@ -271,7 +272,7 @@ import { COMPRAR, PRECIO } from "../consts";
   .pp-boton-chico { min-width: 200px; }
   .pp-boton-listo { background: #172629; border-color: #172629; }
 
-  .pp-pie { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: clamp(16px, 2vw, 26px); }
+  .pp-pie { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: clamp(10px, 1vw, 14px); }
   .pp-nota { display: flex; align-items: center; gap: 10px; margin: 0; color: var(--pie); font-size: var(--t-chico); }
   .pp-comprar { min-height: 50px; padding: 12px 20px; background: var(--panel); border-color: var(--borde); color: var(--marca-1); }
   @media (hover: hover) and (pointer: fine) { .pp-comprar:hover { border-color: var(--marca); } }
@@ -290,7 +291,7 @@ import { COMPRAR, PRECIO } from "../consts";
     .pp-precio { grid-column: 1 / -1; justify-items: start; text-align: left; grid-auto-flow: column; justify-content: start; align-items: baseline; gap: 10px; }
     .pp-campo { height: auto; aspect-ratio: 1.6 / 1; }
     .pp-boton { font-size: 0.95rem; padding: 0 12px; white-space: nowrap; }
-    .pp-solo-reposo { grid-template-columns: 1fr; }
+    .pp-segmentos button { font-size: 0.84rem; padding: 0 4px; white-space: nowrap; letter-spacing: -0.01em; }
     .pp-pie { flex-direction: column; align-items: stretch; }
     .pp-comprar { width: 100%; }
   }

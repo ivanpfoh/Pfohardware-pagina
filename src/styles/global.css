@@ -180,6 +180,8 @@ html.mov [data-titulo].entro .linea > span {
 /* ---------- Animaciones de entrada: el contenido es visible por defecto ----------
    app.ts marca html.mov solo si hay movimiento permitido y JS; recién ahí lo de abajo arranca oculto. */
 html.mov [data-entra] { opacity: 0; transform: translateY(24px); }
+html.quieto [data-entra].abajo:not(.entro) { opacity: 0; }
+html.quieto [data-entra].abajo.entro { opacity: 1; transition: opacity 600ms ease; }
 html.mov [data-entra].entro { opacity: 1; transform: none; transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out); transition-delay: var(--d, 0ms); }
 
 /* "Reducir movimiento": nada se desplaza solo; quedan los fundidos y los cambios de color al usar los controles */

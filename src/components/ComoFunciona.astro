@@ -6,11 +6,14 @@
   <div class="contenedor como-grilla">
     <figure class="como-video" data-entra data-ui>
       <video data-demo-real muted loop playsinline preload="none" disablepictureinpicture
-        poster="img/motion/demo-optimizador-poster.webp" width="900" height="966"
+        poster="img/motion/hero-optimizador-optimizando.webp" width="900" height="966"
         aria-label="Grabación del Optimizador PfoHardware: un clic en Optimizar ahora, el anillo de progreso llega al 100 % y aparece Optimización completada, con la opción Deshacer cambios.">
         <source src="img/motion/demo-optimizador.mp4" type="video/mp4" />
       </video>
-      <figcaption>La grabación del programa real, en una PC con Windows 11.</figcaption>
+      <figcaption>
+        <span>La grabación del programa real, en una PC con Windows 11.</span>
+        <button type="button" class="boton boton-panel como-play" data-play hidden>Ver la grabación</button>
+      </figcaption>
     </figure>
     <div class="como-texto">
       <h2 id="como-titulo" data-titulo><span class="linea"><span>Así funciona</span></span><span class="linea"><span>en tu PC.</span></span></h2>
@@ -41,12 +44,21 @@
 <script>
   import { ahorroDatos, moverPoco } from "../scripts/base";
 
-  // La grabación corre solo mientras se ve; con "reducir movimiento" o ahorro de datos queda con controles
+  // La grabación corre sola mientras se ve. Con "reducir movimiento" o ahorro de datos no arranca sola:
+  // aparece un botón propio, fuera de la ventana, para verla cuando uno quiera
   const video = document.querySelector<HTMLVideoElement>("[data-demo-real]");
-  if (video) {
-    if (moverPoco() || ahorroDatos() || !("IntersectionObserver" in window)) video.controls = true;
+  const play = document.querySelector<HTMLButtonElement>("[data-play]");
+  if (video && play) {
+    const mostrarBoton = (): void => {
+      play.hidden = false;
+      play.addEventListener("click", () => {
+        if (video.paused) { video.preload = "auto"; video.play().catch(() => {}); play.textContent = "Pausar la grabación"; }
+        else { video.pause(); play.textContent = "Ver la grabación"; }
+      });
+    };
+    if (moverPoco() || ahorroDatos() || !("IntersectionObserver" in window)) mostrarBoton();
     else new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) { video.preload = "auto"; video.play().catch(() => { video.controls = true; }); }
+      if (e.isIntersecting) { video.preload = "auto"; video.play().catch(() => { if (play.hidden) mostrarBoton(); }); }
       else video.pause();
     }, { threshold: 0.35 }).observe(video);
   }
@@ -69,7 +81,8 @@
   .como-grilla { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: clamp(36px, 7vw, 120px); align-items: start; }
   .como-video { margin: 0; position: sticky; top: calc(var(--header) + 28px); }
   .como-video video { width: 100%; aspect-ratio: 900 / 966; border-radius: var(--radio-ventana); background: var(--panel); box-shadow: 0 50px 100px -40px rgba(0, 0, 0, 0.9); } /* taste-skill-ignore: grabación de la ventana del programa: Windows le pone sombra a sus ventanas */
-  .como-video figcaption { margin-top: 14px; color: var(--texto-dim); font-size: var(--t-chico); }
+  .como-video figcaption { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 14px; color: var(--texto-dim); font-size: var(--t-chico); }
+  .como-play { min-height: 44px; padding: 10px 16px; font-size: 0.92rem; }
   .pasos { list-style: none; display: grid; gap: clamp(40px, 7vh, 88px); margin-top: clamp(40px, 5vw, 72px); counter-reset: paso; }
   .paso { position: relative; padding-left: 64px; transition: opacity 400ms ease; }
   .paso::before {
@@ -88,7 +101,7 @@
   .requisitos strong { color: var(--texto); }
   @media (max-width: 900px) {
     .como-grilla { grid-template-columns: 1fr; }
-    .como-video { position: static; max-width: 520px; }
+    .como-video { position: static; max-width: 520px; order: 2; }
     .requisitos { grid-template-columns: 1fr; }
   }
 </style>
