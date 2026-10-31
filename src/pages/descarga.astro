@@ -6,6 +6,14 @@ import { COMPRAR, EMAIL, INSTAGRAM, RECUPERAR } from "../consts";
 // Huella del archivo oficial: se actualiza en cada versión (build_nuitka.bat la muestra al compilar).
 const VERSION = "v2.9.1";
 const HASH = "E3C6F847FA481541A8525274E162F7C0E10ABAB8E47C69EA855EA0BD89C99BA3";
+
+// Pantallas reales del programa (cuadros del video de HyperFrames y una captura del programa)
+const pantallas = [
+  { src: "img/motion/hero-optimizador-programa.webp", alt: "El Optimizador abierto: Tu PC está lista para optimizar", texto: "Al abrirlo: elegís el modo y tocás Optimizar ahora." },
+  { src: "img/motion/hero-optimizador-optimizando.webp", alt: "El Optimizador trabajando: el anillo de progreso y Optimizando tu PC", texto: "Mientras trabaja: el anillo avanza hasta el 100 %." },
+  { src: "img/motion/hero-optimizador-final.webp", alt: "El Optimizador al terminar: Optimización completada, con Deshacer cambios", texto: "Al terminar: si algo no te gusta, Deshacer cambios." },
+  { src: "img/optimizador-app.webp", alt: "El Optimizador abierto otra vez, con la fecha de la última optimización", texto: "Cuando lo volvés a abrir, te muestra la última optimización." },
+];
 ---
 <Base
   titulo="Descarga · Optimizador PfoHardware"
@@ -29,6 +37,20 @@ const HASH = "E3C6F847FA481541A8525274E162F7C0E10ABAB8E47C69EA855EA0BD89C99BA3";
         <span class="punto" aria-hidden="true"></span>
         <span><strong>Compatibilidad:</strong> el programa es exclusivo para <strong>Windows 10 y 11</strong> (64 bits), con cualquier procesador Intel o AMD y 2 GB de RAM o más. No funciona en macOS ni Linux.</span>
       </p>
+    </div>
+  </section>
+
+  <section class="pantallas" aria-labelledby="pantallas-titulo">
+    <div class="contenedor">
+      <h2 id="pantallas-titulo" data-entra>Lo que vas a ver al abrirlo</h2>
+      <div class="pantallas-fila">
+        {pantallas.map((p) => (
+          <figure data-entra>
+            <img src={p.src} alt={p.alt} width="900" height="966" loading="lazy" decoding="async" />
+            <figcaption>{p.texto}</figcaption>
+          </figure>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -78,12 +100,19 @@ const HASH = "E3C6F847FA481541A8525274E162F7C0E10ABAB8E47C69EA855EA0BD89C99BA3";
   .acciones { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
   .compat { display: flex; gap: 14px; margin: 0; padding: 24px; border-radius: var(--radio); background: var(--panel); }
   .compat .punto { margin-top: 0.55em; }
+  .pantallas { padding-bottom: clamp(56px, 7vw, 96px); background: var(--campo-1); }
+  .pantallas h2 { font-size: clamp(1.6rem, 2.8vw, 2.4rem); }
+  .pantallas-fila { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
+  .pantallas figure { margin: 0; }
+  .pantallas img { width: 100%; aspect-ratio: 900 / 966; object-fit: cover; border-radius: var(--radio); background: var(--panel); }
+  .pantallas figcaption { margin-top: 12px; font-size: 0.95rem; }
   .seccion-chica { padding: clamp(72px, 9vw, 128px) 0; background: var(--campo-2); }
   .dos { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
   .hash { display: block; margin: 12px 0 14px; padding: 14px 16px; border-radius: 10px; overflow-wrap: anywhere; color: var(--marca); background: var(--fondo); }
   .soporte { margin-top: 36px; max-width: 46em; }
   @media (max-width: 900px) {
     .arriba-grilla, .dos { grid-template-columns: 1fr; }
+    .pantallas-fila { grid-template-columns: 1fr 1fr; }
     .acciones .boton { flex: 1 1 100%; }
   }
 </style>

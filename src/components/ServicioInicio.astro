@@ -74,7 +74,7 @@ import { MAIL_CONSULTA } from "../consts";
     border-radius: var(--radio); text-decoration: none; isolation: isolate; overflow: hidden; transition: background-color 250ms ease;
   }
   .si-lista a::before {
-    content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, #0C2A23, rgba(12, 42, 35, 0));
+    content: ""; position: absolute; inset: 0; z-index: -1; background: #0C2A23;
     transform: scaleX(0); transform-origin: left; transition: transform 500ms var(--ease-out);
   }
   .si-icono { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 10px; background: var(--panel); color: var(--marca-1); }
@@ -89,7 +89,7 @@ import { MAIL_CONSULTA } from "../consts";
   .si-vista {
     position: fixed; left: 0; top: 0; z-index: 50; width: 240px; height: 180px; object-fit: cover; border-radius: var(--radio);
     pointer-events: none; opacity: 0; scale: 0.85; transition: opacity 250ms ease, scale 400ms var(--ease-out);
-    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.8); /* taste-skill-ignore: vista previa que flota sobre la página */
   }
   .si-vista:not([src]) { display: none; }
   .si-vista.visible { opacity: 1; scale: 1; }

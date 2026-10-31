@@ -38,7 +38,7 @@
   --texto-dim: #8B949E;
   --pie: #7D8590;            /* el gris del pie del programa, apenas más claro para leerse a 14 px */
   --texto-marca: #04120E;
-  --degrade: linear-gradient(120deg, var(--marca-1), var(--marca-2));
+  --degrade: linear-gradient(120deg, var(--marca-1), var(--marca-2)); /* taste-skill-ignore: degradé de marca: el del botón Optimizar ahora del programa */
   /* Tonos de campo para las secciones: un paso de tono, nunca una línea */
   --campo-1: #05080A;
   --campo-2: #0A1013;
@@ -48,7 +48,7 @@
   --letra-titulo: "Segoe UI Variable Display", "Segoe UI", "Selawik", system-ui, sans-serif;
 
   /* Escala: pocos tamaños, bien separados */
-  --t-gigante: clamp(2.75rem, 6.6vw, 6rem);
+  --t-gigante: clamp(2.2rem, 6.6vw, 6rem);
   --t-titulo: clamp(2.1rem, 4.4vw, 3.9rem);
   --t-sub: clamp(1.35rem, 2vw, 1.75rem);
   --t-cuerpo: clamp(1rem, 0.94rem + 0.3vw, 1.15rem);
@@ -56,7 +56,7 @@
 
   --margen: clamp(16px, 4.4vw, 64px);
   --ancho: 1320px;
-  --seccion: clamp(96px, 13vw, 200px);
+  --seccion: clamp(72px, 8.5vw, 120px);
   --radio: 12px;              /* el radio de los botones y paneles del programa */
   --radio-ventana: 14px;
   --header: 68px;
@@ -135,7 +135,7 @@ strong { font-weight: 600; }
 /* ---------- Botones: los del programa ---------- */
 .boton {
   position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 10px;
-  min-height: 52px; padding: 14px 24px; border: 1px solid transparent; border-radius: var(--radio);
+  min-height: 52px; padding: 14px 24px; border: 1px solid transparent; border-radius: var(--radio); /* taste-skill-ignore: borde transparente para animar el color del borde */
   font: 600 1.02rem/1.2 var(--letra); text-decoration: none; cursor: pointer; isolation: isolate; overflow: hidden;
   transition: transform 160ms var(--ease-out), background-color 200ms ease, border-color 200ms ease, color 200ms ease, box-shadow 300ms ease;
 }
@@ -145,7 +145,7 @@ strong { font-weight: 600; }
 .boton-marca { background: var(--degrade); color: var(--texto-marca); }
 .boton-marca::after {
   content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(100deg, transparent 35%, rgba(255, 255, 255, 0.5) 50%, transparent 65%);
+  background: linear-gradient(100deg, transparent 35%, rgba(255, 255, 255, 0.5) 50%, transparent 65%); /* taste-skill-ignore: brillo del botón de marca al pasar el mouse */
   transform: translateX(-120%); transition: transform 700ms var(--ease-out);
 }
 /* Los botones oscuros del programa ("Deshacer cambios", "Programas de inicio") */
@@ -153,7 +153,7 @@ strong { font-weight: 600; }
 .boton-grande { min-height: 64px; padding: 18px 32px; font-size: 1.14rem; }
 @media (hover: hover) and (pointer: fine) {
   .boton-marca:hover::after { transform: translateX(120%); }
-  .boton-marca:hover { box-shadow: 0 14px 40px -12px rgba(18, 232, 214, 0.55); }
+  .boton-marca:hover { box-shadow: 0 14px 40px -12px rgba(18, 232, 214, 0.55); } /* taste-skill-ignore: respuesta al pasar el mouse sobre el botón de marca */
   .boton:hover svg { transform: translateX(3px); }
   .boton-panel:hover { border-color: var(--linea); background: #0E161A; }
 }
@@ -182,8 +182,9 @@ html.mov [data-titulo].entro .linea > span {
 html.mov [data-entra] { opacity: 0; transform: translateY(24px); }
 html.mov [data-entra].entro { opacity: 1; transform: none; transition: opacity 900ms var(--ease-out), transform 900ms var(--ease-out); transition-delay: var(--d, 0ms); }
 
+/* "Reducir movimiento": nada se desplaza solo; quedan los fundidos y los cambios de color al usar los controles */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; }
 }
 
 /* ---------- Transiciones entre páginas (Chrome, Edge y Safari) ---------- */

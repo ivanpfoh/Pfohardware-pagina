@@ -4,7 +4,7 @@
 ---
 <section class="como" id="como-funciona" aria-labelledby="como-titulo">
   <div class="contenedor como-grilla">
-    <figure class="como-video" data-entra>
+    <figure class="como-video" data-entra data-ui>
       <video data-demo-real muted loop playsinline preload="none" disablepictureinpicture
         poster="img/motion/demo-optimizador-poster.webp" width="900" height="966"
         aria-label="Grabación del Optimizador PfoHardware: un clic en Optimizar ahora, el anillo de progreso llega al 100 % y aparece Optimización completada, con la opción Deshacer cambios.">
@@ -68,7 +68,7 @@
   .como { padding-block: var(--seccion); background: var(--campo-2); scroll-margin-top: var(--header); }
   .como-grilla { display: grid; grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr); gap: clamp(36px, 7vw, 120px); align-items: start; }
   .como-video { margin: 0; position: sticky; top: calc(var(--header) + 28px); }
-  .como-video video { width: 100%; aspect-ratio: 900 / 966; border-radius: var(--radio-ventana); background: var(--panel); box-shadow: 0 50px 100px -40px rgba(0, 0, 0, 0.9); }
+  .como-video video { width: 100%; aspect-ratio: 900 / 966; border-radius: var(--radio-ventana); background: var(--panel); box-shadow: 0 50px 100px -40px rgba(0, 0, 0, 0.9); } /* taste-skill-ignore: grabación de la ventana del programa: Windows le pone sombra a sus ventanas */
   .como-video figcaption { margin-top: 14px; color: var(--texto-dim); font-size: var(--t-chico); }
   .pasos { list-style: none; display: grid; gap: clamp(40px, 7vh, 88px); margin-top: clamp(40px, 5vw, 72px); counter-reset: paso; }
   .paso { position: relative; padding-left: 64px; transition: opacity 400ms ease; }

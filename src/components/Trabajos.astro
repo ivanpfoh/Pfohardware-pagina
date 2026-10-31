@@ -19,10 +19,7 @@ const fotos = [
     <h2 id="trabajos-titulo" data-titulo><span class="linea"><span>Trabajos reales,</span></span><span class="linea"><span>de cerca.</span></span></h2>
     <div class="trabajos-lado">
       <p data-entra>Fotos de equipos que pasaron por mis manos: limpiezas, cambios de piezas y diagnósticos.</p>
-      <div class="flechas" data-flechas>
-        <button type="button" class="boton boton-panel" data-mover="-1" aria-label="Foto anterior"><Icono nombre="izquierda" tam={20} /></button>
-        <button type="button" class="boton boton-panel" data-mover="1" aria-label="Foto siguiente"><Icono nombre="flecha" tam={20} /></button>
-      </div>
+      <p class="tira-leyenda" data-leyenda aria-hidden="true"></p>
     </div>
   </div>
   <div class="tira-marco">
@@ -50,12 +47,6 @@ const fotos = [
   const bloque = document.querySelector<HTMLElement>("[data-tira]");
   const pista = bloque?.querySelector<HTMLElement>("[data-tira-pista]");
   if (bloque && pista) {
-    // Flechas (celular y sin animaciones): de a una foto
-    bloque.querySelectorAll<HTMLButtonElement>("[data-mover]").forEach((b) => b.addEventListener("click", () => {
-      const ancho = (pista.querySelector<HTMLElement>(".foto")?.offsetWidth ?? 300) + 16;
-      pista.scrollBy({ left: ancho * Number(b.dataset.mover), behavior: moverPoco() ? "auto" : "smooth" });
-    }));
-
     // Escritorio con movimiento: la sección queda fija y la tira avanza de costado mientras se baja
     if (escritorio() && !moverPoco()) {
       cargarMovimiento().then(({ gsap, ScrollTrigger }) => {
@@ -63,9 +54,20 @@ const fotos = [
         mm.add("(min-width: 1025px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)", () => {
           bloque.classList.add("fijada");
           const recorrido = (): number => Math.max(0, pista.scrollWidth - window.innerWidth);
+          // En la escena las fotos no llevan su texto debajo: una sola leyenda dice cuál está pasando por el centro
+          const fotos = [...pista.querySelectorAll<HTMLElement>(".foto")];
+          const leyenda = bloque.querySelector<HTMLElement>("[data-leyenda]");
+          const actualizar = (): void => {
+            const centro = window.innerWidth / 2;
+            let cerca = fotos[0], dist = Infinity;
+            for (const f of fotos) { const b = f.getBoundingClientRect(); const d = Math.abs(b.left + b.width / 2 - centro); if (d < dist) { dist = d; cerca = f; } }
+            const texto = cerca.querySelector(".foto-texto")?.textContent ?? "";
+            if (leyenda && leyenda.textContent !== texto) leyenda.textContent = texto;
+          };
+          // La tira avanza un poco más rápido que el scroll, así la sección no queda fija tanto tiempo
           const avance = gsap.to(pista, {
             x: () => -recorrido(), ease: "none",
-            scrollTrigger: { trigger: bloque, start: "top top", end: () => `+=${recorrido()}`, pin: true, scrub: 0.6, invalidateOnRefresh: true, anticipatePin: 1 },
+            scrollTrigger: { trigger: bloque, start: "top top", end: () => `+=${recorrido() * 0.7}`, pin: true, scrub: 0.6, invalidateOnRefresh: true, anticipatePin: 1, onUpdate: actualizar, onRefresh: actualizar },
           });
           pista.querySelectorAll("img").forEach((img) => {
             gsap.fromTo(img, { xPercent: -6 }, {
@@ -84,30 +86,38 @@ const fotos = [
 <style>
   .trabajos { position: relative; z-index: 2; padding-block: var(--seccion); background: var(--campo-2); overflow-x: clip; }
   .trabajos-cabeza { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 32px; align-items: end; margin-bottom: clamp(36px, 5vw, 64px); }
-  .trabajos-lado p { max-width: 28em; }
-  .flechas { display: flex; gap: 8px; margin-top: 20px; }
-  .flechas .boton { width: 52px; padding: 0; }
+  .trabajos-lado p { max-width: 28em; margin: 0; }
+  /* Sin la escena: una grilla con el mismo recorte para todas las fotos */
   .tira {
-    list-style: none; display: flex; gap: 16px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none;
-    padding-inline: max(var(--margen), calc((100vw - var(--ancho)) / 2)); scroll-padding-inline: max(var(--margen), calc((100vw - var(--ancho)) / 2));
+    list-style: none; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px;
+    max-width: calc(var(--ancho) + var(--margen) * 2); margin-inline: auto; padding-inline: var(--margen);
   }
-  .tira::-webkit-scrollbar { display: none; }
-  .foto { position: relative; flex: 0 0 auto; height: clamp(340px, 56vh, 560px); aspect-ratio: var(--ar); scroll-snap-align: start; }
-  .foto a { display: block; height: calc(100% - 40px); border-radius: var(--radio); overflow: hidden; background: var(--panel); }
-  .foto img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.13); transition: transform 1s var(--ease-out); }
-  @media (hover: hover) and (pointer: fine) { .foto a:hover img { transform: scale(1.18); } }
-  .foto-texto { margin: 12px 0 0; font-weight: 600; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .foto { position: relative; }
+  .foto a { display: block; aspect-ratio: 4 / 3; border-radius: var(--radio); overflow: hidden; background: var(--panel); }
+  .foto img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.06); transition: transform 1s var(--ease-out); }
+  @media (hover: hover) and (pointer: fine) { .foto a:hover img { transform: scale(1.12); } }
+  .foto-texto { margin: 12px 0 0; font-weight: 600; font-size: 0.95rem; }
   .foto-marca { position: absolute; top: 14px; left: 14px; padding: 6px 12px; border-radius: 8px; background: var(--fondo); font-weight: 600; font-size: 0.85rem; pointer-events: none; }
   .foto-marca-despues { background: var(--degrade); color: var(--texto-marca); }
   .mas { margin-top: 28px; }
-  /* Fijada: la tira se mueve con GSAP y entra entera en una pantalla */
-  .trabajos.fijada { min-height: 100vh; padding-block: calc(var(--header) + 8px) 36px; }
-  .trabajos.fijada .tira { overflow: visible; scroll-snap-type: none; width: max-content; }
-  .trabajos.fijada .flechas { display: none; }
+  /* La escena (escritorio con movimiento): la sección queda fija y la tira avanza de costado */
+  .trabajos.fijada { min-height: 100svh; padding-block: calc(var(--header) + 8px) 36px; }
   .trabajos.fijada .trabajos-cabeza { margin-bottom: 28px; }
-  .trabajos.fijada .foto { height: clamp(260px, calc(100vh - 340px), 600px); }
+  .trabajos.fijada .tira {
+    display: flex; width: max-content; max-width: none; margin: 0;
+    padding-inline: max(var(--margen), calc((100vw - var(--ancho)) / 2));
+  }
+  .trabajos.fijada .foto { flex: 0 0 auto; height: clamp(260px, calc(100vh - 330px), 600px); aspect-ratio: var(--ar); }
+  .trabajos.fijada .foto a { aspect-ratio: auto; }
+  .trabajos.fijada .foto img { transform: scale(1.13); }
+  .trabajos.fijada .foto-texto { display: none; }
+  .trabajos.fijada .foto a { height: 100%; }
+  .tira-leyenda { display: none; }
+  .trabajos.fijada .tira-leyenda { display: block; min-height: 1.6em; margin: 14px 0 0; color: var(--marca-1); font-weight: 600; }
   @media (max-width: 900px) {
     .trabajos-cabeza { grid-template-columns: 1fr; }
-    .foto { height: 420px; max-width: 82vw; }
+    .tira { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .foto a { aspect-ratio: 3 / 4; }
+    .foto-texto { font-size: 0.88rem; }
   }
 </style>

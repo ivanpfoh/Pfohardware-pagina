@@ -50,13 +50,13 @@ const imagenOg = SITIO + "img/og-pfohardware.jpg";
       </>
     )}
     <script is:inline>
-      // Las entradas animadas arrancan ocultas solo si hay JS y movimiento permitido.
+      // Las entradas animadas arrancan ocultas solo si hay JS.
       // Si el script principal no llega a cargar, a los 2,5 s se muestra todo igual.
       (function () {
         var r = document.documentElement;
-        if (window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches) { r.classList.add("quieto"); return; }
-        r.classList.add("mov");
-        setTimeout(function () { if (!r.classList.contains("app")) r.classList.remove("mov"); }, 2500);
+        // Con "reducir movimiento" (también cuando Windows tiene las animaciones apagadas) todo se ve de entrada
+        r.classList.add(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches ? "quieto" : "mov");
+        setTimeout(function () { if (!r.classList.contains("app")) r.classList.remove("mov", "quieto"); }, 2500);
       })();
     </script>
     {datosEstructurados && <script type="application/ld+json" set:html={JSON.stringify(datosEstructurados)} />}

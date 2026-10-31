@@ -9,7 +9,7 @@ import { COMPRAR, PRECIO } from "../consts";
 ---
 <section class="portada" id="optimizador" aria-labelledby="portada-titulo">
   <div class="contenedor">
-    <Ventana class="portada-ventana">
+    <Ventana class="portada-ventana" pagina>
       <div class="pp" data-pp data-estado="reposo" data-modo="completa">
         <div class="pp-cabeza">
           <img class="pp-logo" src="img/logo-ph-96.png" alt="" width="56" height="56" />
@@ -20,7 +20,7 @@ import { COMPRAR, PRECIO } from "../consts";
           <p class="pp-precio" data-entra><strong class="num">{PRECIO}</strong><span>pago único</span></p>
         </div>
 
-        <div class="pp-campo" aria-hidden="true">
+        <div class="pp-campo" aria-hidden="true" data-ui>
           <svg class="pp-anillo" viewBox="0 0 120 120">
             <defs>
               <linearGradient id="pp-grad" x1="0" y1="0" x2="1" y2="1">
@@ -44,17 +44,17 @@ import { COMPRAR, PRECIO } from "../consts";
           <p class="pp-sub" data-sub-app>Deja toda la PC más liviana: arranca más rápido, con menos programas y permisos en segundo plano, y rinde más en juegos.</p>
         </div>
 
-        <div class="pp-controles pp-solo-reposo">
+        <div class="pp-controles pp-solo-reposo" data-ui>
           <div class="pp-segmentos" role="radiogroup" aria-label="Modo de optimización">
             <button type="button" role="radio" aria-checked="true" data-modo-btn="completa">Optimización completa</button>
             <button type="button" role="radio" aria-checked="false" data-modo-btn="juegos" tabindex="-1">Solo juegos</button>
           </div>
           <button type="button" class="pp-optimizar" data-optimizar>Optimizar ahora</button>
         </div>
-        <div class="pp-controles pp-solo-trabajando">
+        <div class="pp-controles pp-solo-trabajando" data-ui>
           <button type="button" class="pp-boton pp-boton-chico" data-cancelar>Cancelar</button>
         </div>
-        <div class="pp-controles pp-solo-listo">
+        <div class="pp-controles pp-solo-listo" data-ui>
           <div class="pp-fila">
             <button type="button" class="pp-boton" data-deshacer><Icono nombre="deshacer" tam={17} grosor={2.4} /> Deshacer cambios</button>
             <button type="button" class="pp-boton pp-boton-listo" data-listo>Listo</button>
@@ -127,7 +127,7 @@ import { COMPRAR, PRECIO } from "../consts";
       const esta = ++corrida;
       ir("trabajando");
       fijarAvance(0);
-      const duracion = moverPoco() ? 500 : 3400;
+      const duracion = 3400;
       const inicio = performance.now();
       const paso = (ahora: number): void => {
         if (esta !== corrida) return;
@@ -150,7 +150,7 @@ import { COMPRAR, PRECIO } from "../consts";
       const esta = ++corrida;
       cancelAnimationFrame(cuadro);
       const fin = (): void => { fijarAvance(0); ir("reposo"); pp.querySelector<HTMLButtonElement>("[data-optimizar]")?.focus({ preventScroll: true }); };
-      if (!vaciar || moverPoco()) { fin(); return; }
+      if (!vaciar) { fin(); return; }
       ir("deshaciendo");
       titulo.textContent = "Deshaciendo cambios";
       const desde = Number(pct.textContent) || 100;
@@ -190,7 +190,8 @@ import { COMPRAR, PRECIO } from "../consts";
 </script>
 
 <style>
-  .portada { padding: calc(var(--header) + 4px) 0 clamp(48px, 7vw, 96px); background: var(--campo-1); }
+  /* El fondo de la portada es un tono más oscuro que la ventana, que tiene el negro del programa */
+  .portada { padding: calc(var(--header) + 4px) 0 clamp(48px, 7vw, 96px); background: #020405; }
   .portada-ventana { max-width: 1240px; margin-inline: auto; }
 
   /* Medidas en proporción al ancho de la ventana (cqw) y del campo (cqh), como el programa */
@@ -211,7 +212,7 @@ import { COMPRAR, PRECIO } from "../consts";
     /* En escritorio el campo toma el alto que sobra para que la ventana entre entera en la pantalla */
     position: relative; container-type: size; height: clamp(190px, calc(100svh - 600px), 400px);
     margin: clamp(10px, 1.6vw, 22px) calc(clamp(18px, 3vw, 44px) * -1) 0;
-    background-image: radial-gradient(rgba(36, 50, 56, 0.85) 0.3cqh, transparent 0.345cqh), radial-gradient(closest-side, rgba(18, 232, 214, 0.07), transparent);
+    background-image: radial-gradient(rgba(36, 50, 56, 0.85) 0.3cqh, transparent 0.345cqh), radial-gradient(closest-side, rgba(18, 232, 214, 0.07), transparent); /* taste-skill-ignore: campo de puntos del programa (pieza data-ui) */
     background-size: 4cqh 4cqh, 60% 100%;
     background-position: center, center; background-repeat: repeat, no-repeat;
     overflow: hidden;
@@ -242,9 +243,9 @@ import { COMPRAR, PRECIO } from "../consts";
   .pp-solo-reposo { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .pp-solo-trabajando { justify-items: center; }
 
-  .pp-segmentos { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 5px; border-radius: var(--radio-ventana); background: var(--panel); border: 1px solid var(--borde); }
+  .pp-segmentos { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; padding: 5px; border-radius: var(--radio-ventana); background: var(--panel); border: 1px solid var(--borde); } /* taste-skill-ignore: selector de modos del programa (pieza data-ui) */
   .pp-segmentos button {
-    min-height: 48px; border: 1px solid transparent; border-radius: 10px; background: transparent; cursor: pointer;
+    min-height: 48px; border: 1px solid transparent; border-radius: 10px; background: transparent; cursor: pointer; /* taste-skill-ignore: selector de modos del programa (pieza data-ui) */
     font: 600 clamp(0.92rem, 1.1vw, 1.05rem)/1.2 var(--letra); color: var(--texto-dim); transition: background-color 200ms ease, color 200ms ease;
   }
   .pp-segmentos button[aria-checked="true"] { background: #0C2A23; border-color: #145442; color: var(--marca-1); }
@@ -254,15 +255,15 @@ import { COMPRAR, PRECIO } from "../consts";
     font: 700 clamp(1.05rem, 1.4vw, 1.25rem)/1 var(--letra); transition: transform 160ms var(--ease-out), box-shadow 300ms ease;
   }
   .pp-optimizar:active { transform: scale(0.98); }
-  @media (hover: hover) and (pointer: fine) { .pp-optimizar:hover { box-shadow: 0 0 0 4px rgba(18, 232, 214, 0.2); } }
+  @media (hover: hover) and (pointer: fine) { .pp-optimizar:hover { box-shadow: 0 0 0 4px rgba(18, 232, 214, 0.2); } } /* taste-skill-ignore: respuesta al pasar el mouse, no queda en reposo */
   /* Recién termina la entrada, el botón invita una vez */
   .pp.en-vivo .pp-optimizar { animation: invita 1.6s var(--ease-out) 0.3s 1; }
-  @keyframes invita { 0% { box-shadow: 0 0 0 0 rgba(18, 232, 214, 0.55); } 100% { box-shadow: 0 0 0 18px rgba(18, 232, 214, 0); } }
+  @keyframes invita { 0% { box-shadow: 0 0 0 0 rgba(18, 232, 214, 0.55); } 100% { box-shadow: 0 0 0 18px rgba(18, 232, 214, 0); } } /* taste-skill-ignore: pulso de invitación que se dispara una vez */
 
   .pp-fila { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; max-width: 720px; width: 100%; margin-inline: auto; }
   .pp-boton {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 52px; padding: 0 18px;
-    border: 1px solid var(--borde); border-radius: var(--radio-ventana); background: var(--fondo); color: var(--texto); cursor: pointer;
+    border: 1px solid var(--borde); border-radius: var(--radio-ventana); background: var(--fondo); color: var(--texto); cursor: pointer; /* taste-skill-ignore: botón secundario del programa (pieza data-ui) */
     font: 600 1rem/1.2 var(--letra); transition: background-color 200ms ease, border-color 200ms ease, transform 160ms var(--ease-out);
   }
   .pp-boton:active { transform: scale(0.98); }

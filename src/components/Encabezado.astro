@@ -71,7 +71,7 @@ const enlaces = [
 
   .menu-boton {
     display: none; position: relative; z-index: 2; width: 48px; height: 48px; border-radius: var(--radio);
-    border: 1px solid var(--borde); background: var(--panel); cursor: pointer; transition: transform 160ms var(--ease-out);
+    border: 0; background: var(--panel); cursor: pointer; transition: transform 160ms var(--ease-out);
   }
   .menu-boton:active { transform: scale(0.94); }
   .menu-rayas { display: grid; gap: 6px; justify-items: center; }
@@ -79,6 +79,11 @@ const enlaces = [
   .menu-boton[aria-expanded="true"] .menu-rayas i:first-child { transform: translateY(4px) rotate(45deg); }
   .menu-boton[aria-expanded="true"] .menu-rayas i:last-child { transform: translateY(-4px) rotate(-45deg); }
 
+  @media (max-width: 960px) and (prefers-reduced-motion: reduce) {
+    .menu, .menu.abierto { clip-path: none; transition: opacity 250ms ease, visibility 0s linear 250ms; }
+    .menu:not(.abierto) { opacity: 0; }
+    .menu.abierto { opacity: 1; transition: opacity 250ms ease, visibility 0s; }
+  }
   @media (max-width: 960px) {
     .menu-boton { display: grid; place-items: center; }
     .encabezado-comprar { display: inline-flex; }

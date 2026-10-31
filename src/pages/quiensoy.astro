@@ -8,6 +8,11 @@ const certificados = [
   { src: "img/certificados/google-soporte-it", alt: "Fundamentos de soporte técnico, Google (2025)", ancho: 800, alto: 619 },
   { src: "img/certificados/itc-hardware", alt: "Diagnóstico y mantenimiento de hardware, Informatic Training Center (2018)", ancho: 800, alto: 600 },
 ];
+const trabajos = [
+  { n: "pc-despues-limpieza", alt: "PC después de la limpieza" },
+  { n: "notebook-revision-interna", alt: "Revisión interna de notebook" },
+  { n: "armado-pc", alt: "Armado de PC" },
+];
 ---
 <Base
   titulo="Quién soy · PfoHardware, Iván Pfoh"
@@ -46,6 +51,21 @@ const certificados = [
     </div>
   </section>
 
+  <section class="trabajos-mios" aria-labelledby="mios-titulo">
+    <div class="contenedor">
+      <h2 id="mios-titulo" data-titulo><span class="linea"><span>Algunos trabajos</span></span></h2>
+      <div class="mios">
+        {trabajos.map((t) => (
+          <a class="mio" href={`img/trabajos/${t.n}-1600.webp`} data-galeria data-entra>
+            <img src={`img/trabajos/${t.n}-640.webp`} alt={t.alt} width="640" height="480" loading="lazy" decoding="async" />
+            <span>{t.alt}</span>
+          </a>
+        ))}
+      </div>
+      <a class="flecha mios-mas" href="index.html#trabajos">Ver más trabajos</a>
+    </div>
+  </section>
+
   <CierreServicio />
   <Visor slot="despues" />
 </Base>
@@ -61,7 +81,7 @@ const certificados = [
   .abanico { position: relative; aspect-ratio: 4 / 3.6; }
   .certificado {
     position: absolute; width: 74%; left: 13%; top: 8%; border-radius: var(--radio); overflow: hidden; background: var(--panel);
-    box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.85); transition: transform 600ms var(--ease-out), z-index 0s;
+    border: 6px solid #13201F; transition: transform 600ms var(--ease-out), z-index 0s;
   }
   .certificado img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
   .c0 { transform: translate(-12%, -4%) rotate(-7deg); z-index: 1; }
@@ -77,7 +97,15 @@ const certificados = [
   .formacion ul { list-style: none; display: grid; gap: 8px; }
   .formacion li { display: flex; gap: 12px; align-items: baseline; color: var(--texto-dim); }
   .formacion li::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--marca-1); transform: translateY(-2px); }
+  .trabajos-mios { padding-block: var(--seccion); background: var(--campo-2); }
+  .mios { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: clamp(32px, 4vw, 56px); }
+  .mio { display: block; text-decoration: none; color: var(--texto); }
+  .mio img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radio); background: var(--panel); transition: transform 700ms var(--ease-out); }
+  .mio span { display: block; margin-top: 12px; font-weight: 600; font-size: 0.95rem; }
+  @media (hover: hover) and (pointer: fine) { .mio:hover img { transform: scale(1.025); } }
+  .mios-mas { margin-top: 28px; }
   @media (max-width: 900px) {
+    .mios { grid-template-columns: 1fr 1fr; }
     .arriba-grilla { grid-template-columns: 1fr; }
     .abanico { max-width: 460px; }
   }
