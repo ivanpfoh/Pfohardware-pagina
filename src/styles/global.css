@@ -151,11 +151,14 @@ strong { font-weight: 600; }
 /* Los botones oscuros del programa ("Deshacer cambios", "Programas de inicio") */
 .boton-panel { background: var(--panel); border-color: var(--borde); color: var(--texto); }
 .boton-grande { min-height: 64px; padding: 18px 32px; font-size: 1.14rem; }
+/* Sobre el degradé de marca: el botón va oscuro, con el color del texto del botón del programa */
+.boton-oscuro { background: var(--texto-marca); color: var(--texto); }
 @media (hover: hover) and (pointer: fine) {
   .boton-marca:hover::after { transform: translateX(120%); }
   .boton-marca:hover { box-shadow: 0 14px 40px -12px rgba(18, 232, 214, 0.55); } /* taste-skill-ignore: respuesta al pasar el mouse sobre el botón de marca */
   .boton:hover svg { transform: translateX(3px); }
   .boton-panel:hover { border-color: var(--linea); background: #0E161A; }
+  .boton-oscuro:hover { background: #000; }
 }
 .enlace { color: var(--marca); text-decoration: underline; text-decoration-color: rgba(18, 232, 214, 0.45); }
 @media (hover: hover) and (pointer: fine) { .enlace:hover { text-decoration-color: currentColor; } }
@@ -178,7 +181,7 @@ html.mov [data-titulo].entro .linea > span {
 }
 
 /* ---------- Animaciones de entrada: el contenido es visible por defecto ----------
-   app.ts marca html.mov solo si hay movimiento permitido y JS; recién ahí lo de abajo arranca oculto. */
+   El script de Base.astro marca html.mov solo si hay JS y movimiento permitido; recién ahí lo de abajo arranca oculto. */
 html.mov [data-entra] { opacity: 0; transform: translateY(24px); }
 html.quieto [data-entra].abajo:not(.entro) { opacity: 0; }
 html.quieto [data-entra].abajo.entro { opacity: 1; transition: opacity 600ms ease; }

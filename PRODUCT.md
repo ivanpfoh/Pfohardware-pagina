@@ -50,7 +50,7 @@ The Optimizer is made, used and personally supported by the same technician who 
 - Logo: "PH" in slanted tiles. Iván loves it, and it stays the protagonist of the home page's opening (the HyperFrames video starts with it big).
 - Palette, the same as the program: gradient #00F5A0 → #1FDDF5, ground #05080A, panel #0B1114, border #17262A.
 - Voice: Rioplatense Spanish, first person (Iván speaking), direct and plain, honest about when a repair is not worth it.
-- Current typefaces: Manrope (text) and Space Grotesk (titles). The program uses the same palette.
+- Typeface: the program's own, Segoe UI Variable, with self-hosted Selawik where Windows fonts are missing (decided 2026-10-31, because Iván wants the site to look like the program). Before that, the site used Manrope and Space Grotesk.
 
 ## Evidence on Hand
 
