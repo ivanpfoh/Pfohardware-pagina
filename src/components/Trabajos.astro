@@ -1,0 +1,113 @@
+---
+import Icono from "./Icono.astro";
+import { INSTAGRAM } from "../consts";
+
+const fotos = [
+  { n: "pc-antes-limpieza", alt: "PC antes de la limpieza", w: 540, h: 720, marca: "Antes" },
+  { n: "pc-despues-limpieza", alt: "PC después de la limpieza", w: 540, h: 720, marca: "Después" },
+  { n: "notebook-revision-interna", alt: "Revisión interna de notebook", w: 540, h: 720 },
+  { n: "ps4-limpieza", alt: "Limpieza de PlayStation 4", w: 506, h: 646 },
+  { n: "notebook-modulo-pantalla", alt: "Cambio de módulo de pantalla", w: 499, h: 637 },
+  { n: "notebook-mantenimiento", alt: "Mantenimiento de notebook", w: 499, h: 376 },
+  { n: "armado-pc", alt: "Armado de PC", w: 496, h: 485 },
+  { n: "pc-escritorio", alt: "Mantenimiento de computadora de escritorio", w: 540, h: 720 },
+  { n: "notebook-diagnostico-arranque", alt: "Diagnóstico de arranque en una notebook", w: 720, h: 540 },
+];
+---
+<section class="trabajos" id="trabajos" aria-labelledby="trabajos-titulo" data-tira>
+  <div class="contenedor trabajos-cabeza">
+    <h2 id="trabajos-titulo" data-titulo><span class="linea"><span>Trabajos reales,</span></span><span class="linea"><span>de cerca.</span></span></h2>
+    <div class="trabajos-lado">
+      <p data-entra>Fotos de equipos que pasaron por mis manos: limpiezas, cambios de piezas y diagnósticos.</p>
+      <div class="flechas" data-flechas>
+        <button type="button" class="boton boton-panel" data-mover="-1" aria-label="Foto anterior"><Icono nombre="izquierda" tam={20} /></button>
+        <button type="button" class="boton boton-panel" data-mover="1" aria-label="Foto siguiente"><Icono nombre="flecha" tam={20} /></button>
+      </div>
+    </div>
+  </div>
+  <div class="tira-marco">
+    <ul class="tira" data-tira-pista>
+      {fotos.map((f) => (
+        <li class="foto" style={`--ar: ${f.w} / ${f.h}`}>
+          <a href={`img/trabajos/${f.n}-1600.webp`} data-galeria>
+            <img src={`img/trabajos/${f.n}-640.webp`} alt={f.alt} width={f.w} height={f.h} loading="lazy" decoding="async" />
+          </a>
+          {f.marca && <span class:list={["foto-marca", f.marca === "Después" && "foto-marca-despues"]}>{f.marca}</span>}
+          <p class="foto-texto">{f.alt}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+  <div class="contenedor">
+    <a class="flecha mas" href={INSTAGRAM} target="_blank" rel="noopener noreferrer">Más trabajos en Instagram <Icono nombre="flecha" tam={18} /></a>
+  </div>
+</section>
+
+<script>
+  import { escritorio, moverPoco } from "../scripts/base";
+  import { cargarMovimiento } from "../scripts/movimiento";
+
+  const bloque = document.querySelector<HTMLElement>("[data-tira]");
+  const pista = bloque?.querySelector<HTMLElement>("[data-tira-pista]");
+  if (bloque && pista) {
+    // Flechas (celular y sin animaciones): de a una foto
+    bloque.querySelectorAll<HTMLButtonElement>("[data-mover]").forEach((b) => b.addEventListener("click", () => {
+      const ancho = (pista.querySelector<HTMLElement>(".foto")?.offsetWidth ?? 300) + 16;
+      pista.scrollBy({ left: ancho * Number(b.dataset.mover), behavior: moverPoco() ? "auto" : "smooth" });
+    }));
+
+    // Escritorio con movimiento: la sección queda fija y la tira avanza de costado mientras se baja
+    if (escritorio() && !moverPoco()) {
+      cargarMovimiento().then(({ gsap, ScrollTrigger }) => {
+        const mm = gsap.matchMedia();
+        mm.add("(min-width: 1025px) and (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)", () => {
+          bloque.classList.add("fijada");
+          const recorrido = (): number => Math.max(0, pista.scrollWidth - window.innerWidth);
+          const avance = gsap.to(pista, {
+            x: () => -recorrido(), ease: "none",
+            scrollTrigger: { trigger: bloque, start: "top top", end: () => `+=${recorrido()}`, pin: true, scrub: 0.6, invalidateOnRefresh: true, anticipatePin: 1 },
+          });
+          pista.querySelectorAll("img").forEach((img) => {
+            gsap.fromTo(img, { xPercent: -6 }, {
+              xPercent: 6, ease: "none",
+              scrollTrigger: { trigger: img.closest(".foto"), containerAnimation: avance, start: "left right", end: "right left", scrub: true },
+            });
+          });
+          ScrollTrigger.refresh();
+          return () => bloque.classList.remove("fijada");
+        });
+      });
+    }
+  }
+</script>
+
+<style>
+  .trabajos { position: relative; z-index: 2; padding-block: var(--seccion); background: var(--campo-2); overflow-x: clip; }
+  .trabajos-cabeza { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 32px; align-items: end; margin-bottom: clamp(36px, 5vw, 64px); }
+  .trabajos-lado p { max-width: 28em; }
+  .flechas { display: flex; gap: 8px; margin-top: 20px; }
+  .flechas .boton { width: 52px; padding: 0; }
+  .tira {
+    list-style: none; display: flex; gap: 16px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none;
+    padding-inline: max(var(--margen), calc((100vw - var(--ancho)) / 2)); scroll-padding-inline: max(var(--margen), calc((100vw - var(--ancho)) / 2));
+  }
+  .tira::-webkit-scrollbar { display: none; }
+  .foto { position: relative; flex: 0 0 auto; height: clamp(340px, 56vh, 560px); aspect-ratio: var(--ar); scroll-snap-align: start; }
+  .foto a { display: block; height: calc(100% - 40px); border-radius: var(--radio); overflow: hidden; background: var(--panel); }
+  .foto img { width: 100%; height: 100%; object-fit: cover; transform: scale(1.13); transition: transform 1s var(--ease-out); }
+  @media (hover: hover) and (pointer: fine) { .foto a:hover img { transform: scale(1.18); } }
+  .foto-texto { margin: 12px 0 0; font-weight: 600; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .foto-marca { position: absolute; top: 14px; left: 14px; padding: 6px 12px; border-radius: 8px; background: var(--fondo); font-weight: 600; font-size: 0.85rem; pointer-events: none; }
+  .foto-marca-despues { background: var(--degrade); color: var(--texto-marca); }
+  .mas { margin-top: 28px; }
+  /* Fijada: la tira se mueve con GSAP y entra entera en una pantalla */
+  .trabajos.fijada { min-height: 100vh; padding-block: calc(var(--header) + 8px) 36px; }
+  .trabajos.fijada .tira { overflow: visible; scroll-snap-type: none; width: max-content; }
+  .trabajos.fijada .flechas { display: none; }
+  .trabajos.fijada .trabajos-cabeza { margin-bottom: 28px; }
+  .trabajos.fijada .foto { height: clamp(260px, calc(100vh - 340px), 600px); }
+  @media (max-width: 900px) {
+    .trabajos-cabeza { grid-template-columns: 1fr; }
+    .foto { height: 420px; max-width: 82vw; }
+  }
+</style>

@@ -1,0 +1,39 @@
+# Compila la web con Astro y la publica en GitHub Pages cada vez que se sube algo a main.
+# Requiere que en Settings → Pages la fuente sea "GitHub Actions".
+name: Publicar la web
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  compilar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Bajar el repo
+        uses: actions/checkout@v7
+      - name: Compilar con Astro
+        uses: withastro/action@v6
+        with:
+          node-version: 24
+
+  publicar:
+    needs: compilar
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.publicacion.outputs.page_url }}
+    steps:
+      - name: Publicar en GitHub Pages
+        id: publicacion
+        uses: actions/deploy-pages@v5

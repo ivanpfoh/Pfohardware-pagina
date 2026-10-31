@@ -1,0 +1,93 @@
+---
+import Base from "../layouts/Base.astro";
+import Icono from "../components/Icono.astro";
+import { EMAIL, INSTAGRAM, MAIL_CONSULTA } from "../consts";
+---
+<Base
+  titulo="Contacto · PfoHardware, pedí tu presupuesto"
+  descripcion="Contame qué le pasa a tu PC o notebook y coordinamos una revisión, retiro y entrega o asistencia. PfoHardware, Recoleta, Capital Federal."
+  ruta="contacto.html"
+  actual="contacto"
+  ogTitulo="Contacto · PfoHardware"
+  ogDescripcion="Pedí tu presupuesto para tu PC o notebook en Recoleta, Capital Federal."
+>
+  <section class="arriba" aria-labelledby="contacto-titulo">
+    <div class="contenedor">
+      <h1 id="contacto-titulo" data-titulo><span class="linea"><span>Hablemos de</span></span><span class="linea"><span>tu equipo.</span></span></h1>
+      <p class="bajada" data-entra>Contame qué está pasando. Coordinamos una revisión, retiro y entrega o asistencia según tu caso. Atiendo en <strong>Recoleta, Capital Federal</strong>.</p>
+    </div>
+  </section>
+
+  <section class="canales-seccion" aria-label="Canales de contacto">
+    <div class="contenedor canales">
+      <a class="canal canal-mail" href={MAIL_CONSULTA} data-entra>
+        <span class="canal-icono"><Icono nombre="mail" tam={26} /></span>
+        <span class="canal-nombre">Email</span>
+        <span class="canal-dato">{EMAIL}</span>
+        <span class="canal-accion">Escribirme <Icono nombre="flecha" tam={18} /></span>
+        <span class="canal-nota">Se abre un mail con una guía para tu consulta.</span>
+      </a>
+      <a class="canal" href={INSTAGRAM} target="_blank" rel="noopener noreferrer" data-entra>
+        <span class="canal-icono"><Icono nombre="instagram" tam={26} /></span>
+        <span class="canal-nombre">Instagram</span>
+        <span class="canal-dato">@pfohardware</span>
+        <span class="canal-accion">Mandar un mensaje <Icono nombre="flecha" tam={18} /></span>
+        <span class="canal-nota">Ahí también vas a ver trabajos recientes.</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="seccion datos">
+    <div class="contenedor dos">
+      <div data-entra>
+        <h2>Para darte un presupuesto más rápido, contame:</h2>
+        <ul class="checklist">
+          <li><Icono nombre="check" tam={18} grosor={2.6} /><span><strong>Qué equipo es</strong> (PC, notebook o consola) y el modelo, si lo sabés.</span></li>
+          <li><Icono nombre="check" tam={18} grosor={2.6} /><span><strong>Qué le pasa</strong> y desde cuándo.</span></li>
+          <li><Icono nombre="check" tam={18} grosor={2.6} /><span><strong>Si hubo algún cambio reciente</strong>: un golpe, un derrame, una actualización o un componente nuevo.</span></li>
+          <li><Icono nombre="check" tam={18} grosor={2.6} /><span><strong>Fotos o un video corto</strong>, si ayudan a mostrar la falla.</span></li>
+        </ul>
+      </div>
+      <div class="compraste" data-entra>
+        <h2>¿Compraste el Optimizador?</h2>
+        <p>Si necesitás tu clave o el link de descarga, recuperalos con el número de operación de Mercado Pago y el mail con el que pagaste.</p>
+        <a class="flecha" href="descarga.html">Recuperar mi clave y la descarga <Icono nombre="flecha" tam={18} /></a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .arriba { padding: calc(var(--header) + clamp(56px, 9vw, 128px)) 0 clamp(48px, 6vw, 80px); background: var(--campo-1); }
+  .bajada { margin-top: 28px; max-width: 34em; font-size: 1.15rem; }
+  .canales-seccion { padding-bottom: clamp(72px, 9vw, 120px); background: var(--campo-1); }
+  .canales { display: grid; grid-template-columns: 1.15fr 1fr; gap: 16px; }
+  .canal {
+    display: grid; grid-template-columns: auto 1fr; grid-template-areas: "icono nombre" "dato dato" "accion accion" "nota nota";
+    gap: 8px 16px; padding: clamp(26px, 3.4vw, 44px); border-radius: var(--radio-ventana); background: var(--panel); text-decoration: none; color: var(--texto);
+    transition: background-color 250ms ease, transform 250ms var(--ease-out);
+  }
+  .canal-mail { background: #0C2A23; }
+  .canal-icono { grid-area: icono; display: grid; place-items: center; width: 52px; height: 52px; border-radius: var(--radio); background: var(--fondo); color: var(--marca-1); }
+  .canal-nombre { grid-area: nombre; align-self: center; font: 600 1.2rem/1 var(--letra-titulo); color: var(--texto-dim); }
+  .canal-dato { grid-area: dato; margin-top: 18px; font: 600 clamp(1.5rem, 3vw, 2.4rem)/1.1 var(--letra-titulo); letter-spacing: -0.03em; overflow-wrap: anywhere; }
+  .canal-accion { grid-area: accion; display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; color: var(--marca); font-weight: 600; }
+  .canal-accion :global(svg) { transition: transform 300ms var(--ease-out); }
+  .canal-nota { grid-area: nota; color: var(--texto-dim); font-size: var(--t-chico); }
+  .canal:active { transform: scale(0.99); }
+  @media (hover: hover) and (pointer: fine) {
+    .canal:hover { background: #0F1A1E; }
+    .canal-mail:hover { background: #0E3229; }
+    .canal:hover .canal-accion :global(svg) { transform: translateX(4px); }
+  }
+  .datos { background: var(--campo-2); }
+  .dos { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+  .datos h2 { font-size: clamp(1.6rem, 2.8vw, 2.4rem); margin-bottom: 24px; }
+  .checklist { list-style: none; display: grid; gap: 14px; }
+  .checklist li { display: flex; gap: 12px; }
+  .checklist :global(svg) { flex: none; margin-top: 4px; color: var(--marca-1); }
+  .compraste p { max-width: 30em; }
+  @media (max-width: 900px) {
+    .canales, .dos { grid-template-columns: 1fr; }
+  }
+</style>

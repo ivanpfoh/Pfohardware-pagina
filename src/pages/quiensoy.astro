@@ -1,0 +1,84 @@
+---
+import Base from "../layouts/Base.astro";
+import CierreServicio from "../components/CierreServicio.astro";
+import Visor from "../components/Visor.astro";
+
+const certificados = [
+  { src: "img/certificados/google-ciberseguridad", alt: "Fundamentos de ciberseguridad, Google (2025)", ancho: 800, alto: 621 },
+  { src: "img/certificados/google-soporte-it", alt: "Fundamentos de soporte técnico, Google (2025)", ancho: 800, alto: 619 },
+  { src: "img/certificados/itc-hardware", alt: "Diagnóstico y mantenimiento de hardware, Informatic Training Center (2018)", ancho: 800, alto: 600 },
+];
+---
+<Base
+  titulo="Quién soy · PfoHardware, Iván Pfoh"
+  descripcion="Iván Pfoh: Técnico Superior en Análisis de Sistemas y estudiante de la Licenciatura en Ciencia de Datos e Inteligencia Artificial en UADE. PfoHardware, Recoleta."
+  ruta="quiensoy.html"
+  actual="quiensoy"
+  ogTitulo="Quién soy · Iván Pfoh, PfoHardware"
+  ogDescripcion="Técnico Superior en Análisis de Sistemas. Soporte informático, diagnóstico de hardware y ciberseguridad en Recoleta, Capital Federal."
+  ogTipo="profile"
+>
+  <section class="arriba" id="sobre-mi" aria-labelledby="quien-titulo">
+    <div class="contenedor arriba-grilla">
+      <div class="bio">
+        <h1 id="quien-titulo" data-titulo><span class="linea"><span>Técnica, criterio</span></span><span class="linea"><span>y trato directo.</span></span></h1>
+        <p class="bio-grande" data-entra>Soy Iván Pfoh, Técnico Superior en Análisis de Sistemas y fundador de PfoHardware. Hice el Optimizador y atiendo el servicio técnico.</p>
+        <p data-entra>Actualmente curso la <strong>Licenciatura en Ciencia de Datos e Inteligencia Artificial en UADE</strong>. Combino soporte informático, diagnóstico de hardware y ciberseguridad para resolver cada caso de forma clara y responsable.</p>
+        <p data-entra>Trabajo con particulares y pequeñas empresas en Recoleta, Capital Federal. La prioridad es simple: que entiendas qué tiene tu equipo, qué vale la pena hacer y por qué.</p>
+      </div>
+      <figure class="formacion" aria-labelledby="formacion-titulo">
+        <div class="abanico">
+          {certificados.map((c, i) => (
+            <a class={`certificado c${i}`} href={`${c.src}-1600.webp`} data-galeria>
+              <img src={`${c.src}-800.webp`} alt={c.alt} width={c.ancho} height={c.alto} loading={i === 0 ? "eager" : "lazy"} decoding="async" />
+            </a>
+          ))}
+        </div>
+        <figcaption>
+          <h2 id="formacion-titulo">Formación</h2>
+          <ul>
+            <li>Técnico Superior en Análisis de Sistemas</li>
+            <li>Licenciatura en Ciencia de Datos e IA, UADE, en curso</li>
+            {certificados.map((c) => <li>{c.alt}</li>)}
+          </ul>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <CierreServicio />
+  <Visor slot="despues" />
+</Base>
+
+<style>
+  .arriba { padding: calc(var(--header) + clamp(48px, 7vw, 104px)) 0 var(--seccion); background: var(--campo-1); }
+  .arriba-grilla { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(40px, 7vw, 120px); align-items: start; }
+  .bio p { max-width: 34em; }
+  .bio-grande { margin-top: clamp(28px, 3vw, 40px); font: 600 clamp(1.25rem, 1.9vw, 1.6rem)/1.38 var(--letra-titulo); letter-spacing: -0.015em; }
+
+  .formacion { margin: 0; }
+  /* Los certificados reales, en abanico; con el mouse se abren un poco más */
+  .abanico { position: relative; aspect-ratio: 4 / 3.6; }
+  .certificado {
+    position: absolute; width: 74%; left: 13%; top: 8%; border-radius: var(--radio); overflow: hidden; background: var(--panel);
+    box-shadow: 0 30px 60px -24px rgba(0, 0, 0, 0.85); transition: transform 600ms var(--ease-out), z-index 0s;
+  }
+  .certificado img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+  .c0 { transform: translate(-12%, -4%) rotate(-7deg); z-index: 1; }
+  .c1 { transform: translate(0, 2%) rotate(1deg); z-index: 2; }
+  .c2 { transform: translate(12%, 10%) rotate(7deg); z-index: 3; }
+  @media (hover: hover) and (pointer: fine) {
+    .abanico:hover .c0 { transform: translate(-20%, -8%) rotate(-10deg); }
+    .abanico:hover .c2 { transform: translate(20%, 14%) rotate(10deg); }
+    .certificado:hover { z-index: 4; }
+  }
+  .formacion figcaption { margin-top: clamp(28px, 3vw, 44px); }
+  .formacion h2 { font-size: var(--t-sub); margin-bottom: 14px; }
+  .formacion ul { list-style: none; display: grid; gap: 8px; }
+  .formacion li { display: flex; gap: 12px; align-items: baseline; color: var(--texto-dim); }
+  .formacion li::before { content: ""; flex: none; width: 7px; height: 7px; border-radius: 50%; background: var(--marca-1); transform: translateY(-2px); }
+  @media (max-width: 900px) {
+    .arriba-grilla { grid-template-columns: 1fr; }
+    .abanico { max-width: 460px; }
+  }
+</style>

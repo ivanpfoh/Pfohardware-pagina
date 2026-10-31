@@ -1,0 +1,28 @@
+---
+// Preguntas frecuentes: <details> nativos (funcionan sin JS y con teclado); la apertura se anima en Chrome y Edge.
+interface Props { class?: string }
+const { class: clase = "" } = Astro.props;
+---
+<div class:list={["faq", clase]}><slot /></div>
+
+<style>
+  .faq { display: grid; gap: 8px; }
+  .faq :global(details) { border-radius: var(--radio); background: var(--panel); transition: background-color 250ms ease; }
+  .faq :global(details[open]) { background: #0D1518; }
+  .faq :global(summary) {
+    display: flex; justify-content: space-between; align-items: center; gap: 18px; padding: 22px 24px; cursor: pointer; list-style: none;
+    font: 600 1.08rem/1.35 var(--letra);
+  }
+  .faq :global(summary::-webkit-details-marker) { display: none; }
+  .faq :global(summary::after) {
+    content: ""; flex: none; width: 11px; height: 11px; border-right: 2px solid var(--marca); border-bottom: 2px solid var(--marca);
+    transform: translateY(-3px) rotate(45deg); transition: transform 350ms var(--ease-out);
+  }
+  .faq :global(details[open] > summary::after) { transform: translateY(3px) rotate(225deg); }
+  .faq :global(details::details-content) { block-size: 0; overflow: clip; transition: block-size 400ms var(--ease-out), content-visibility 400ms allow-discrete; }
+  .faq :global(details[open]::details-content) { block-size: auto; }
+  .faq :global(.faq-cuerpo) { padding: 0 24px 22px; color: var(--texto); max-width: 70ch; }
+  .faq :global(.faq-cuerpo ol) { padding-left: 1.2em; display: grid; gap: 10px; }
+  .faq :global(.faq-cuerpo p:last-child) { margin-bottom: 0; }
+  .faq :global(.faq-cuerpo code) { padding: 2px 6px; border-radius: 6px; background: var(--fondo); }
+</style>

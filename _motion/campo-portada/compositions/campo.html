@@ -1,0 +1,87 @@
+<template>
+  <style>
+    /* Campo del anillo de la portada de la web (3:1). El logo PH arranca grande, con el mismo marco del
+       video del diagnóstico, y se achica hasta volverse el anillo del programa con su rayo. El último
+       cuadro es idéntico a la portada en reposo: ahí la web cambia el video por el anillo que se toca.
+       Medidas en proporción a la altura (640 px), igual que en la web: anillo 70 %, puntos cada 4 %. */
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #05080a;
+    }
+    #campo-fondo {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(36, 50, 56, 0.85) 1.9px, transparent 2.2px),
+        radial-gradient(closest-side, rgba(18, 232, 214, 0.07), transparent);
+      background-size: 25.6px 25.6px, 60% 100%;
+      background-position: center, center;
+      background-repeat: repeat, no-repeat;
+      opacity: 0;
+    }
+    #campo-anillo {
+      position: absolute;
+      left: 736px;
+      top: 96px;
+      width: 448px;
+      height: 448px;
+      overflow: visible;
+    }
+    #campo-anillo circle {
+      fill: none;
+      stroke: #243238;
+      stroke-width: 7;
+    }
+    #campo-rayo {
+      fill: #12e8d6;
+      opacity: 0;
+    }
+    #campo-chip {
+      position: absolute;
+      left: 793.5px;
+      top: 153.5px;
+      width: 333px;
+      height: 333px;
+      border-radius: 58px;
+      background: linear-gradient(#0b1114, #0b1114) padding-box, linear-gradient(135deg, #00f5a0, #1fddf5) border-box;
+      border: 3px solid transparent;
+      box-shadow: 0 0 110px rgba(18, 232, 214, 0.3);
+    }
+    #campo-logo {
+      position: absolute;
+      left: 857px;
+      top: 210px;
+      width: 206px;
+      height: 220px;
+    }
+  </style>
+  <div id="root" data-composition-id="campo" data-width="1920" data-height="640">
+    <div id="campo-fondo"></div>
+    <svg id="campo-anillo" viewBox="0 0 120 120" aria-hidden="true">
+      <circle id="campo-pista" cx="60" cy="60" r="52" pathLength="100" transform="rotate(-90 60 60)" />
+      <path id="campo-rayo" d="M63 38 47 63h12l-3 19 16-26H60z" />
+    </svg>
+    <div id="campo-chip"></div>
+    <img id="campo-logo" src="assets/logo-ph.png" alt="" />
+  </div>
+  <script>
+    // La pista arranca sin dibujar (fuera de la línea de tiempo, para que valga en el cuadro 0)
+    gsap.set("#campo-pista", { strokeDasharray: "100 102", strokeDashoffset: 100 });
+    const tl = gsap.timeline({ paused: true });
+
+    // 1. El logo grande, con la grilla del programa apareciendo de fondo
+    tl.fromTo("#campo-fondo", { opacity: 0 }, { opacity: 1, duration: 0.8, ease: "power2.out" }, 0.05);
+    tl.fromTo("#campo-chip", { boxShadow: "0 0 70px rgba(18,232,214,0.18)" }, { boxShadow: "0 0 130px rgba(18,232,214,0.36)", duration: 1.1, ease: "sine.inOut" }, 0);
+
+    // 2. El logo se vuelve el anillo: la pista se dibuja alrededor mientras el logo se achica hacia el rayo
+    tl.to("#campo-pista", { strokeDashoffset: 0, duration: 1.0, ease: "power2.inOut" }, 1.1);
+    // Cerrado el anillo, sin costura arriba
+    tl.set("#campo-pista", { strokeDasharray: "102 0" }, 2.12);
+    tl.to("#campo-chip", { scale: 0.4, opacity: 0, duration: 0.7, ease: "power3.inOut" }, 1.15);
+    tl.to("#campo-logo", { scale: 0.32, opacity: 0, duration: 0.75, ease: "power3.inOut" }, 1.25);
+    tl.fromTo("#campo-rayo", { opacity: 0, scale: 0.4, svgOrigin: "60 60" }, { opacity: 1, scale: 1, svgOrigin: "60 60", duration: 0.6, ease: "expo.out" }, 1.65);
+
+    window.__timelines["campo"] = tl;
+  </script>
+</template>

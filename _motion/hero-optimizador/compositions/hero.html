@@ -1,0 +1,191 @@
+<template>
+  <style>
+    /* Portada de la web: el logo PH grande (la misma insignia que abre el video del diagnóstico) se achica
+       hasta su lugar en la cabecera del programa mientras la ventana real del Optimizador se abre a su
+       alrededor. Después, el mouse toca "Optimizar ahora", el anillo real llega al 100 % y queda
+       "Optimización completada". Pantallas reales del programa a escala 1,5. */
+    #root {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      background: #05080a;
+    }
+    .capa,
+    .pantalla {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 900px;
+      height: 966px;
+    }
+    /* La grilla de puntos del programa, de fondo mientras se presenta el logo */
+    #hero-puntos {
+      background-image: radial-gradient(rgba(36, 50, 56, 0.9) 1.3px, transparent 1.4px);
+      background-size: 24px 24px;
+      -webkit-mask-image: radial-gradient(closest-side, #000 30%, transparent 100%);
+      mask-image: radial-gradient(closest-side, #000 30%, transparent 100%);
+      opacity: 0;
+    }
+    #hero-programa {
+      z-index: 1;
+    }
+    #hero-anillo-cam {
+      z-index: 2;
+    }
+    #hero-fin {
+      z-index: 3;
+    }
+    #hero-hueco,
+    #hero-boton {
+      position: absolute;
+      left: 48px;
+      top: 735px;
+      width: 804px;
+      height: 69px;
+    }
+    #hero-hueco {
+      background: #05080a;
+    }
+    #hero-reposo-hover,
+    #hero-hueco,
+    #hero-boton {
+      opacity: 0;
+    }
+    /* La insignia: el mismo marco degradé del video del diagnóstico */
+    #hero-chip {
+      position: absolute;
+      left: 290px;
+      top: 323px;
+      width: 320px;
+      height: 320px;
+      z-index: 5;
+      border-radius: 54px;
+      background: linear-gradient(#0b1114, #0b1114) padding-box, linear-gradient(135deg, #00f5a0, #1fddf5) border-box;
+      border: 3px solid transparent;
+      box-shadow: 0 0 110px rgba(18, 232, 214, 0.3);
+    }
+    /* El logo vuela solo: termina encima del logo de la cabecera del programa */
+    #hero-logo {
+      position: absolute;
+      left: 360px;
+      top: 386px;
+      width: 180px;
+      height: 193px;
+      z-index: 6;
+    }
+    /* Tapa el logo de la cabecera mientras el logo grande vuela hacia ahí: así nunca se ven dos */
+    #hero-tapa {
+      position: absolute;
+      left: 46px;
+      top: 52px;
+      width: 62px;
+      height: 66px;
+      z-index: 4;
+      background: #05080a;
+    }
+    #hero-cursor {
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 7;
+      width: 30px;
+      height: 45px;
+    }
+    #hero-cursor svg {
+      display: block;
+      filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.55));
+    }
+  </style>
+  <div id="root" data-composition-id="hero" data-width="900" data-height="966">
+    <div id="hero-puntos" class="capa"></div>
+
+    <!-- La ventana real del programa, que se abre desde el logo -->
+    <div id="hero-programa" class="capa" data-layout-allow-overflow>
+      <img id="hero-reposo" class="pantalla" src="assets/reposo.png" alt="" />
+      <img id="hero-reposo-hover" class="pantalla" src="assets/reposo-hover.png" alt="" />
+      <div id="hero-hueco"></div>
+      <img id="hero-boton" src="assets/boton-hover.png" alt="" />
+    </div>
+
+    <!-- El anillo real del programa, cuadro por cuadro -->
+    <div id="hero-anillo-cam" class="capa" data-layout-allow-overflow>
+      <video
+        id="hero-anillo"
+        class="clip pantalla"
+        data-start="3.95"
+        data-duration="3.6"
+        data-track-index="1"
+        src="assets/anillo.mp4"
+        muted
+        playsinline
+      ></video>
+    </div>
+
+    <div id="hero-fin" class="clip capa" data-start="7.55" data-duration="1.45" data-track-index="2">
+      <img id="hero-fin-img" class="pantalla" src="assets/fin.png" alt="" />
+    </div>
+
+    <div id="hero-tapa"></div>
+    <div id="hero-chip"></div>
+    <img id="hero-logo" src="assets/logo-ph.png" alt="" />
+
+    <div id="hero-cursor" data-layout-allow-overflow>
+      <svg width="30" height="45" viewBox="0 0 20 30" aria-hidden="true">
+        <path
+          d="M1 1 L1 24 L6.6 18.6 L10.4 27.6 L14 26.1 L10.3 17.3 L17.8 17.3 Z"
+          fill="#ffffff"
+          stroke="#000000"
+          stroke-width="1.4"
+          stroke-linejoin="round"
+        />
+      </svg>
+    </div>
+  </div>
+  <script>
+    // La punta del cursor está en (1,5 ; 1,5): se resta para que caiga justo en el punto
+    const PUNTA = 1.5;
+    const pos = (x, y) => ({ x: x - PUNTA, y: y - PUNTA });
+    const AFUERA = pos(960, 1040);
+    const BOTON = pos(470, 772); // "Optimizar ahora" (x 48-851, y 735-803)
+    // Centro del logo en la cabecera del programa (x 52-100, y 58-110 en la captura)
+    const CABECERA = { x: 76, y: 84 };
+    const LOGO = { x: 450, y: 482.5, alto: 193 }; // centro y alto del logo grande
+    const escalaFinal = 54 / LOGO.alto;
+
+    gsap.set("#hero-cursor", AFUERA);
+    gsap.set("#hero-programa", { clipPath: "circle(0px at 450px 483px)" });
+    const tl = gsap.timeline({ paused: true });
+
+    // 1. El logo grande, con la grilla del programa apareciendo de fondo
+    tl.fromTo("#hero-puntos", { opacity: 0 }, { opacity: 0.8, duration: 1.1, ease: "power2.out" }, 0.1);
+    tl.fromTo("#hero-chip", { boxShadow: "0 0 70px rgba(18,232,214,0.18)" }, { boxShadow: "0 0 130px rgba(18,232,214,0.36)", duration: 1.2, ease: "sine.inOut" }, 0);
+
+    // 2. El logo se vuelve el programa: la ventana se abre desde su centro y el logo vuela a la cabecera
+    tl.to("#hero-programa", { clipPath: "circle(1400px at 450px 483px)", duration: 1.0, ease: "expo.inOut" }, 1.3);
+    tl.to("#hero-chip", { scale: 0.2, opacity: 0, duration: 0.55, ease: "power3.in" }, 1.3);
+    tl.to("#hero-puntos", { opacity: 0, duration: 0.4, ease: "power1.out" }, 1.5);
+    tl.to("#hero-logo", { x: CABECERA.x - LOGO.x, y: CABECERA.y - LOGO.y, scale: escalaFinal, duration: 1.0, ease: "expo.inOut" }, 1.3);
+    tl.set("#hero-tapa", { opacity: 0 }, 2.3);
+    tl.to("#hero-logo", { opacity: 0, duration: 0.25, ease: "power1.out" }, 2.3);
+
+    // 3. Quieto en "Tu PC está lista para optimizar" (acá la web puede pasar a la versión que se toca)
+
+    // 4. El mouse va al botón mientras la cámara se acerca a él
+    tl.fromTo("#hero-cursor", AFUERA, { ...BOTON, duration: 0.9, ease: "power2.inOut", immediateRender: false }, 2.9);
+    tl.fromTo("#hero-programa", { scale: 1, transformOrigin: "449.5px 769px" }, { scale: 1.08, transformOrigin: "449.5px 769px", duration: 0.9, ease: "power2.inOut", immediateRender: false }, 3.0);
+    tl.fromTo("#hero-reposo-hover", { opacity: 0 }, { opacity: 1, duration: 0.12, ease: "power1.out", immediateRender: false }, 3.55);
+
+    // 5. Clic: el cursor y el botón se hunden apenas
+    tl.set("#hero-hueco, #hero-boton", { opacity: 1 }, 3.84);
+    tl.fromTo("#hero-boton", { scale: 1 }, { scale: 0.97, duration: 0.08, ease: "power2.out", immediateRender: false }, 3.85);
+    tl.fromTo("#hero-cursor svg", { scale: 1, transformOrigin: "2px 2px" }, { scale: 0.86, transformOrigin: "2px 2px", duration: 0.08, ease: "power2.out", immediateRender: false }, 3.85);
+    tl.to("#hero-cursor svg", { scale: 1, duration: 0.16, ease: "power2.out" }, 3.93);
+
+    // 6. Corte al anillo: entra apenas grande y se asienta
+    tl.fromTo("#hero-anillo-cam", { scale: 1.04, transformOrigin: "50% 60%" }, { scale: 1, transformOrigin: "50% 60%", duration: 0.6, ease: "expo.out", immediateRender: false }, 3.95);
+    // El mouse se va mientras el programa trabaja
+    tl.fromTo("#hero-cursor", BOTON, { ...AFUERA, duration: 0.6, ease: "power3.in", immediateRender: false }, 4.4);
+
+    window.__timelines["hero"] = tl;
+  </script>
+</template>

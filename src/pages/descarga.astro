@@ -1,0 +1,89 @@
+---
+import Base from "../layouts/Base.astro";
+import Preguntas from "../components/Preguntas.astro";
+import { COMPRAR, EMAIL, INSTAGRAM, RECUPERAR } from "../consts";
+
+// Huella del archivo oficial: se actualiza en cada versión (build_nuitka.bat la muestra al compilar).
+const VERSION = "v2.9.1";
+const HASH = "E3C6F847FA481541A8525274E162F7C0E10ABAB8E47C69EA855EA0BD89C99BA3";
+---
+<Base
+  titulo="Descarga · Optimizador PfoHardware"
+  descripcion="Descarga del Optimizador de Sistema PfoHardware y recuperación de clave."
+  ruta="descarga.html"
+  actual="descarga"
+  noIndexar
+>
+  <section class="arriba" aria-labelledby="titulo-descarga">
+    <div class="contenedor arriba-grilla">
+      <div>
+        <h1 id="titulo-descarga" data-titulo><span class="linea"><span>¿Ya compraste</span></span><span class="linea"><span>el Optimizador?</span></span></h1>
+        <p class="bajada" data-entra>Tu clave y el link de descarga están en el mail que recibiste al comprar. Si no lo encontrás, recuperalos con el número de operación de Mercado Pago y el mail con el que pagaste.</p>
+        <!-- El link de descarga solo se entrega a quien compró: página de la compra, mail y "Recuperar mi clave". -->
+        <div class="acciones" data-entra>
+          <a class="boton boton-marca boton-grande" href={RECUPERAR}>Recuperar mi clave y la descarga</a>
+          <a class="boton boton-panel boton-grande" href={COMPRAR}>Todavía no lo compré</a>
+        </div>
+      </div>
+      <p class="compat" data-entra>
+        <span class="punto" aria-hidden="true"></span>
+        <span><strong>Compatibilidad:</strong> el programa es exclusivo para <strong>Windows 10 y 11</strong> (64 bits), con cualquier procesador Intel o AMD y 2 GB de RAM o más. No funciona en macOS ni Linux.</span>
+      </p>
+    </div>
+  </section>
+
+  <section class="seccion-chica">
+    <div class="contenedor dos">
+      <h2 data-entra>Instalación y dudas</h2>
+      <div data-entra>
+        <Preguntas>
+          <details open>
+            <summary>¿Cómo lo instalo?</summary>
+            <div class="faq-cuerpo">
+              <ol>
+                <li><strong>Descargá el archivo</strong> desde el mail de tu compra o desde “Recuperar mi clave”, descomprimí el <code>.zip</code> y abrí el <code>.exe</code>.</li>
+                <li><strong>Aceptá el permiso de administrador</strong> que te pide el programa.</li>
+                <li><strong>Ingresá tu clave</strong>, tocá <strong>Optimizar ahora</strong> y listo. Si querés volver atrás, usá <strong>Deshacer cambios</strong>.</li>
+              </ol>
+            </div>
+          </details>
+          <details>
+            <summary>Windows muestra “Windows protegió su PC”. ¿Es normal?</summary>
+            <div class="faq-cuerpo">
+              <p>Sí. Al tratarse de un desarrollo independiente, Windows SmartScreen puede mostrar esa pantalla azul. Hacé clic en <strong>“Más información”</strong> y después en <strong>“Ejecutar de todas formas”</strong>.</p>
+              <p>El aviso aparece porque el programa todavía no tiene una firma digital comercial. No significa que tenga virus.</p>
+            </div>
+          </details>
+          <details>
+            <summary>¿Sos usuario avanzado? Comprobá que el archivo es el oficial</summary>
+            <div class="faq-cuerpo">
+              <p>En PowerShell, dentro de la carpeta donde lo descargaste, escribí <code>Get-FileHash Optimizador_PfoHardware.zip</code>. El resultado tiene que ser exactamente este ({VERSION}):</p>
+              <code class="hash" data-hash>{HASH}</code>
+              <p>Si no coincide, no lo abras y escribime.</p>
+            </div>
+          </details>
+        </Preguntas>
+        <p class="soporte">
+          <strong>¿Dudas o inconvenientes?</strong> Contás con mi soporte directo y personal: escribime a <a class="enlace" href={`mailto:${EMAIL}`}>{EMAIL}</a> o por Instagram a <a class="enlace" href={INSTAGRAM} target="_blank" rel="noopener noreferrer">@pfohardware</a> y te asisto de inmediato.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .arriba { padding: calc(var(--header) + clamp(56px, 9vw, 128px)) 0 clamp(56px, 7vw, 96px); background: var(--campo-1); }
+  .arriba-grilla { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: clamp(32px, 6vw, 96px); align-items: end; }
+  .bajada { margin-top: 32px; max-width: 34em; font-size: 1.15rem; }
+  .acciones { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
+  .compat { display: flex; gap: 14px; margin: 0; padding: 24px; border-radius: var(--radio); background: var(--panel); }
+  .compat .punto { margin-top: 0.55em; }
+  .seccion-chica { padding: clamp(72px, 9vw, 128px) 0; background: var(--campo-2); }
+  .dos { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr); gap: clamp(28px, 5vw, 80px); align-items: start; }
+  .hash { display: block; margin: 12px 0 14px; padding: 14px 16px; border-radius: 10px; overflow-wrap: anywhere; color: var(--marca); background: var(--fondo); }
+  .soporte { margin-top: 36px; max-width: 46em; }
+  @media (max-width: 900px) {
+    .arriba-grilla, .dos { grid-template-columns: 1fr; }
+    .acciones .boton { flex: 1 1 100%; }
+  }
+</style>
