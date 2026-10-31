@@ -5,7 +5,7 @@
 // de modos y las pantallas copian al programa real. Es una demostración: no toca la PC de nadie.
 import Ventana from "./Ventana.astro";
 import Icono from "./Icono.astro";
-import { COMPRAR, PRECIO } from "../consts";
+import { COMPRAR } from "../consts";
 ---
 <section class="portada" id="optimizador" aria-labelledby="portada-titulo">
   <div class="contenedor">
@@ -17,7 +17,6 @@ import { COMPRAR, PRECIO } from "../consts";
             <h1 id="portada-titulo" data-titulo><span class="linea"><span>Tu PC, más fluida</span></span><span class="linea"><span>con un clic.</span></span></h1>
             <p data-entra>Optimizador PfoHardware para Windows 10 y 11</p>
           </div>
-          <p class="pp-precio" data-entra><strong class="num">{PRECIO}</strong><span>pago único</span></p>
         </div>
 
         <div class="pp-campo" aria-hidden="true" data-ui>
@@ -63,7 +62,7 @@ import { COMPRAR, PRECIO } from "../consts";
 
         <div class="pp-pie" data-ui>
           <p class="pp-nota" data-nota><i class="punto" aria-hidden="true"></i><span data-nota-texto>Demostración: se ve y responde como el programa, pero no toca tu PC.</span></p>
-          <a class="boton pp-comprar" href={COMPRAR} data-comprar>Comprar y descargar <span class="num">· {PRECIO}</span> <Icono nombre="flecha" tam={18} /></a>
+          <a class="boton pp-comprar" href={COMPRAR} data-comprar>Comprar y descargar <Icono nombre="flecha" tam={18} /></a>
         </div>
       </div>
     </Ventana>
@@ -192,7 +191,7 @@ import { COMPRAR, PRECIO } from "../consts";
 <style>
   /* El fondo de la portada es el tono de panel de la paleta; la ventana tiene el negro del programa */
   .portada { padding: var(--header) 0 clamp(48px, 7vw, 96px); background: var(--campo-2); }
-  .portada-ventana { max-width: 1240px; margin-inline: auto; }
+  .portada-ventana { max-width: 980px; margin-inline: auto; }
 
   /* Medidas en proporción al ancho de la ventana (cqw) y del campo (cqh), como el programa */
   .pp {

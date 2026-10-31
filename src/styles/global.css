@@ -170,7 +170,7 @@ strong { font-weight: 600; }
 .punto { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--marca-1); flex: none; }
 
 /* ---------- Títulos que suben línea por línea detrás de una máscara ---------- */
-.linea { display: block; overflow: clip; padding-bottom: 0.1em; margin-bottom: -0.1em; }
+.linea { display: block; overflow: clip; padding-bottom: 0.2em; margin-bottom: -0.2em; }
 .linea > span { display: block; }
 .linea:nth-child(2) > span { --i: 1; }
 .linea:nth-child(3) > span { --i: 2; }

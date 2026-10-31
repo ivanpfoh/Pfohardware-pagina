@@ -1,5 +1,5 @@
 ---
-import { COMPRAR, PRECIO } from "../consts";
+import { COMPRAR } from "../consts";
 
 interface Props {
   actual?: "inicio" | "servicios" | "quiensoy" | "contacto" | "descarga" | "otra";
@@ -30,7 +30,7 @@ const enlaces = [
           <li><a href={e.href} aria-current={e.id && e.id === actual && e.id !== "inicio" ? "page" : undefined}>{e.texto}</a></li>
         ))}
       </ul>
-      <a class="boton boton-panel menu-comprar" href={COMPRAR}>Comprar <span class="num">{PRECIO}</span></a>
+      <a class="boton boton-panel menu-comprar" href={COMPRAR}>Comprar</a>
       <a class="menu-ya" href="descarga.html" aria-current={actual === "descarga" ? "page" : undefined}>Ya lo compré</a>
     </nav>
   </div>
